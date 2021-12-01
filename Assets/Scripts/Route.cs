@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouteScript : MonoBehaviour
+public class Route : MonoBehaviour
 {
     Transform[] childObjects;
     public List<Transform> childObjectList = new List<Transform>();
