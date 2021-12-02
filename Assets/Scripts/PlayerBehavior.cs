@@ -21,25 +21,33 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
-            RollDice();
+            RollDice();             // last index = 143
 
+                                                    // count = 144
             if ((routePos + stepsToTake) < currentRoute.childObjectList.Count)  // if the amount of steps to take does not overflow, move player piece
             {
                 StartCoroutine(Move());
 
+                if ((routePos + stepsToTake) == currentRoute.childObjectList.Count - 1)
+                {
+                    Debug.Log("Winner...");
+                }
+
             }
-            else if ((routePos + stepsToTake) > currentRoute.childObjectList.Count) // if the amount of steps to take overflows, re-roll dice
+            else // if the amount of steps to take overflows, re-roll dice
             {
                 do
                 {
                     RollDice();
-                } while ((routePos + stepsToTake) > currentRoute.childObjectList.Count);
+                } while ((routePos + stepsToTake) >= currentRoute.childObjectList.Count);
+                
 
                 StartCoroutine(Move());
-            } else
-            {
-                Debug.Log("We have a winner");
-                // announce winner etc.
+
+                if ((routePos + stepsToTake) == currentRoute.childObjectList.Count - 1)
+                {
+                    Debug.Log("Winner...");
+                }
             }
         }
     }
@@ -63,7 +71,7 @@ public class PlayerBehavior : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
 
             stepsToTake--;
         }
@@ -82,8 +90,8 @@ public class PlayerBehavior : MonoBehaviour
 
     void RollDice()
     {
-        dieOne = Random.Range(20, 40);
-        dieTwo = Random.Range(15, 25);
+        dieOne = Random.Range(25, 40);
+        dieTwo = Random.Range(15, 30);
         stepsToTake = dieOne + dieTwo;
 
         Debug.Log("Dice rolled: " + stepsToTake);
