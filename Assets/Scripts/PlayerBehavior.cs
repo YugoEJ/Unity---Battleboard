@@ -33,22 +33,12 @@ public class PlayerBehavior : MonoBehaviour
                     Debug.Log("Winner...");
                 }
 
-            }
-            else // if the amount of steps to take overflows, re-roll dice
+            } 
+            else
             {
-                do
-                {
-                    RollDice();
-                } while ((routePos + stepsToTake) >= currentRoute.childObjectList.Count);
-                
-
-                StartCoroutine(Move());
-
-                if ((routePos + stepsToTake) == currentRoute.childObjectList.Count - 1)
-                {
-                    Debug.Log("Winner...");
-                }
+                Debug.Log("Rolled a number that is too high");
             }
+
         }
     }
 
