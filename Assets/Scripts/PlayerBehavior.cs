@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoneScript : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
     public Route currentRoute;
 
@@ -68,7 +68,6 @@ public class StoneScript : MonoBehaviour
             stepsToTake--;
         }
 
-        stepsToTake = 9;
         isMoving = false;
 
         // check if landed on final tile; announce winner
@@ -83,8 +82,8 @@ public class StoneScript : MonoBehaviour
 
     void RollDice()
     {
-        dieOne = Random.Range(1, 7);
-        dieTwo = Random.Range(1, 7);
+        dieOne = Random.Range(20, 40);
+        dieTwo = Random.Range(15, 25);
         stepsToTake = dieOne + dieTwo;
 
         Debug.Log("Dice rolled: " + stepsToTake);
