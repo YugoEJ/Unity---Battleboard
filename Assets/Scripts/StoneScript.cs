@@ -7,34 +7,40 @@ public class StoneScript : MonoBehaviour
     public Route currentRoute;
 
     public float speed = 50f;
+
     int routePos;
 
     int dieOne;
     int dieTwo;
-    public int steps;
+    int stepsToTake;
 
     bool isMoving;
+    //bool isPlayerTurn; // this boolean will be required to seperate the turns appropriately, perhaps change its access modifier to Static...
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {
-            dieOne = Random.Range(1, 7);
-            dieTwo = Random.Range(1, 7);
-            steps = dieOne + dieTwo;
+            RollDice();
 
-            Debug.Log("Dice rolled: " + steps);
-
-            StartCoroutine(Move());
-
-            /*if ((routePos + steps) < currentRoute.childObjectList.Count) 
+            if ((routePos + stepsToTake) < currentRoute.childObjectList.Count)  // if the amount of steps to take does not overflow, move player piece
             {
                 StartCoroutine(Move());
+
             }
-            else
+            else if ((routePos + stepsToTake) > currentRoute.childObjectList.Count) // if the amount of steps to take overflows, re-roll dice
             {
-                Debug.Log("Rolled a number that is too high");
-            }*/
+                do
+                {
+                    RollDice();
+                } while ((routePos + stepsToTake) > currentRoute.childObjectList.Count);
+
+                StartCoroutine(Move());
+            } else
+            {
+                Debug.Log("We have a winner");
+                // announce winner etc.
+            }
         }
     }
 
@@ -46,15 +52,9 @@ public class StoneScript : MonoBehaviour
         }
         isMoving = true;
 
-        while (steps > 0)
+        while (stepsToTake > 0)
         {
             routePos++;
-            routePos %= currentRoute.childObjectList.Count;
-
-            if ((routePos + 1) > currentRoute.childObjectList.Count)
-            {
-
-            } 
 
             Vector3 nextPos = currentRoute.childObjectList[routePos].position;
 
@@ -65,16 +65,28 @@ public class StoneScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
 
-            steps--;
-            //routePos++;
+            stepsToTake--;
         }
 
+        stepsToTake = 9;
         isMoving = false;
+
+        // check if landed on final tile; announce winner
+
+        // check if landed on a special tile; apply special effect / initiate minigame / etc.
     }
 
     bool MoveToNextNode(Vector3 goalNode)
     {
         return goalNode != (transform.position = Vector3.MoveTowards(transform.position, goalNode, speed * Time.deltaTime));
-        
+    }
+
+    void RollDice()
+    {
+        dieOne = Random.Range(1, 7);
+        dieTwo = Random.Range(1, 7);
+        stepsToTake = dieOne + dieTwo;
+
+        Debug.Log("Dice rolled: " + stepsToTake);
     }
 }
