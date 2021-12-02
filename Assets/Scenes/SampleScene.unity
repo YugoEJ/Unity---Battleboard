@@ -3540,7 +3540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 182946249}
-  speed: 200
+  speed: 100
 --- !u!1 &419315355
 GameObject:
   m_ObjectHideFlags: 0

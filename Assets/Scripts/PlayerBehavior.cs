@@ -24,23 +24,45 @@ public class PlayerBehavior : MonoBehaviour
             RollDice();             // last index = 143
 
                                                     // count = 144
-            if ((routePos + stepsToTake) < currentRoute.childObjectList.Count)  // if the amount of steps to take does not overflow, move player piece
+            if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))  // if the amount of steps to take does not overflow, move player piece
             {
                 StartCoroutine(Move());
-
-                if ((routePos + stepsToTake) == currentRoute.childObjectList.Count - 1)
-                {
-                    Debug.Log("Winner...");
-                }
-
+                Debug.Log("Player moving...");
             } 
             else
             {
-                Debug.Log("Rolled a number that is too high");
-            }
+                StartCoroutine(Move());
+                Debug.Log("We have a winner...");
 
+                // announce winner
+            }
         }
     }
+
+    /*IEnumerator MoveToFinalNode()
+    {
+        if (isMoving)
+        {
+            yield break;
+        }
+        isMoving = true;
+
+        while (stepsToTake > 0 && (routePos != (currentRoute.childObjectList.Count - 1)))
+        {
+            routePos++;
+
+            Vector3 nextPos = currentRoute.childObjectList[routePos].position;
+
+            while (MoveToNextNode(nextPos))
+            {
+                yield return null;
+            }
+
+            //yield return new WaitForSeconds(0.1f);
+
+            stepsToTake--;
+        }
+    }*/
 
     IEnumerator Move()
     {
@@ -50,7 +72,7 @@ public class PlayerBehavior : MonoBehaviour
         }
         isMoving = true;
 
-        while (stepsToTake > 0)
+        while (stepsToTake > 0 && (routePos != (currentRoute.childObjectList.Count - 1)))
         {
             routePos++;
 
