@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         isPlayerWinner = false;
     }
 
-    private void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving && isPlayersTurn && !isPlayerWinner)
         {

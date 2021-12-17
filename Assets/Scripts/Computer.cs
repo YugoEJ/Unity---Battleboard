@@ -15,7 +15,7 @@ public class Computer : MonoBehaviour
 
     bool isMoving;
 
-    private void Update()
+    public void Update()
     {
         if (!Player.isPlayersTurn && !isMoving && !Player.isPlayerWinner)
         {

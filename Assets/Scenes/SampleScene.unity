@@ -3239,7 +3239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 182946249}
-  speed: 50
+  speed: 40
 --- !u!1 &425805702
 GameObject:
   m_ObjectHideFlags: 0
@@ -8555,10 +8555,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1138873927}
+  - component: {fileID: 1138873928}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8576,6 +8577,20 @@ Transform:
   m_Father: {fileID: 2086116387}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1138873928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138873926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9040605984f4e8d44ac13d84856d2091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 404985681}
+  computer: {fileID: 1794623884}
 --- !u!1 &1140683193
 GameObject:
   m_ObjectHideFlags: 0
