@@ -8,58 +8,114 @@ public class GameManagerScript : MonoBehaviour
     public Computer computer;
 
     private bool playerTurn;
-    private bool coinFlip;
+    private bool gameOver;
 
     private int dice;
     private int stepsToTake;
 
-
-    /*private void Awake()
+    private void Start()
     {
-        coinFlip = FlipCoin();
-
-        if (coinFlip == true)
-        {
-            playerTurn = true;
-        }
-
-        GameFlow(player, computer);
-    }*/
+        gameOver = false;
+        playerTurn = true;
+        //FlipCoin();
+    }
 
     private void Update()
     {
-        player.Update();
-        computer.Update();
-    }
-
-    private void GameFlow(Player player, Computer computer)
-    {
-        while (true)
+        if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && gameOver == false && playerTurn == true)
         {
-            
+            MovePlayer();
+        }
+        else if (!computer.isMoving && gameOver == false && playerTurn == false) // (if computer's turn)
+        {
+            MoveComputer();
         }
     }
 
+    private void MovePlayer()
+    {
+        RollDice();
 
+        if (player.canMove(stepsToTake))
+        {
+            StartCoroutine(player.Move(stepsToTake));
+            playerTurn = !playerTurn;
+        }
+        else
+        {
+            StartCoroutine(player.Move(stepsToTake));
+            gameOver = true;
+        }
 
-    void RollDice()
+        if (!gameOver)
+        {
+            Debug.Log("Computer's turn.");
+        }
+        else
+        {
+            Debug.Log("Player wins!");
+        }
+
+    }
+
+    private void MoveComputer()
+    {
+        RollDice();
+
+        if (computer.canMove(stepsToTake))
+        {
+            StartCoroutine(computer.Move(stepsToTake));
+            playerTurn = !playerTurn;
+        }
+        else
+        {
+            StartCoroutine(player.Move(stepsToTake));
+            gameOver = true;
+        }
+
+        if (!gameOver)
+        {
+            Debug.Log("Player's turn.");
+        }
+        else
+        {
+            Debug.Log("Computer wins!");
+        }
+    }
+
+    private void RollDice()
     {
         dice = Random.Range(1, 7);
         stepsToTake = dice;
 
-        Debug.Log("Player rolled dice: " + stepsToTake);
+        Debug.Log("Dice rolled: " + stepsToTake);
     }
 
-    bool FlipCoin()
+    /*bool FlipCoin()
     {
+        Debug.Log("Flipping coin to decide who goes first!");
+        StartCoroutine(Delay());
         int coin = Random.Range(0, 2);
-        bool playerBegins = false;
 
         if (coin == 0)
         {
-            playerBegins = true;
+            playerTurn = true;
+            Debug.Log("Coin: Head");
+            Debug.Log("Player's turn!");
+        }
+        else
+        {
+            playerTurn = false;
+            Debug.Log("Coin: Tails");
+            Debug.Log("Computer's turn!");
         }
 
-        return playerBegins;
+        return playerTurn;
+    }*/
+
+    private IEnumerator Delay()
+    {
+        Debug.Log("Waiting 5 seconds...");
+        yield return new WaitForSeconds(5);
     }
 }

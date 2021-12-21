@@ -10,36 +10,22 @@ public class Computer : MonoBehaviour
 
     int routePos;
 
-    int dice;
-    int stepsToTake;
+    public bool isMoving;
 
-    bool isMoving;
-
-    public void Update()
+    public bool canMove(int stepsToTake)
     {
-        if (!Player.isPlayersTurn && !isMoving && !Player.isPlayerWinner)
+        if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
-            Debug.Log("Computer's turn!");
-            //System.Threading.Thread.Sleep(1500);
-
-            RollDice();
-
-            if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))  // if the amount of steps to take does not overflow, move player piece
-            {
-                StartCoroutine(Move());
-            }
-            else
-            {
-                StartCoroutine(Move());
-                Debug.Log("COMPUTER WINS!");
-                Player.isPlayerWinner = true;
-
-                // announce winner
-            }
+            return true;
+        }
+        else
+        {
+            return false;
+            // winner
         }
     }
 
-    IEnumerator Move()
+    public IEnumerator Move(int stepsToTake)
     {
         if (isMoving)
         {
@@ -137,14 +123,11 @@ public class Computer : MonoBehaviour
         // check if landed on final tile; announce winner
 
         // check if landed on a special tile; apply special effect / initiate minigame / etc.
-
-        Player.isPlayersTurn = true;
-        Debug.Log("Player's turn!");
     }
 
-    bool MoveToNextNode(Vector3 goalNode)
+    void MoveToNextNode(Vector3 goalNode)
     {
-        return goalNode != (transform.position = Vector3.MoveTowards(transform.position, goalNode, speed * Time.deltaTime));
+        transform.position = Vector3.MoveTowards(transform.position, goalNode, speed * Time.deltaTime);
     }
 
     bool IsEdgePos(int currNode)
@@ -163,13 +146,5 @@ public class Computer : MonoBehaviour
         }
 
         return isEdgePos;
-    }
-
-    void RollDice()
-    {
-        dice = Random.Range(1, 7);
-        stepsToTake = dice;
-
-        Debug.Log("Computer rolled dice: " + stepsToTake);
     }
 }

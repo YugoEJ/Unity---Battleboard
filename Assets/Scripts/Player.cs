@@ -10,48 +10,28 @@ public class Player : MonoBehaviour
 
     int routePos;
 
-    int dice;
-    int stepsToTake;
+    public bool isMoving;
 
-    public static bool isPlayersTurn;
-    public static bool isPlayerWinner;
-    bool isMoving;
-
-    private void Start()
+    public bool canMove(int stepsToTake)
     {
-        isPlayersTurn = true;
-        isPlayerWinner = false;
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving && isPlayersTurn && !isPlayerWinner)
+        if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
-            RollDice();
-
-            if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
-            {
-                StartCoroutine(Move());
-            } 
-            else
-            {
-                StartCoroutine(Move());
-                isPlayerWinner = true;
-                Debug.Log("player wins");
-
-                // announce winner
-            }
+            return true;
+        }
+        else
+        {
+            return false;
+            // winner
         }
     }
 
-    IEnumerator Move()
+    public IEnumerator Move(int stepsToTake)
     {
         if (isMoving)
         {
             yield break;
         }
         isMoving = true;
-
 
         while (stepsToTake > 0 && (routePos != (currentRoute.childObjectList.Count - 1)))
         {
@@ -143,8 +123,6 @@ public class Player : MonoBehaviour
         // check if landed on final tile; announce winner
 
         // check if landed on a special tile; apply special effect / initiate minigame / etc.
-
-        isPlayersTurn = false;
     }
 
     void MoveToNextNode(Vector3 goalNode)
@@ -169,13 +147,5 @@ public class Player : MonoBehaviour
         }
 
         return isEdgePos;
-    }
-
-    void RollDice()
-    {
-        dice = Random.Range(1, 7);
-        stepsToTake = dice;
-
-        Debug.Log("Player rolled dice: " + stepsToTake);
     }
 }
