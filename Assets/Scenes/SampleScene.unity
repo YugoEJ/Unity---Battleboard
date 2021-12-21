@@ -3240,6 +3240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 182946249}
   speed: 40
+  isMoving: 0
 --- !u!1 &425805702
 GameObject:
   m_ObjectHideFlags: 0
@@ -13345,7 +13346,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 605438681}
-  speed: 50
+  speed: 40
+  isMoving: 0
 --- !u!4 &1794623885
 Transform:
   m_ObjectHideFlags: 0
