@@ -123,13 +123,13 @@ public class Player : MonoBehaviour
         // check if landed on a special tile; apply special effect / initiate minigame / etc.
     }
 
-    void MoveToNextNode(Vector3 goalNode)
+    private void MoveToNextNode(Vector3 goalNode)
     {
         transform.position = Vector3.MoveTowards(transform.position, goalNode, speed * Time.deltaTime);
     }
 
     // IsEdgePos() checks (for moving animation) whether to calculate for X or Z axes
-    bool IsEdgePos(int currNode)
+    private bool IsEdgePos(int currNode)
     {
         bool isEdgePos = false;
 
