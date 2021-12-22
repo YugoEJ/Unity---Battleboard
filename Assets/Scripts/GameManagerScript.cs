@@ -8,6 +8,7 @@ public class GameManagerScript : MonoBehaviour
     public Player computer;
     private Player currentPlayer;
 
+    private bool gamePaused;
     private bool gameOver;
 
     private int dice;
@@ -15,20 +16,33 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
-        gameOver = false;
         currentPlayer = FlipCoin();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && !gameOver && currentPlayer == player)
+        if (!gamePaused && !gameOver)
         {
-            Move(player, computer);
+            if (currentPlayer == player)
+            {
+                if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && !computer.isMoving)
+                {
+                    Move(player, computer);
+                }
+            }
+            else
+            {
+                if (!computer.isMoving && !player.isMoving)
+                {
+                    Move(computer, player);
+                }
+            }
         }
 
-        if (!player.isMoving && !gameOver && currentPlayer == computer)
+        if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
         {
-            Move(computer, player);
+            gamePaused = !gamePaused;
+            Debug.Log("PAUSED");
         }
     }
 
@@ -40,27 +54,21 @@ public class GameManagerScript : MonoBehaviour
         {
             StartCoroutine(currentPlayer.Move(stepsToTake));
             this.currentPlayer = nextPlayer;
+            Debug.Log(this.currentPlayer.name + " 's turn.");
         }
         else
         {
             StartCoroutine(currentPlayer.Move(stepsToTake));
             gameOver = true;
+            Debug.Log(this.currentPlayer.name + " wins!");
         }
-
-        if (gameOver)
-        {
-            Debug.Log("Player wins!");
-        }
-
-        
     }
 
     private void RollDice()
     {
-        dice = Random.Range(1, 7);
-        stepsToTake = dice;
+        this.stepsToTake = Random.Range(1, 7);
 
-        Debug.Log("Dice rolled: " + stepsToTake);
+        Debug.Log(currentPlayer.name + " is rolling the dice...\n" + "Dice rolled: " + this.stepsToTake);
     }
 
     private Player FlipCoin()
