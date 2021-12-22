@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public Player player;
-    public Computer computer;
+    public Player computer;
+    private Player currentPlayer;
 
-    private bool playerTurn;
     private bool gameOver;
 
     private int dice;
@@ -16,71 +16,43 @@ public class GameManagerScript : MonoBehaviour
     private void Start()
     {
         gameOver = false;
-        playerTurn = true;
-        //FlipCoin();
+        currentPlayer = FlipCoin();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && gameOver == false && playerTurn == true)
+        if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && !gameOver && currentPlayer == player)
         {
-            MovePlayer();
+            Move(player, computer);
         }
-        else if (!computer.isMoving && gameOver == false && playerTurn == false) // (if computer's turn)
+
+        if (!player.isMoving && !gameOver && currentPlayer == computer)
         {
-            MoveComputer();
+            Move(computer, player);
         }
     }
 
-    private void MovePlayer()
+    private void Move(Player currentPlayer, Player nextPlayer)
     {
         RollDice();
 
-        if (player.canMove(stepsToTake))
+        if (currentPlayer.CanMove(stepsToTake))
         {
-            StartCoroutine(player.Move(stepsToTake));
-            playerTurn = !playerTurn;
+            StartCoroutine(currentPlayer.Move(stepsToTake));
+            this.currentPlayer = nextPlayer;
         }
         else
         {
-            StartCoroutine(player.Move(stepsToTake));
+            StartCoroutine(currentPlayer.Move(stepsToTake));
             gameOver = true;
         }
 
-        if (!gameOver)
-        {
-            Debug.Log("Computer's turn.");
-        }
-        else
+        if (gameOver)
         {
             Debug.Log("Player wins!");
         }
 
-    }
-
-    private void MoveComputer()
-    {
-        RollDice();
-
-        if (computer.canMove(stepsToTake))
-        {
-            StartCoroutine(computer.Move(stepsToTake));
-            playerTurn = !playerTurn;
-        }
-        else
-        {
-            StartCoroutine(player.Move(stepsToTake));
-            gameOver = true;
-        }
-
-        if (!gameOver)
-        {
-            Debug.Log("Player's turn.");
-        }
-        else
-        {
-            Debug.Log("Computer wins!");
-        }
+        
     }
 
     private void RollDice()
@@ -91,31 +63,23 @@ public class GameManagerScript : MonoBehaviour
         Debug.Log("Dice rolled: " + stepsToTake);
     }
 
-    /*bool FlipCoin()
+    private Player FlipCoin()
     {
+        Player[] players = new Player[2];
+        players[0] = player;
+        players[1] = computer;
+
         Debug.Log("Flipping coin to decide who goes first!");
-        StartCoroutine(Delay());
         int coin = Random.Range(0, 2);
 
-        if (coin == 0)
-        {
-            playerTurn = true;
-            Debug.Log("Coin: Head");
-            Debug.Log("Player's turn!");
-        }
-        else
-        {
-            playerTurn = false;
-            Debug.Log("Coin: Tails");
-            Debug.Log("Computer's turn!");
-        }
+        currentPlayer = players[coin];
+        Debug.Log(currentPlayer.name + " goes first!");
 
-        return playerTurn;
-    }*/
+        return currentPlayer;
+    }
 
     private IEnumerator Delay()
     {
-        Debug.Log("Waiting 5 seconds...");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3.0f);
     }
 }

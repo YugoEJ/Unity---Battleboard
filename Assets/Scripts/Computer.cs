@@ -12,7 +12,7 @@ public class Computer : MonoBehaviour
 
     public bool isMoving;
 
-    public bool canMove(int stepsToTake)
+    public bool CanMove(int stepsToTake)
     {
         if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {

@@ -8591,7 +8591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 404985681}
-  computer: {fileID: 1794623884}
+  computer: {fileID: 1794623886}
 --- !u!1 &1140683193
 GameObject:
   m_ObjectHideFlags: 0
@@ -13325,7 +13325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1794623885}
-  - component: {fileID: 1794623884}
+  - component: {fileID: 1794623886}
   m_Layer: 0
   m_Name: Computer
   m_TagString: Untagged
@@ -13333,21 +13333,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1794623884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794623883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b41cba81dfdf40f40a24e01242ed5937, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRoute: {fileID: 605438681}
-  speed: 40
-  isMoving: 0
 --- !u!4 &1794623885
 Transform:
   m_ObjectHideFlags: 0
@@ -13363,6 +13348,21 @@ Transform:
   m_Father: {fileID: 199888876}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1794623886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794623883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecef78a63215f9c41b9759228bb26875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRoute: {fileID: 605438681}
+  speed: 40
+  isMoving: 0
 --- !u!1 &1796274344
 GameObject:
   m_ObjectHideFlags: 0

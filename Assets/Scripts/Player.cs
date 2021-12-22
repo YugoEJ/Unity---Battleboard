@@ -5,14 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Route currentRoute;
-
     public float speed = 40f;
 
-    int routePos;
-
+    private int routePos;
     public bool isMoving;
 
-    public bool canMove(int stepsToTake)
+    public bool CanMove(int stepsToTake)
     {
         if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
