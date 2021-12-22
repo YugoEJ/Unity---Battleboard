@@ -11,7 +11,6 @@ public class GameManagerScript : MonoBehaviour
     private bool gamePaused;
     private bool gameOver;
 
-    private int dice;
     private int stepsToTake;
 
     private void Start()
@@ -49,18 +48,19 @@ public class GameManagerScript : MonoBehaviour
     private void Move(Player currentPlayer, Player nextPlayer)
     {
         RollDice();
-
-        if (currentPlayer.CanMove(stepsToTake))
+        StartCoroutine(currentPlayer.Move(stepsToTake));
+        
+        
+        if (currentPlayer.CanMove(stepsToTake)) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
-            StartCoroutine(currentPlayer.Move(stepsToTake));
             this.currentPlayer = nextPlayer;
             Debug.Log(this.currentPlayer.name + " 's turn.");
         }
         else
         {
-            StartCoroutine(currentPlayer.Move(stepsToTake));
             gameOver = true;
             Debug.Log(this.currentPlayer.name + " wins!");
+            return;
         }
     }
 
