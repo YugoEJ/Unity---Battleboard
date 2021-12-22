@@ -33,7 +33,7 @@ public class Route : MonoBehaviour
                 Gizmos.DrawLine(prevPos, currentPos);
             }
 
-            // here we will randomize the tiles by using the String array, with some logic to spread them out a bit on the board
+            // we need to randomize the tiles (somewhere in this file) by using the String array, with some logic to spread them out a bit on the board
         }
     }
 
@@ -51,5 +51,4 @@ public class Route : MonoBehaviour
             }
         }
     }
-
 }
