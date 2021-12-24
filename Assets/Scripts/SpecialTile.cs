@@ -8,15 +8,14 @@ public class SpecialTile : MonoBehaviour
     private Sprite tileImage;
     private AudioClip tileSound;
 
-    private string[] tileEffects = new string[] { "effect1", "effect2", "minigame1", "minigame2" };
+    private string[] tileEffects;
     private Sprite[] tileImages;
     private AudioClip[] tileSounds;
 
     private void Start()
     {
-
+        tileEffects = new string[] { "effect1", "effect2", "minigame1", "minigame2"};
     }
-
     public void InitializeTile(float posX, float posZ)
     {
         GameObject specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -26,7 +25,7 @@ public class SpecialTile : MonoBehaviour
         RandomizeTile();
     }
 
-    public void RandomizeTile()
+    private void RandomizeTile()
     {
         this.tileEffect = this.tileEffects[Random.Range(0, 4)];
         Debug.Log("Random tile effect: " + this.tileEffect);
