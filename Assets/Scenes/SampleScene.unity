@@ -1664,79 +1664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add602ebf80bf204689917bdf8389e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childObjectList:
-  - {fileID: 1791320585}
-  - {fileID: 1997123905}
-  - {fileID: 1137101814}
-  - {fileID: 404499758}
-  - {fileID: 437097025}
-  - {fileID: 138562740}
-  - {fileID: 497634787}
-  - {fileID: 1686194243}
-  - {fileID: 1904995411}
-  - {fileID: 494773801}
-  - {fileID: 1961303626}
-  - {fileID: 273377258}
-  - {fileID: 1750897494}
-  - {fileID: 425805703}
-  - {fileID: 1088993335}
-  - {fileID: 1723746025}
-  - {fileID: 1620870354}
-  - {fileID: 1255406828}
-  - {fileID: 238148285}
-  - {fileID: 842240773}
-  - {fileID: 337738503}
-  - {fileID: 1141780144}
-  - {fileID: 317068532}
-  - {fileID: 467062594}
-  - {fileID: 235326584}
-  - {fileID: 914054675}
-  - {fileID: 1635984565}
-  - {fileID: 1571160216}
-  - {fileID: 101677377}
-  - {fileID: 1114439400}
-  - {fileID: 2019329693}
-  - {fileID: 308229211}
-  - {fileID: 636745421}
-  - {fileID: 1784795613}
-  - {fileID: 1274096337}
-  - {fileID: 1240044881}
-  - {fileID: 1583741554}
-  - {fileID: 1340753412}
-  - {fileID: 2107628440}
-  - {fileID: 1020420440}
-  - {fileID: 1233479477}
-  - {fileID: 1699142446}
-  - {fileID: 77600661}
-  - {fileID: 1624248927}
-  - {fileID: 114862300}
-  - {fileID: 25234106}
-  - {fileID: 1103757138}
-  - {fileID: 792382479}
-  - {fileID: 631716102}
-  - {fileID: 1586419581}
-  - {fileID: 1140683194}
-  - {fileID: 1720388203}
-  - {fileID: 888817638}
-  - {fileID: 529352382}
-  - {fileID: 1249534850}
-  - {fileID: 1625629754}
-  - {fileID: 1186315540}
-  - {fileID: 607491493}
-  - {fileID: 990148435}
-  - {fileID: 1807455704}
-  - {fileID: 36941714}
-  - {fileID: 1849453816}
-  - {fileID: 1775451000}
-  - {fileID: 249918154}
-  - {fileID: 1972672502}
-  - {fileID: 1045490630}
-  - {fileID: 792674695}
-  - {fileID: 1910714169}
-  - {fileID: 160892224}
-  - {fileID: 1167919850}
-  - {fileID: 320274346}
-  - {fileID: 563598468}
+  tileList:
+  - {fileID: 0}
 --- !u!1 &186901688
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,7 +3169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 182946249}
   speed: 40
-  isMoving: 0
 --- !u!1 &425805702
 GameObject:
   m_ObjectHideFlags: 0
@@ -4792,79 +4720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add602ebf80bf204689917bdf8389e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childObjectList:
-  - {fileID: 600923550}
-  - {fileID: 1047937997}
-  - {fileID: 1929468245}
-  - {fileID: 83338585}
-  - {fileID: 2138387288}
-  - {fileID: 2057955938}
-  - {fileID: 1264059289}
-  - {fileID: 8851187}
-  - {fileID: 186901689}
-  - {fileID: 99949430}
-  - {fileID: 2003246337}
-  - {fileID: 167114436}
-  - {fileID: 187074552}
-  - {fileID: 695185391}
-  - {fileID: 463174046}
-  - {fileID: 772162355}
-  - {fileID: 653735932}
-  - {fileID: 1494655536}
-  - {fileID: 1329122498}
-  - {fileID: 1311474015}
-  - {fileID: 1616240044}
-  - {fileID: 216719145}
-  - {fileID: 1627112544}
-  - {fileID: 1003568145}
-  - {fileID: 1729768674}
-  - {fileID: 1381267143}
-  - {fileID: 1276403076}
-  - {fileID: 1002290520}
-  - {fileID: 395893926}
-  - {fileID: 2042036649}
-  - {fileID: 1933526836}
-  - {fileID: 645225406}
-  - {fileID: 1319264010}
-  - {fileID: 947930012}
-  - {fileID: 994305334}
-  - {fileID: 1089793106}
-  - {fileID: 1435556070}
-  - {fileID: 632468125}
-  - {fileID: 1461509262}
-  - {fileID: 1491478029}
-  - {fileID: 890056838}
-  - {fileID: 585677736}
-  - {fileID: 97469911}
-  - {fileID: 55649010}
-  - {fileID: 700677311}
-  - {fileID: 1973919329}
-  - {fileID: 869281412}
-  - {fileID: 132118965}
-  - {fileID: 1673633049}
-  - {fileID: 682454465}
-  - {fileID: 363202618}
-  - {fileID: 1853449860}
-  - {fileID: 513788237}
-  - {fileID: 728867985}
-  - {fileID: 1598597088}
-  - {fileID: 878168660}
-  - {fileID: 329748864}
-  - {fileID: 1782631936}
-  - {fileID: 470161992}
-  - {fileID: 1796274345}
-  - {fileID: 621150674}
-  - {fileID: 2115106326}
-  - {fileID: 1293934229}
-  - {fileID: 1576794635}
-  - {fileID: 1377747112}
-  - {fileID: 437616742}
-  - {fileID: 671175861}
-  - {fileID: 1704561815}
-  - {fileID: 516500911}
-  - {fileID: 1019078727}
-  - {fileID: 1146567062}
-  - {fileID: 757596928}
+  tileList: []
 --- !u!4 &605438682
 Transform:
   m_ObjectHideFlags: 0
@@ -13362,7 +13218,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentRoute: {fileID: 605438681}
   speed: 40
-  isMoving: 0
 --- !u!1 &1796274344
 GameObject:
   m_ObjectHideFlags: 0

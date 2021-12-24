@@ -14,7 +14,7 @@ public class Computer : MonoBehaviour
 
     public bool CanMove(int stepsToTake)
     {
-        if ((routePos + stepsToTake) < (currentRoute.childObjectList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
+        if ((routePos + stepsToTake) < (currentRoute.tileList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
             return true;
         }
@@ -33,13 +33,13 @@ public class Computer : MonoBehaviour
         }
         isMoving = true;
 
-        while (stepsToTake > 0 && (routePos != (currentRoute.childObjectList.Count - 1)))
+        while (stepsToTake > 0 && (routePos != (currentRoute.tileList.Count - 1)))
         {
-            Vector3 initialPos = currentRoute.childObjectList[routePos].position;
+            Vector3 initialPos = currentRoute.tileList[routePos].position;
 
             routePos++;
 
-            Vector3 finalPos = currentRoute.childObjectList[routePos].position;
+            Vector3 finalPos = currentRoute.tileList[routePos].position;
             Vector3 nextPos = transform.position;
 
             //--------first-------step--------------//
