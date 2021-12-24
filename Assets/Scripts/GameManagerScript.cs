@@ -24,14 +24,14 @@ public class GameManagerScript : MonoBehaviour
         {
             if (currentPlayer == player)
             {
-                if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving && !computer.isMoving)
+                if (Input.GetKeyDown(KeyCode.Space) && !player.IsMoving() && !computer.IsMoving())
                 {
                     Move(player, computer);
                 }
             }
             else
             {
-                if (!computer.isMoving && !player.isMoving)
+                if (!computer.IsMoving() && !player.IsMoving())
                 {
                     Move(computer, player);
                 }
@@ -41,16 +41,23 @@ public class GameManagerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
         {
             gamePaused = !gamePaused;
-            Debug.Log("PAUSED");
+            if (gamePaused)
+            {
+                Debug.Log("PAUSED");
+            }
+            else
+            {
+                Debug.Log("UNPAUSED");
+            }
         }
     }
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
         RollDice();
+
         StartCoroutine(currentPlayer.Move(stepsToTake));
-        
-        
+
         if (currentPlayer.CanMove(stepsToTake)) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
@@ -67,7 +74,6 @@ public class GameManagerScript : MonoBehaviour
     private void RollDice()
     {
         this.stepsToTake = Random.Range(1, 7);
-
         Debug.Log(currentPlayer.name + " is rolling the dice...\n" + "Dice rolled: " + this.stepsToTake);
     }
 

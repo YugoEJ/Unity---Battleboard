@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float speed = 40f;
 
     private int routePos;
-    public bool isMoving;
+    private bool isMoving;
 
     public bool CanMove(int stepsToTake)
     {
@@ -145,5 +145,10 @@ public class Player : MonoBehaviour
         }
 
         return isEdgePos;
+    }
+
+    public bool IsMoving()
+    {
+        return this.isMoving;
     }
 }
