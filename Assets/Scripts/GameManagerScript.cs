@@ -58,6 +58,8 @@ public class GameManagerScript : MonoBehaviour
 
         StartCoroutine(currentPlayer.Move(stepsToTake));
 
+        // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
+
         if (currentPlayer.CanMove(stepsToTake)) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
