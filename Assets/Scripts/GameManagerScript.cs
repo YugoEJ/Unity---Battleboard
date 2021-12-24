@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -40,30 +41,24 @@ public class GameManagerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
         {
-            gamePaused = !gamePaused;
-            if (gamePaused)
-            {
-                Debug.Log("PAUSED");
-            }
-            else
-            {
-                Debug.Log("UNPAUSED");
-            }
+            PauseGame();
         }
     }
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
+        //StartCoroutine(DiceRollDelay());
         RollDice();
 
         StartCoroutine(currentPlayer.Move(stepsToTake));
+
 
         // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
 
         if (currentPlayer.CanMove(stepsToTake)) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
-            Debug.Log(this.currentPlayer.name + " 's turn.");
+            StartCoroutine(NextTurnDelay());
         }
         else
         {
@@ -75,8 +70,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void RollDice()
     {
-        this.stepsToTake = Random.Range(1, 7);
-        Debug.Log(currentPlayer.name + " is rolling the dice...\n" + "Dice rolled: " + this.stepsToTake);
+        stepsToTake = Random.Range(1, 7);
+        Debug.Log(currentPlayer.name + " rolled the dice on: " + stepsToTake);
     }
 
     private Player FlipCoin()
@@ -89,13 +84,43 @@ public class GameManagerScript : MonoBehaviour
         int coin = Random.Range(0, 2);
 
         currentPlayer = players[coin];
-        Debug.Log(currentPlayer.name + " goes first!");
+
+        StartCoroutine(NextTurnDelay());
 
         return currentPlayer;
     }
 
-    private IEnumerator Delay()
+    private IEnumerator NextTurnDelay()
     {
-        yield return new WaitForSeconds(3.0f);
+        PauseGame();
+        yield return new WaitForSeconds((stepsToTake / 2) + 1);
+
+        if (currentPlayer == player)
+        {
+            Debug.Log(currentPlayer.name + " 's turn.");
+        }
+        else
+        {
+            Debug.Log(currentPlayer.name + " 's turn.");
+            yield return new WaitForSeconds(1);
+        }
+
+        PauseGame();
+    }
+
+    /*private IEnumerator DiceRollDelay()
+    {
+        PauseGame();
+        Debug.Log(currentPlayer.name + " is rolling the dice...");
+        yield return new WaitForSeconds(2);
+        stepsToTake = Random.Range(1, 7);
+        Debug.Log("Dice rolled: " + stepsToTake);
+        yield return new WaitForSeconds(1);
+        PauseGame();
+    }*/
+
+    private void PauseGame()
+    {
+        gamePaused = !gamePaused;
     }
 }
