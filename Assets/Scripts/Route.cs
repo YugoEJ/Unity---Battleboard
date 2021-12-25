@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Route : MonoBehaviour
 {
-    private Transform[] tiles;
     public List<Transform> tileList = new List<Transform>();
 
-    public SpecialTile[] specialTiles = new SpecialTile[72];
+    private Transform[] tiles;
+    private SpecialTile[] specialTiles = new SpecialTile[72];
 
     private void Start()
     {
@@ -42,6 +42,11 @@ public class Route : MonoBehaviour
                 tileList.Add(tile);
             }
         }
+    }
+
+    private SpecialTile GetSpecialTile(int index)
+    {
+        return specialTiles[index];
     }
 
         /*private void OnDrawGizmos()
