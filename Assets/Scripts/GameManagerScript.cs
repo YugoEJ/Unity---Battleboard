@@ -47,7 +47,6 @@ public class GameManagerScript : MonoBehaviour
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
-        //StartCoroutine(DiceRollDelay());
         RollDice();
 
         StartCoroutine(currentPlayer.Move(stepsToTake));
@@ -95,13 +94,15 @@ public class GameManagerScript : MonoBehaviour
         PauseGame();
         yield return new WaitForSeconds((stepsToTake / 2) + 1);
 
+        // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
+
         if (currentPlayer == player)
         {
-            Debug.Log(currentPlayer.name + " 's turn.");
+            Debug.Log(currentPlayer.name + "'s turn.");
         }
         else
         {
-            Debug.Log(currentPlayer.name + " 's turn.");
+            Debug.Log(currentPlayer.name + "'s turn.");
             yield return new WaitForSeconds(1);
         }
 

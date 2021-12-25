@@ -21,7 +21,7 @@ public class Route : MonoBehaviour
         {
             SpecialTile st = new SpecialTile();
             
-            if (Random.Range(0, 9) == 1)
+            if (Random.Range(0, 8) == 4)
             {
                 st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
                 specialTiles[i] = st;
