@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class SpecialTile : MonoBehaviour
 {
-    private string tileEffect;
+    private string tileEffect; // convert to Effect to try working with it
     private Sprite tileImage;
     private AudioClip tileSound;
 
-    private string[] tileEffects;
+    private string[] tileEffects = new string[] { "effect1", "effect2", "minigame1", "minigame2" };
     private Sprite[] tileImages;
     private AudioClip[] tileSounds;
 
-    private void Start()
-    {
-        tileEffects = new string[] { "effect1", "effect2", "minigame1", "minigame2"};
-    }
     public void InitializeTile(float posX, float posZ)
     {
         GameObject specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -29,5 +25,13 @@ public class SpecialTile : MonoBehaviour
     {
         this.tileEffect = this.tileEffects[Random.Range(0, 4)];
         Debug.Log("Random tile effect: " + this.tileEffect);
+    }
+
+    enum Effect // use this enum instead of tileEffects string array
+    {
+        Effect1,
+        Effect2,
+        Minigame1,
+        Minigame2
     }
 }

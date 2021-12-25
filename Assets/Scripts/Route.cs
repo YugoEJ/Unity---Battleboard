@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class Route : MonoBehaviour
 {
-    Transform[] tiles;
-    //public GameObject[] specialTiles;
-    SpecialTile[] specialTiles = new SpecialTile[72];
-
+    private Transform[] tiles;
     public List<Transform> tileList = new List<Transform>();
 
-    // String[] specialTileArray;
-    // here we will create an array of Strings that will hold the names of the special tiles (powerups/minigames/other effects)
+    public SpecialTile[] specialTiles = new SpecialTile[72];
 
     private void Start()
     {
@@ -23,12 +19,12 @@ public class Route : MonoBehaviour
     {
         for (int i = 0; i < 72; i++)
         {
-            SpecialTile sp = new SpecialTile();
+            SpecialTile st = new SpecialTile();
             
-            if (Random.Range(0, 10) == 1)
+            if (Random.Range(0, 9) == 1)
             {
-                sp.InitializeTile(tileList[i].position.x, tileList[i].position.z);
-                specialTiles[i] = sp;
+                st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
+                specialTiles[i] = st;
             }
         }
     }
