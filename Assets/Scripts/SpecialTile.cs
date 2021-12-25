@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpecialTile : MonoBehaviour
 {
+    GameObject specialTile;
+
     private string tileEffect; // convert to Effect to try working with it
     private Sprite tileImage;
     private AudioClip tileSound;
@@ -14,7 +16,8 @@ public class SpecialTile : MonoBehaviour
 
     public void InitializeTile(float posX, float posZ)
     {
-        GameObject specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        specialTile.name = "Special Tile";
         specialTile.transform.position = new Vector3(posX, 6.25f, posZ);
         specialTile.transform.localScale = new Vector3(0.6466f, 0.6466f, 0.6466f);
 
@@ -23,7 +26,9 @@ public class SpecialTile : MonoBehaviour
 
     private void RandomizeTile()
     {
-        this.tileEffect = this.tileEffects[Random.Range(0, 4)];
+        int randomEffectIndex = Random.Range(0, 4);
+        this.tileEffect = this.tileEffects[randomEffectIndex];
+
         Debug.Log("Random tile effect: " + this.tileEffect);
     }
 
