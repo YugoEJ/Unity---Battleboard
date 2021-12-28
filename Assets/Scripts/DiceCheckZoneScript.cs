@@ -5,6 +5,7 @@ using UnityEngine;
 public class DiceCheckZoneScript : MonoBehaviour {
 
 	Vector3 diceVelocity;
+	int diceNumber;
 
 	void FixedUpdate () {
 		diceVelocity = DiceScript.diceVelocity;
@@ -17,23 +18,33 @@ public class DiceCheckZoneScript : MonoBehaviour {
 			switch (col.gameObject.name) {
 			case "Side1":
 				DiceNumberTextScript.diceNumber = 6;
+				diceNumber = 1;
 				break;
 			case "Side2":
 				DiceNumberTextScript.diceNumber = 5;
+				diceNumber = 2;
 				break;
 			case "Side3":
 				DiceNumberTextScript.diceNumber = 4;
+				diceNumber = 3;
 				break;
 			case "Side4":
 				DiceNumberTextScript.diceNumber = 3;
+				diceNumber = 4;
 				break;
 			case "Side5":
 				DiceNumberTextScript.diceNumber = 2;
+				diceNumber = 5;
 				break;
 			case "Side6":
 				DiceNumberTextScript.diceNumber = 1;
+				diceNumber = 6;
 				break;
 			}
+
+			Debug.Log(diceNumber);
 		}
+
+		
 	}
 }

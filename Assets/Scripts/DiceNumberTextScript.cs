@@ -15,6 +15,6 @@ public class DiceNumberTextScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		text.text = diceNumber.ToString ();
+		//text.text = diceNumber.ToString ();
 	}
 }
