@@ -6,33 +6,26 @@ public class DiceScript : MonoBehaviour {
 
 	Rigidbody rb;
 	public static Vector3 diceVelocity;
+	private bool diceLanded;
 
 	void Start () {
-
 		rb = GetComponent<Rigidbody> ();
 	}
 
 	void Update()
 	{
-
 		diceVelocity = rb.velocity;
-
-		if (Input.GetKeyDown(KeyCode.D))
-		{
-			Roll();
-		}
 	}
 
 	public void Roll()
     {
-
-		//DiceNumberTextScript.diceNumber = 0;
 		float dirX = Random.Range(100, 500);
 		float dirY = Random.Range(100, 500);
 		float dirZ = Random.Range(100, 500);
-		transform.position = new Vector3(-60.9f, 41.1f, 160.5f);
-		//transform.rotation = Quaternion.identity;
-		rb.AddForce(transform.up * (-200));
+
+		transform.position = new Vector3(2.78f, Random.Range(81f, 85f), 166.98f);
+		transform.rotation = Quaternion.identity;
 		rb.AddTorque(dirX, dirY, dirZ);
+		rb.velocity = (transform.up * Random.Range(3, 8));
 	}
 }

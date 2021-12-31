@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public DiceScript dice;
+
     public Player player;
     public Player computer;
     private Player currentPlayer;
@@ -12,7 +14,7 @@ public class GameManagerScript : MonoBehaviour
     private bool gamePaused;
     private bool gameOver;
 
-    private int stepsToTake;
+    //private int stepsToTake;
 
     private void Start()
     {
@@ -47,14 +49,16 @@ public class GameManagerScript : MonoBehaviour
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
-        RollDice();
+        //RollDice();
 
-        StartCoroutine(currentPlayer.Move(stepsToTake));
+        dice.Roll();
+
+        StartCoroutine(currentPlayer.Move());
 
 
         // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
 
-        if (currentPlayer.CanMove(stepsToTake)) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
+        if (currentPlayer.CanMove()) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
             StartCoroutine(NextTurnDelay());
@@ -67,11 +71,13 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    private void RollDice()
+    /*private void RollDice()
     {
         stepsToTake = Random.Range(1, 7);
         Debug.Log(currentPlayer.name + " rolled the dice on: " + stepsToTake);
-    }
+    }*/
+
+
 
     private Player FlipCoin()
     {
@@ -92,7 +98,7 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator NextTurnDelay()
     {
         PauseGame();
-        yield return new WaitForSeconds((stepsToTake / 2) + 1);
+        yield return new WaitForSeconds(3f + ((currentPlayer.StepsToTake() / 2) + 1));
 
         // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
 
@@ -107,18 +113,8 @@ public class GameManagerScript : MonoBehaviour
         }
 
         PauseGame();
+        yield return new WaitForSeconds(2.5f);
     }
-
-    /*private IEnumerator DiceRollDelay()
-    {
-        PauseGame();
-        Debug.Log(currentPlayer.name + " is rolling the dice...");
-        yield return new WaitForSeconds(2);
-        stepsToTake = Random.Range(1, 7);
-        Debug.Log("Dice rolled: " + stepsToTake);
-        yield return new WaitForSeconds(1);
-        PauseGame();
-    }*/
 
     private void PauseGame()
     {

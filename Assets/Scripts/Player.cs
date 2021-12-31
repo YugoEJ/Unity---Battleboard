@@ -7,11 +7,14 @@ public class Player : MonoBehaviour
     public Route currentRoute;
     public float speed = 40f;
 
+    private int stepsToTake;
     private int routePos;
     private bool isMoving;
 
-    public bool CanMove(int stepsToTake)
+    public bool CanMove()
     {
+        stepsToTake = DiceCheckZoneScript.StepsToTake();
+
         if ((routePos + stepsToTake) < (currentRoute.tileList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
             return true;
@@ -23,8 +26,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator Move(int stepsToTake)
+    public IEnumerator Move()
     {
+        yield return new WaitForSeconds(3f);
+
+        stepsToTake = DiceCheckZoneScript.StepsToTake();
+
         if (isMoving)
         {
             yield break;
@@ -118,6 +125,8 @@ public class Player : MonoBehaviour
 
         isMoving = false;
 
+        yield return new WaitForSeconds(1.5f);
+
         // check if landed on final tile; announce winner
 
         // check if landed on a special tile; apply special effect / initiate minigame / etc.
@@ -150,5 +159,10 @@ public class Player : MonoBehaviour
     public bool IsMoving()
     {
         return this.isMoving;
+    }
+
+    public int StepsToTake()
+    {
+        return stepsToTake;
     }
 }

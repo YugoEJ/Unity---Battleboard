@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class DiceCheckZoneScript : MonoBehaviour {
 
-	Vector3 diceVelocity;
-	int diceNumber;
+	private Vector3 diceVelocity;
+	private static int stepsToTake;
+	private static bool diceLanded;
+
+	public static int StepsToTake()
+    {
+		return stepsToTake;
+    }
 
 	void FixedUpdate () {
 		diceVelocity = DiceScript.diceVelocity;
@@ -15,36 +21,45 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	{
 		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
 		{
+			diceLanded = true;
+
 			switch (col.gameObject.name) {
 			case "Side1":
-				DiceNumberTextScript.diceNumber = 6;
-				diceNumber = 1;
+				//DiceNumberTextScript.diceNumber = 6;
+					stepsToTake = 1;
 				break;
 			case "Side2":
-				DiceNumberTextScript.diceNumber = 5;
-				diceNumber = 2;
+				//DiceNumberTextScript.diceNumber = 5;
+					stepsToTake = 2;
 				break;
 			case "Side3":
-				DiceNumberTextScript.diceNumber = 4;
-				diceNumber = 3;
+				//DiceNumberTextScript.diceNumber = 4;
+					stepsToTake = 3;
 				break;
 			case "Side4":
-				DiceNumberTextScript.diceNumber = 3;
-				diceNumber = 4;
+				//DiceNumberTextScript.diceNumber = 3;
+					stepsToTake = 4;
 				break;
 			case "Side5":
-				DiceNumberTextScript.diceNumber = 2;
-				diceNumber = 5;
+				//DiceNumberTextScript.diceNumber = 2;
+					stepsToTake = 5;
 				break;
 			case "Side6":
-				DiceNumberTextScript.diceNumber = 1;
-				diceNumber = 6;
+				//DiceNumberTextScript.diceNumber = 1;
+					stepsToTake = 6;
 				break;
 			}
-
-			Debug.Log(diceNumber);
 		}
+        else
+        {
+			diceLanded = false;
+        }
 
-		
+		Debug.Log(stepsToTake);
 	}
+
+	public bool DiceLanded()
+    {
+		return diceLanded;
+    }
 }
