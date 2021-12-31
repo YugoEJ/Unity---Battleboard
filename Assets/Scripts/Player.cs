@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         stepsToTake = DiceCheckZoneScript.StepsToTake();
+        Debug.Log(name + " rolled: " + stepsToTake);
 
         if (isMoving)
         {

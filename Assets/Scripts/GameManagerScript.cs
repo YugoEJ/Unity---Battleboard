@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public DiceScript dice;
+    public DiceCheckZoneScript diceResult;
 
     public Player player;
     public Player computer;
@@ -55,12 +56,12 @@ public class GameManagerScript : MonoBehaviour
 
         StartCoroutine(currentPlayer.Move());
 
-
         // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
 
         if (currentPlayer.CanMove()) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
+
             StartCoroutine(NextTurnDelay());
         }
         else

@@ -8,11 +8,6 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	private static int stepsToTake;
 	private static bool diceLanded;
 
-	public static int StepsToTake()
-    {
-		return stepsToTake;
-    }
-
 	void FixedUpdate () {
 		diceVelocity = DiceScript.diceVelocity;
 	}
@@ -54,8 +49,11 @@ public class DiceCheckZoneScript : MonoBehaviour {
         {
 			diceLanded = false;
         }
+	}
 
-		Debug.Log(stepsToTake);
+	public static int StepsToTake()
+	{
+		return stepsToTake;
 	}
 
 	public bool DiceLanded()
