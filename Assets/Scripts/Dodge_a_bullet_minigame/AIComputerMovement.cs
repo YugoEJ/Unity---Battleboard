@@ -6,13 +6,15 @@ using UnityEngine;
 public class AIComputerMovement : MonoBehaviour
 {
 
-    public float movementSpeed = 20f;
-    public float rotationSpeed = 100f;
+    public float MovementSpeed = 60f;
+    //public float rotationSpeed = 100f;
 
     private bool isWandering = false;
     private bool isRotatingLeft = false;
     private bool isRotatingRight = false;
     private bool isWalking = false;
+
+    private int direction;
 
     Rigidbody rb;
     Animator animator;
@@ -32,39 +34,50 @@ public class AIComputerMovement : MonoBehaviour
             StartCoroutine(Wander());
         }
 
-        if(isRotatingRight == true)
+        if(direction == -1)
         {
-            transform.Rotate(transform.up * Time.deltaTime * rotationSpeed);
+            if (isRotatingRight == true)
+            {
+                rb.velocity = new Vector3(0, 0, 0);
+                transform.eulerAngles = new Vector2(0, -90); //flip the character on its x axis - to the right
+                //transform.position += new Vector3(-1, 0, 0) * Time.deltaTime * MovementSpeed;
+            }
         }
 
-        if(isRotatingLeft == true)
+        if(direction == 1)
         {
-            transform.Rotate(transform.up * Time.deltaTime * -rotationSpeed);
+            if (isRotatingLeft == true)
+            {
+                rb.velocity = new Vector3(0, 0, 0);
+                transform.eulerAngles = new Vector2(0, 90); //flip the character on its x axis - to the left
+                //transform.position += new Vector3(1, 0, 0) * Time.deltaTime * MovementSpeed;
+            }
         }
 
         if(isWalking == true)
         {
-            rb.AddForce(transform.forward * movementSpeed);
+            rb.AddForce(transform.forward * MovementSpeed);
             animator.SetBool("isRunning", true);
         }
 
         if(isWalking == false)
         {
             animator.SetBool("isRunning", false);
+            rb.velocity = new Vector3(0, 0, 0);
         }
     }
 
     IEnumerator Wander()
     {
-        int rotationTime = Random.Range(1, 3);
-        int rotateWait = Random.Range(1, 3);
-        int rotateDirection = Random.Range(1, 2);
-        int walkWait = Random.Range(1, 3);
+        int rotationTime = Random.Range(1, 1);
+        int rotateWait = Random.Range(1, 1);
+        int rotateDirection = Random.Range(1, 4);
+        int walkWait = Random.Range(1, 1);
         int walkTime = Random.Range(1, 3);
 
         isWandering = true;
 
-        yield return new WaitForSeconds(walkWait);
+        //yield return new WaitForSeconds(walkWait);
 
         isWalking = true;
 
@@ -79,6 +92,8 @@ public class AIComputerMovement : MonoBehaviour
             isRotatingLeft = true;
             yield return new WaitForSeconds(rotationTime);
             isRotatingLeft = false;
+            direction = 1;
+            
         }
 
         if (rotateDirection == 2)
@@ -86,8 +101,24 @@ public class AIComputerMovement : MonoBehaviour
             isRotatingRight = true;
             yield return new WaitForSeconds(rotationTime);
             isRotatingRight = false;
+            direction = -1;
         }
 
         isWandering = false;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "rightBound")
+        {
+            Debug.Log("touched RIGHT!");
+            //isWalking = false;
+        }
+
+        if (col.gameObject.tag == "leftBound")
+        {
+            Debug.Log("touched LEFT!");
+            //isWalking = false;
+        }
     }
 }
