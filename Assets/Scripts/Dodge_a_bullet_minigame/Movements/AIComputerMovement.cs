@@ -6,7 +6,7 @@ using UnityEngine;
 public class AIComputerMovement : MonoBehaviour
 {
 
-    public float MovementSpeed = 60f;
+    public float MovementSpeed = 30f;
     //public float rotationSpeed = 100f;
 
     private bool isWandering = false;
