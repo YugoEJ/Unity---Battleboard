@@ -26,6 +26,11 @@ public class Route : MonoBehaviour
                 st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
                 specialTiles[i] = st;
             }
+            else
+            {
+                st.InitEmptyTile();
+                specialTiles[i] = st;
+            }
         }
     }
 
@@ -47,6 +52,11 @@ public class Route : MonoBehaviour
     private SpecialTile GetSpecialTile(int index)
     {
         return specialTiles[index];
+    }
+
+    public SpecialTile[] GetSpecialTiles()
+    {
+        return specialTiles;
     }
 
         /*private void OnDrawGizmos()

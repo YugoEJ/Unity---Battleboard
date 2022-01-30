@@ -6,11 +6,11 @@ public class SpecialTile : MonoBehaviour
 {
     private GameObject specialTile;
 
-    private string tileEffect; // convert to Effect to try working with it
+    private string tileEffect;
     //private Sprite tileImage;
     //private AudioClip tileSound;
 
-    private string[] tileEffects = new string[] { "effect1", "effect2", "effect3", "effect4", "minigame1", "minigame2", "minigame3" };
+    private string[] tileEffects = new string[] { "effect" };
     //private Sprite[] tileImages;
     //private AudioClip[] tileSounds;
 
@@ -24,19 +24,22 @@ public class SpecialTile : MonoBehaviour
         RandomizeTile();
     }
 
+    public void InitEmptyTile()
+    {
+        specialTile = null;
+        tileEffect = "no effect";
+    }
+
     private void RandomizeTile()
     {
-        int randomEffectIndex = Random.Range(0, 7);
-        this.tileEffect = this.tileEffects[randomEffectIndex];
+        this.tileEffect = this.tileEffects[0];
 
         Debug.Log("Random tile effect: " + this.tileEffect);
     }
 
-    enum Effect // use this enum instead of tileEffects string array
+    public string GetTileEffect()
     {
-        Effect1,
-        Effect2,
-        Minigame1,
-        Minigame2
+        return this.tileEffect;
     }
+
 }

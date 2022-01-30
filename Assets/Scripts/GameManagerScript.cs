@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public DiceScript dice;
-    public DiceCheckZoneScript diceResult;
+    //public DiceCheckZoneScript diceResult;
 
     public Player player;
     public Player computer;
@@ -99,7 +99,7 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator NextTurnDelay()
     {
         PauseGame();
-        yield return new WaitForSeconds(3f + ((currentPlayer.StepsToTake() / 2) + 1));
+        yield return new WaitForSeconds(3 + ((currentPlayer.StepsToTake() / 2) + 2.5f));
 
         // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
 

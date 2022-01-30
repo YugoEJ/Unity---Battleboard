@@ -131,6 +131,10 @@ public class Player : MonoBehaviour
         // check if landed on final tile; announce winner
 
         // check if landed on a special tile; apply special effect / initiate minigame / etc.
+        if (IsOnSpecialTile())
+        {
+            Debug.Log(name + " landed on special tile (Player.cs)");
+        }
     }
 
     private void MoveToNextNode(Vector3 goalNode)
@@ -165,5 +169,10 @@ public class Player : MonoBehaviour
     public int StepsToTake()
     {
         return stepsToTake;
+    }
+
+    public bool IsOnSpecialTile()
+    {
+        return (currentRoute.GetSpecialTiles()[routePos].GetTileEffect() == "effect");
     }
 }
