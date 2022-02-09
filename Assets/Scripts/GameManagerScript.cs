@@ -16,9 +16,18 @@ public class GameManagerScript : MonoBehaviour
     private bool gameOver;
     private float speed = 40f;
 
+    public AudioSource BGM;
+    public AudioSource diceSFX;
+    public AudioSource stepOneSFX;
+    public AudioSource stepTwoSFX;
+    public AudioSource stepThreeSFX;
+    public AudioSource stepFourSFX;
+
     private void Start()
     {
         currentPlayer = FlipCoin();
+        diceSFX.Play();
+        BGM.Play();
     }
 
     private void Update()
@@ -49,8 +58,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
-        //RollDice();
 
+        diceSFX.Play();
         dice.Roll();
 
         StartCoroutine(MovePlayer(currentPlayer));
@@ -93,6 +102,8 @@ public class GameManagerScript : MonoBehaviour
 
             Vector3 finalPos = currentPlayer.currentRoute.tileList[currentPlayer.RoutePos()].position;
             Vector3 nextPos = currentPlayer.transform.position;
+
+            PlayStepSound();
 
             //--------first-------step--------------//
 
@@ -165,6 +176,7 @@ public class GameManagerScript : MonoBehaviour
                 yield return null;
             }
 
+
             yield return new WaitForSeconds(0.1f);
 
             stepsToTake--;
@@ -221,5 +233,25 @@ public class GameManagerScript : MonoBehaviour
     public void PauseGame()
     {
         gamePaused = !gamePaused;
+    }
+
+    public void PlayStepSound()
+    {
+        int sound = Random.Range(1, 5);
+
+        switch (sound)
+        {
+            case 1: stepOneSFX.Play();
+                break;
+
+            case 2: stepTwoSFX.Play();
+                break;
+
+            case 3: stepThreeSFX.Play();
+                break;
+
+            case 4: stepFourSFX.Play();
+                break;
+        }
     }
 }
