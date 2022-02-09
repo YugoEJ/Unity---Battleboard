@@ -82,7 +82,6 @@ public class GameManagerScript : MonoBehaviour
 
     public IEnumerator MovePlayer(Player currentPlayer)
     {
-
         yield return new WaitForSeconds(3f);
 
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
@@ -96,14 +95,14 @@ public class GameManagerScript : MonoBehaviour
 
         while (stepsToTake > 0 && (currentPlayer.RoutePos() != (currentPlayer.currentRoute.tileList.Count - 1)))
         {
+            PlayStepSound();
+
             Vector3 initialPos = currentPlayer.currentRoute.tileList[currentPlayer.RoutePos()].position;
 
             currentPlayer.SetRoutePos(currentPlayer.RoutePos() + 1);
 
             Vector3 finalPos = currentPlayer.currentRoute.tileList[currentPlayer.RoutePos()].position;
             Vector3 nextPos = currentPlayer.transform.position;
-
-            PlayStepSound();
 
             //--------first-------step--------------//
 
@@ -179,6 +178,7 @@ public class GameManagerScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
 
+            //StopStepSound();
             stepsToTake--;
         }
 
@@ -253,5 +253,13 @@ public class GameManagerScript : MonoBehaviour
             case 4: stepFourSFX.Play();
                 break;
         }
+    }
+
+    private void StopStepSound()
+    {
+        stepOneSFX.Stop();
+        stepTwoSFX.Stop();
+        stepThreeSFX.Stop();
+        stepFourSFX.Stop();
     }
 }
