@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Route currentRoute;
-    public float speed = 40f;
 
     private int stepsToTake;
     private int routePos;
@@ -26,124 +25,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator Move()
-    {
-        yield return new WaitForSeconds(3f);
-
-        stepsToTake = DiceCheckZoneScript.StepsToTake();
-        Debug.Log(name + " rolled: " + stepsToTake);
-
-        if (isMoving)
-        {
-            yield break;
-        }
-        isMoving = true;
-
-        while (stepsToTake > 0 && (routePos != (currentRoute.tileList.Count - 1)))
-        {
-            Vector3 initialPos = currentRoute.tileList[routePos].position;
-
-            routePos++;
-
-            Vector3 finalPos = currentRoute.tileList[routePos].position;
-            Vector3 nextPos = transform.position;
-            
-            //--------first-------step--------------//
-
-            // first step coordinates
-            if (IsEdgePos(routePos - 1))
-            {
-                nextPos.z = finalPos.z;
-            }
-            else
-            {
-                nextPos.x = finalPos.x;
-            }
-            nextPos.y = 8f;
-
-
-            // first step (only Y changes)
-            while (transform.position != nextPos)
-            {
-                MoveToNextNode(nextPos);
-                yield return null;
-            }
-
-            //---------second-------step-------------//
-
-            // second step coordinates
-            if (IsEdgePos(routePos - 1))
-            {
-                nextPos.z = finalPos.z;
-                nextPos.x = (finalPos.x + initialPos.x) / 2;
-            }
-            else
-            {
-                nextPos.x = finalPos.x;
-                nextPos.z = (finalPos.z + initialPos.z) / 2;
-            }
-            nextPos.y = 12f;
-
-            // second step (Y changes to slightly higher, and X/Z changes to ((initialPos.X/Z + finalPos.X/Z) / 2)
-            while (transform.position != nextPos)
-            {
-                MoveToNextNode(nextPos);
-                yield return null;
-            }
-            
-            //---------third-----step----------------//
-
-            // third step coordinates
-            nextPos.x = finalPos.x;
-            nextPos.y = 8f;
-            nextPos.z = finalPos.z;
-
-            // third step (Y changes to slightly lower, and X/Z changes to (finalPos.X/Z)
-            while (transform.position != nextPos)
-            {
-                MoveToNextNode(nextPos);
-                yield return null;
-            }
-
-            //---------final------step---------------//
-
-            // final step coordinates
-            nextPos.x = finalPos.x;
-            nextPos.y = 5.5f;
-            nextPos.z = finalPos.z;
-
-            // final step (Y changes to original height (5.5f))
-            while (transform.position != nextPos)
-            {
-                MoveToNextNode(nextPos);
-                yield return null;
-            }
-
-            yield return new WaitForSeconds(0.1f);
-
-            stepsToTake--;
-        }
-
-        isMoving = false;
-
-        yield return new WaitForSeconds(1.5f);
-
-        // check if landed on final tile; announce winner
-
-        // check if landed on a special tile; apply special effect / initiate minigame / etc.
-        if (IsOnSpecialTile())
-        {
-            Debug.Log(name + " landed on special tile (Player.cs)");
-        }
-    }
-
-    private void MoveToNextNode(Vector3 goalNode)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, goalNode, speed * Time.deltaTime);
-    }
-
     // IsEdgePos() checks (for moving animation) whether to calculate for X or Z axes
-    private bool IsEdgePos(int currNode)
+    public bool IsEdgePos(int currNode)
     {
         bool isEdgePos = false;
 
@@ -166,10 +49,25 @@ public class Player : MonoBehaviour
         return this.isMoving;
     }
 
+    public void SetMoving(bool moving)
+    {
+        this.isMoving = moving;
+    }
+
     public int StepsToTake()
     {
         return stepsToTake;
     }
+
+    public int RoutePos()
+    {
+        return this.routePos;
+    }
+
+    public void SetRoutePos(int newPos)
+    {
+        this.routePos = newPos;
+    } 
 
     public bool IsOnSpecialTile()
     {

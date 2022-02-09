@@ -14,8 +14,7 @@ public class GameManagerScript : MonoBehaviour
 
     private bool gamePaused;
     private bool gameOver;
-
-    //private int stepsToTake;
+    private float speed = 40f;
 
     private void Start()
     {
@@ -54,7 +53,7 @@ public class GameManagerScript : MonoBehaviour
 
         dice.Roll();
 
-        StartCoroutine(currentPlayer.Move());
+        StartCoroutine(MovePlayer(currentPlayer));
 
         // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
 
@@ -67,18 +66,120 @@ public class GameManagerScript : MonoBehaviour
         else
         {
             gameOver = true;
-            Debug.Log(this.currentPlayer.name + " wins!");
+            Debug.Log(currentPlayer.name + " wins!");
             return;
         }
     }
 
-    /*private void RollDice()
+    public IEnumerator MovePlayer(Player currentPlayer)
     {
-        stepsToTake = Random.Range(1, 7);
-        Debug.Log(currentPlayer.name + " rolled the dice on: " + stepsToTake);
-    }*/
+
+        yield return new WaitForSeconds(3f);
+
+        int stepsToTake = DiceCheckZoneScript.StepsToTake();
+        Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
+
+        if (currentPlayer.IsMoving())
+        {
+            yield break;
+        }
+        currentPlayer.SetMoving(true);
+
+        while (stepsToTake > 0 && (currentPlayer.RoutePos() != (currentPlayer.currentRoute.tileList.Count - 1)))
+        {
+            Vector3 initialPos = currentPlayer.currentRoute.tileList[currentPlayer.RoutePos()].position;
+
+            currentPlayer.SetRoutePos(currentPlayer.RoutePos() + 1);
+
+            Vector3 finalPos = currentPlayer.currentRoute.tileList[currentPlayer.RoutePos()].position;
+            Vector3 nextPos = currentPlayer.transform.position;
+
+            //--------first-------step--------------//
+
+            // first step coordinates
+            if (currentPlayer.IsEdgePos(currentPlayer.RoutePos() - 1))
+            {
+                nextPos.z = finalPos.z;
+            }
+            else
+            {
+                nextPos.x = finalPos.x;
+            }
+            nextPos.y = 8f;
 
 
+            // first step (only Y changes)
+            while (currentPlayer.transform.position != nextPos)
+            {
+                MoveToNextNode(nextPos);
+                yield return null;
+            }
+
+            //---------second-------step-------------//
+
+            // second step coordinates
+            if (currentPlayer.IsEdgePos(currentPlayer.RoutePos() - 1))
+            {
+                nextPos.z = finalPos.z;
+                nextPos.x = (finalPos.x + initialPos.x) / 2;
+            }
+            else
+            {
+                nextPos.x = finalPos.x;
+                nextPos.z = (finalPos.z + initialPos.z) / 2;
+            }
+            nextPos.y = 12f;
+
+            // second step (Y changes to slightly higher, and X/Z changes to ((initialPos.X/Z + finalPos.X/Z) / 2)
+            while (currentPlayer.transform.position != nextPos)
+            {
+                MoveToNextNode(nextPos);
+                yield return null;
+            }
+
+            //---------third-----step----------------//
+
+            // third step coordinates
+            nextPos.x = finalPos.x;
+            nextPos.y = 8f;
+            nextPos.z = finalPos.z;
+
+            // third step (Y changes to slightly lower, and X/Z changes to (finalPos.X/Z)
+            while (currentPlayer.transform.position != nextPos)
+            {
+                MoveToNextNode(nextPos);
+                yield return null;
+            }
+
+            //---------final------step---------------//
+
+            // final step coordinates
+            nextPos.x = finalPos.x;
+            nextPos.y = 5.5f;
+            nextPos.z = finalPos.z;
+
+            // final step (Y changes to original height (5.5f))
+            while (currentPlayer.transform.position != nextPos)
+            {
+                MoveToNextNode(nextPos);
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.1f);
+
+            stepsToTake--;
+        }
+
+        currentPlayer.SetMoving(false);
+
+        yield return new WaitForSeconds(1.5f);
+
+    }
+
+    private void MoveToNextNode(Vector3 goalNode)
+    {
+        currentPlayer.transform.position = Vector3.MoveTowards(currentPlayer.transform.position, goalNode, speed * Time.deltaTime);
+    }
 
     private Player FlipCoin()
     {
@@ -117,7 +218,7 @@ public class GameManagerScript : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
         gamePaused = !gamePaused;
     }
