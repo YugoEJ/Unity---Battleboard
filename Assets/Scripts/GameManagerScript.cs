@@ -111,7 +111,7 @@ public class GameManagerScript : MonoBehaviour
             // first step (only Y changes)
             while (currentPlayer.transform.position != nextPos)
             {
-                MoveToNextNode(nextPos);
+                MoveToNextNode(nextPos, currentPlayer);
                 yield return null;
             }
 
@@ -133,7 +133,7 @@ public class GameManagerScript : MonoBehaviour
             // second step (Y changes to slightly higher, and X/Z changes to ((initialPos.X/Z + finalPos.X/Z) / 2)
             while (currentPlayer.transform.position != nextPos)
             {
-                MoveToNextNode(nextPos);
+                MoveToNextNode(nextPos, currentPlayer);
                 yield return null;
             }
 
@@ -147,7 +147,7 @@ public class GameManagerScript : MonoBehaviour
             // third step (Y changes to slightly lower, and X/Z changes to (finalPos.X/Z)
             while (currentPlayer.transform.position != nextPos)
             {
-                MoveToNextNode(nextPos);
+                MoveToNextNode(nextPos, currentPlayer);
                 yield return null;
             }
 
@@ -161,7 +161,7 @@ public class GameManagerScript : MonoBehaviour
             // final step (Y changes to original height (5.5f))
             while (currentPlayer.transform.position != nextPos)
             {
-                MoveToNextNode(nextPos);
+                MoveToNextNode(nextPos, currentPlayer);
                 yield return null;
             }
 
@@ -176,7 +176,7 @@ public class GameManagerScript : MonoBehaviour
 
     }
 
-    private void MoveToNextNode(Vector3 goalNode)
+    private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
     {
         currentPlayer.transform.position = Vector3.MoveTowards(currentPlayer.transform.position, goalNode, speed * Time.deltaTime);
     }
