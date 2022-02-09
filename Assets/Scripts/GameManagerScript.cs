@@ -58,7 +58,6 @@ public class GameManagerScript : MonoBehaviour
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
-
         diceSFX.Play();
         dice.Roll();
 
@@ -69,6 +68,7 @@ public class GameManagerScript : MonoBehaviour
         if (currentPlayer.CanMove()) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
             this.currentPlayer = nextPlayer;
+            //Debug.Log(nextPlayer.name + "'s turn.");
 
             StartCoroutine(NextTurnDelay());
         }
@@ -178,7 +178,6 @@ public class GameManagerScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
 
-            //StopStepSound();
             stepsToTake--;
         }
 
@@ -203,6 +202,7 @@ public class GameManagerScript : MonoBehaviour
         int coin = Random.Range(0, 2);
 
         currentPlayer = players[coin];
+        //Debug.Log(currentPlayer.name + " goes first.");
 
         StartCoroutine(NextTurnDelay());
 
@@ -229,6 +229,8 @@ public class GameManagerScript : MonoBehaviour
         PauseGame();
         yield return new WaitForSeconds(2.5f);
     }
+
+
 
     public void PauseGame()
     {
