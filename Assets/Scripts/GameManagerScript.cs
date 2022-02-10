@@ -15,6 +15,8 @@ public class GameManagerScript : MonoBehaviour
     private bool gamePaused;
     private bool gameOver;
     private float speed = 40f;
+    private int diceResult;
+    private int totalDiceRolls;
 
     public AudioSource BGM;
     public AudioSource diceSFX;
@@ -25,6 +27,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
+        totalDiceRolls = 0;
         currentPlayer = FlipCoin();
         diceSFX.Play();
         BGM.Play();
@@ -65,8 +68,9 @@ public class GameManagerScript : MonoBehaviour
 
         // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
 
-        if (currentPlayer.CanMove()) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
+        if (currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake())) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
+
             this.currentPlayer = nextPlayer;
             //Debug.Log(nextPlayer.name + "'s turn.");
 
@@ -84,7 +88,10 @@ public class GameManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
+        // the variable stepsToTake constantly changes within the function, whereas diceResult changes frequently in order to update this.totalDiceRolls
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
+        this.diceResult = stepsToTake;
+
         Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
 
         if (currentPlayer.IsMoving())
@@ -93,6 +100,7 @@ public class GameManagerScript : MonoBehaviour
         }
         currentPlayer.SetMoving(true);
 
+        // loop for the moving animation
         while (stepsToTake > 0 && (currentPlayer.RoutePos() != (currentPlayer.currentRoute.tileList.Count - 1)))
         {
             PlayStepSound();
@@ -182,14 +190,35 @@ public class GameManagerScript : MonoBehaviour
         }
 
         currentPlayer.SetMoving(false);
+        this.totalDiceRolls += this.diceResult;
 
         yield return new WaitForSeconds(1.5f);
-
     }
 
     private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
     {
         currentPlayer.transform.position = Vector3.MoveTowards(currentPlayer.transform.position, goalNode, speed * Time.deltaTime);
+    }
+
+    private IEnumerator NextTurnDelay()
+    {
+        PauseGame();
+        yield return new WaitForSeconds(3);
+
+        // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
+
+        if (currentPlayer == player)
+        {
+            Debug.Log(currentPlayer.name + "'s turn.");
+        }
+        else
+        {
+            Debug.Log(currentPlayer.name + "'s turn.");
+            yield return new WaitForSeconds(1);
+        }
+
+        PauseGame();
+        yield return new WaitForSeconds(2.5f);
     }
 
     private Player FlipCoin()
@@ -208,29 +237,6 @@ public class GameManagerScript : MonoBehaviour
 
         return currentPlayer;
     }
-
-    private IEnumerator NextTurnDelay()
-    {
-        PauseGame();
-        yield return new WaitForSeconds(3 + ((currentPlayer.StepsToTake() / 2) + 2.5f));
-
-        // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
-
-        if (currentPlayer == player)
-        {
-            Debug.Log(currentPlayer.name + "'s turn.");
-        }
-        else
-        {
-            Debug.Log(currentPlayer.name + "'s turn.");
-            yield return new WaitForSeconds(1);
-        }
-
-        PauseGame();
-        yield return new WaitForSeconds(2.5f);
-    }
-
-
 
     public void PauseGame()
     {

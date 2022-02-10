@@ -6,14 +6,12 @@ public class Player : MonoBehaviour
 {
     public Route currentRoute;
 
-    private int stepsToTake;
+    //private int stepsToTake;
     private int routePos;
     private bool isMoving;
 
-    public bool CanMove()
+    public bool CanMove(int stepsToTake)
     {
-        stepsToTake = DiceCheckZoneScript.StepsToTake();
-
         if ((routePos + stepsToTake) < (currentRoute.tileList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
         {
             return true;
@@ -54,10 +52,10 @@ public class Player : MonoBehaviour
         this.isMoving = moving;
     }
 
-    public int StepsToTake()
+    /*public int StepsToTake()
     {
         return stepsToTake;
-    }
+    }*/
 
     public int RoutePos()
     {
