@@ -18,6 +18,8 @@ public class SpecialTile : MonoBehaviour
     {
         specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
         specialTile.name = "Special Tile";
+        var st = specialTile.GetComponent<Renderer>();
+        st.material.SetColor("_Color", Color.grey);
         specialTile.transform.position = new Vector3(posX, 6.25f, posZ);
         specialTile.transform.localScale = new Vector3(0.6466f, 0.6466f, 0.6466f);
 

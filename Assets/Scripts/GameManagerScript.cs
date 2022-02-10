@@ -27,6 +27,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
+        gamePaused = false;
         totalDiceRolls = 0;
         currentPlayer = FlipCoin();
         diceSFX.Play();
@@ -35,6 +36,11 @@ public class GameManagerScript : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
+        {
+            PauseGame();
+        }
+
         if (!gamePaused && !gameOver)
         {
             if (currentPlayer == player)
@@ -44,18 +50,13 @@ public class GameManagerScript : MonoBehaviour
                     Move(player, computer);
                 }
             }
-            else
+            else if (currentPlayer == computer)
             {
                 if (!computer.IsMoving() && !player.IsMoving())
                 {
                     Move(computer, player);
                 }
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
-        {
-            PauseGame();
         }
     }
 
