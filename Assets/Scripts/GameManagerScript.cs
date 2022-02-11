@@ -12,6 +12,7 @@ public class GameManagerScript : MonoBehaviour
     public Player computer;
     private Player currentPlayer;
 
+    public bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
     private float speed = 40f;
@@ -27,11 +28,14 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
+        duringMinigame = false;
         gamePaused = false;
         totalDiceRolls = 0;
-        currentPlayer = FlipCoin();
+        currentPlayer = player;
         diceSFX.Play();
         BGM.Play();
+
+        Debug.Log("Player goes first.");
     }
 
     private void Update()
@@ -41,7 +45,7 @@ public class GameManagerScript : MonoBehaviour
             PauseGame();
         }
 
-        if (!gamePaused && !gameOver)
+        if (!gamePaused && !gameOver && !duringMinigame)
         {
             if (currentPlayer == player)
             {
@@ -194,6 +198,8 @@ public class GameManagerScript : MonoBehaviour
         this.totalDiceRolls += this.diceResult;
 
         yield return new WaitForSeconds(1.5f);
+
+        Debug.Log("Testing end of PlayerMove()");
     }
 
     private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
@@ -222,7 +228,7 @@ public class GameManagerScript : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
     }
 
-    private Player FlipCoin()
+    /*private Player FlipCoin()
     {
         Player[] players = new Player[2];
         players[0] = player;
@@ -237,7 +243,7 @@ public class GameManagerScript : MonoBehaviour
         StartCoroutine(NextTurnDelay());
 
         return currentPlayer;
-    }
+    }*/
 
     public void PauseGame()
     {

@@ -7029,7 +7029,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fedc8984b4b12964c9af9022201837a8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9445,6 +9445,7 @@ MonoBehaviour:
   dice: {fileID: 358047570}
   player: {fileID: 404985681}
   computer: {fileID: 1794623886}
+  duringMinigame: 0
   BGM: {fileID: 1522196459}
   diceSFX: {fileID: 874686048}
   stepOneSFX: {fileID: 206889956}
@@ -12361,7 +12362,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 858a4f30d9a7b304cb0ce9272e7c9726, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.03
+  m_Volume: 0.22
   m_Pitch: 1
   Loop: 0
   Mute: 0
