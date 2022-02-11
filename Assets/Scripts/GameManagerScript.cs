@@ -211,7 +211,16 @@ public class GameManagerScript : MonoBehaviour
             if (this.totalDiceRolls >= this.stepsForMinigame)
             {
                 Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
+
                 this.stepsForMinigame += this.stepsForMinigame;
+                boardCam.enabled = false;
+                minigameCam.enabled = true;
+
+                // BEGIN MINIGAME
+
+                duringMinigame = true;
+                PauseGame();
+
             }
         }
     }
