@@ -31,7 +31,7 @@ public class GameManagerScript : MonoBehaviour
     private void Start()
     {
         duringMinigame = false;
-        stepsForMinigame = 20;
+        stepsForMinigame = 25;
         gamePaused = false;
         totalDiceRolls = 0;
         currentPlayer = player;
@@ -210,8 +210,8 @@ public class GameManagerScript : MonoBehaviour
 
             if (this.totalDiceRolls >= this.stepsForMinigame)
             {
-                Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " > " + this.stepsForMinigame);
-                this.stepsForMinigame += 20;
+                Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
+                this.stepsForMinigame += this.stepsForMinigame;
             }
         }
     }

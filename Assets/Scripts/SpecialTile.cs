@@ -10,7 +10,7 @@ public class SpecialTile : MonoBehaviour
     //private Sprite tileImage;
     //private AudioClip tileSound;
 
-    private string[] tileEffects = new string[] { "effect" };
+    private string[] tileEffects = new string[] { "powerup1", "powerup2", "punishment" };
     //private Sprite[] tileImages;
     //private AudioClip[] tileSounds;
 
@@ -18,8 +18,8 @@ public class SpecialTile : MonoBehaviour
     {
         specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
         specialTile.name = "Special Tile";
-        var st = specialTile.GetComponent<Renderer>();
-        st.material.SetColor("_Color", Color.grey);
+        //var st = specialTile.GetComponent<Renderer>();
+        //st.material.SetColor("_Color", Color.grey);
         specialTile.transform.position = new Vector3(posX, 6.25f, posZ);
         specialTile.transform.localScale = new Vector3(0.6466f, 0.6466f, 0.6466f);
 
@@ -34,7 +34,18 @@ public class SpecialTile : MonoBehaviour
 
     private void RandomizeTile()
     {
-        this.tileEffect = this.tileEffects[0];
+        var tile = specialTile.GetComponent<Renderer>();
+
+        if (Random.Range(1, 8) < 6)
+        {
+            this.tileEffect = this.tileEffects[Random.Range(0, 2)];
+            tile.material.SetColor("_Color", Color.green);
+        }
+        else
+        {
+            this.tileEffect = this.tileEffects[2];
+            tile.material.SetColor("_Color", Color.red);
+        }
 
         Debug.Log("Random tile effect: " + this.tileEffect);
     }
