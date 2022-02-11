@@ -1,23 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public DiceScript dice;
-    //public DiceCheckZoneScript diceResult;
+    public Camera boardCam;
+    public Camera minigameCam;
 
     public Player player;
     public Player computer;
     private Player currentPlayer;
 
-    public bool duringMinigame;
-    private bool gamePaused;
-    private bool gameOver;
-    private float speed = 40f;
-    private int diceResult;
-    private int totalDiceRolls;
+    public DiceScript dice;
 
     public AudioSource BGM;
     public AudioSource diceSFX;
@@ -26,14 +20,25 @@ public class GameManagerScript : MonoBehaviour
     public AudioSource stepThreeSFX;
     public AudioSource stepFourSFX;
 
+    private bool duringMinigame;
+    private bool gamePaused;
+    private bool gameOver;
+    private float speed = 40f;
+    private int diceResult;
+    private int totalDiceRolls;
+    private int stepsForMinigame;
+
     private void Start()
     {
         duringMinigame = false;
+        stepsForMinigame = 20;
         gamePaused = false;
         totalDiceRolls = 0;
         currentPlayer = player;
         diceSFX.Play();
         BGM.Play();
+
+        minigameCam.enabled = false;
 
         Debug.Log("Player goes first.");
     }
@@ -96,6 +101,7 @@ public class GameManagerScript : MonoBehaviour
         // the variable stepsToTake constantly changes within the function, whereas diceResult changes frequently in order to update this.totalDiceRolls
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
         this.diceResult = stepsToTake;
+        this.totalDiceRolls += stepsToTake;
 
         Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
 
@@ -195,13 +201,18 @@ public class GameManagerScript : MonoBehaviour
         }
 
         currentPlayer.SetMoving(false);
-        this.totalDiceRolls += this.diceResult;
 
         yield return new WaitForSeconds(1.5f);
 
-        if (currentPlayer.IsOnSpecialTile() && currentPlayer == player)
+        if (currentPlayer == computer)
         {
-            PauseGame();
+            Debug.Log("Current total dice rolls: " + this.totalDiceRolls);
+
+            if (this.totalDiceRolls >= this.stepsForMinigame)
+            {
+                Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " > " + this.stepsForMinigame);
+                this.stepsForMinigame += 20;
+            }
         }
     }
 
