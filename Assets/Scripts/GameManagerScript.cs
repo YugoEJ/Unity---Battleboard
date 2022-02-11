@@ -199,7 +199,10 @@ public class GameManagerScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        Debug.Log("Testing end of PlayerMove()");
+        if (currentPlayer.IsOnSpecialTile() && currentPlayer == player)
+        {
+            PauseGame();
+        }
     }
 
     private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
@@ -268,13 +271,5 @@ public class GameManagerScript : MonoBehaviour
             case 4: stepFourSFX.Play();
                 break;
         }
-    }
-
-    private void StopStepSound()
-    {
-        stepOneSFX.Stop();
-        stepTwoSFX.Stop();
-        stepThreeSFX.Stop();
-        stepFourSFX.Stop();
     }
 }
