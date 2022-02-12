@@ -82,9 +82,10 @@ public class GameManagerScript : MonoBehaviour
 
         StartCoroutine(MovePlayer(currentPlayer));
 
-        if (currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake())) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
+        // if current player CAN move, this means he hasn't reached the end, and the game will continue.
+        if (currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake())) 
         {
-            if (this.skipTurn)
+            if (this.skipTurn == true)
             {
                 this.currentPlayer = currentPlayer;
                 this.skipTurn = false;
@@ -99,6 +100,7 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
+            // if this statement is true, currentPlayer is the winner.
             this.gameOver = true;
             Debug.Log(currentPlayer.name + " wins!");
             return;
@@ -262,7 +264,7 @@ public class GameManagerScript : MonoBehaviour
 
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
             case "skip-turn":
-                if (this.skipTurn == true)
+                if (this.skipTurn && this.currentPlayer == computer)
                 {
                     this.skipTurn = false;
                 }
@@ -277,15 +279,15 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator NextTurnDelay()
     {
         PauseGame();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(3.5f);
 
-        if (currentPlayer == player)
+        if (this.currentPlayer == player)
         {
-            Debug.Log(currentPlayer.name + "'s turn.");
+            Debug.Log(this.currentPlayer.name + "'s turn.");
         }
         else
         {
-            Debug.Log(currentPlayer.name + "'s turn.");
+            Debug.Log(this.currentPlayer.name + "'s turn.");
             yield return new WaitForSeconds(1);
         }
 

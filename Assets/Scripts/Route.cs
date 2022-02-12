@@ -22,6 +22,7 @@ public class Route : MonoBehaviour
 
         for (int i = 0; i < 72; i++)
         {
+            // if on a new row, reset max special tiles back to 3
             if (i > tilesPerRow)
             {
                 maxSpecialTilesPerRow = 3;
