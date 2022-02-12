@@ -16,24 +16,35 @@ public class Route : MonoBehaviour
 
     private void RandomizeSpecialTiles()
     {
-        int tilesPerRow = 12;
+        int tilesPerRow = 11;
         int maxSpecialTilesPerRow = 3;
+        bool backToBack = false;
 
         for (int i = 0; i < 72; i++)
         {
             SpecialTile st = new SpecialTile();
             
-            if (Random.Range(0, 6) < 2 && i > 3 && i < 70)
+            if (Random.Range(0, 6) < 3 && i > 3 && i < 70)
             {
+                // this statement makes sure there are no back-to-back special tiles.
+                if (backToBack)
+                {
+                    backToBack = false;
+                    st.InitEmptyTile();
+                    specialTiles[i] = st;
+                    continue;
+                }
+
                 if (maxSpecialTilesPerRow != 0)
                 {
                     st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
                     specialTiles[i] = st;
 
                     maxSpecialTilesPerRow--;
+                    backToBack = true;
                 }
 
-                if (i + 1 >= tilesPerRow)
+                if (i > tilesPerRow)
                 {
                     maxSpecialTilesPerRow = 3;
                     tilesPerRow += tilesPerRow;

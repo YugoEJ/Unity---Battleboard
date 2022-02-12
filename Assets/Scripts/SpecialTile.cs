@@ -34,7 +34,7 @@ public class SpecialTile : MonoBehaviour
     {
         var tile = specialTile.GetComponent<Renderer>();
 
-        if (Random.Range(1, 5) <= 3)
+        if (Random.Range(1, 7) <= 4)
         {
             this.tileEffect = this.tileEffects[Random.Range(0, 2)];
             tile.material.SetColor("_Color", Color.green);
