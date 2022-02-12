@@ -25,8 +25,8 @@ public class SpecialTile : MonoBehaviour
     public void InitEmptyTile()
     {
         this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        this.specialTile.name = null;
         this.specialTile.SetActive(false);
-        //this.specialTile.name = "Empty Tile";
         this.tileEffect = "no-effect";
     }
 
@@ -34,7 +34,7 @@ public class SpecialTile : MonoBehaviour
     {
         var tile = specialTile.GetComponent<Renderer>();
 
-        if (Random.Range(1, 7) <= 4)
+        if (Random.Range(0, 7) <= 4)
         {
             this.tileEffect = this.tileEffects[Random.Range(0, 2)];
             tile.material.SetColor("_Color", Color.green);
