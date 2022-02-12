@@ -27,7 +27,7 @@ public class GameManagerScript : MonoBehaviour
     private bool gameOver;
     private bool skipTurn;
     private float speed = 40f;
-    private int diceResult;
+    //private int diceResult;
     private int totalDiceRolls;
     private int stepsForMinigame;
 
@@ -87,19 +87,24 @@ public class GameManagerScript : MonoBehaviour
 
         StartCoroutine(MovePlayer(currentPlayer));
 
-        // HERE we will check if the player landed on a special tile (with a method from within currentPlayer itself). if so, Pause the game and apply effect (buff/minigame/etc.), then Unpause.
-
         if (currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake())) // if current player CAN move, this means he hasn't reached the end, and the game can continue.
         {
-
-            this.currentPlayer = nextPlayer;
+            if (this.skipTurn)
+            {
+                this.currentPlayer = currentPlayer;
+                this.skipTurn = false;
+            }
+            else
+            {
+                this.currentPlayer = nextPlayer;
+            }
             //Debug.Log(nextPlayer.name + "'s turn.");
 
             StartCoroutine(NextTurnDelay());
         }
         else
         {
-            gameOver = true;
+            this.gameOver = true;
             Debug.Log(currentPlayer.name + " wins!");
             return;
         }
@@ -215,7 +220,6 @@ public class GameManagerScript : MonoBehaviour
 
         ApplySpecialTileEffect(currentPlayer);
 
-
         yield return new WaitForSeconds(1.5f);
 
         if (currentPlayer == computer)
@@ -262,7 +266,7 @@ public class GameManagerScript : MonoBehaviour
                 break;
 
             case "skip-turn":
-
+                this.skipTurn = true;
                 break;
 
         }
