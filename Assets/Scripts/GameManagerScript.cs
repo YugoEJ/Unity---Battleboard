@@ -27,7 +27,6 @@ public class GameManagerScript : MonoBehaviour
     private bool gameOver;
     private bool skipTurn;
     private float speed = 40f;
-    //private int diceResult;
     private int totalDiceRolls;
     private int stepsForMinigame;
 
@@ -57,27 +56,23 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(boardScene.name);
         }
 
-        if (!duringMinigame)
+        if (!gamePaused && !gameOver && !duringMinigame)
         {
-            if (!gamePaused && !gameOver && !duringMinigame)
+            if (currentPlayer == player)
             {
-                if (currentPlayer == player)
+                if (Input.GetKeyDown(KeyCode.Space) && !player.IsMoving() && !computer.IsMoving())
                 {
-                    if (Input.GetKeyDown(KeyCode.Space) && !player.IsMoving() && !computer.IsMoving())
-                    {
-                        Move(player, computer);
-                    }
+                    Move(player, computer);
                 }
-                else if (currentPlayer == computer)
+            }
+            else if (currentPlayer == computer)
+            {
+                if (!computer.IsMoving() && !player.IsMoving())
                 {
-                    if (!computer.IsMoving() && !player.IsMoving())
-                    {
-                        Move(computer, player);
-                    }
+                    Move(computer, player);
                 }
             }
         }
-
     }
 
     private void Move(Player currentPlayer, Player nextPlayer)
@@ -265,10 +260,17 @@ public class GameManagerScript : MonoBehaviour
                 currentPlayer.GiveSuperSpeed();
                 break;
 
+            // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
             case "skip-turn":
-                this.skipTurn = true;
+                if (this.skipTurn == true)
+                {
+                    this.skipTurn = false;
+                }
+                else
+                {
+                    this.skipTurn = true;
+                }
                 break;
-
         }
     }
 
