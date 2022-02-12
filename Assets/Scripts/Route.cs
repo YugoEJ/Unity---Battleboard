@@ -50,6 +50,12 @@ public class Route : MonoBehaviour
 
                         backToBack = true;
                     }
+                    else
+                    {
+                        st.InitEmptyTile();
+                        specialTiles[i] = st;
+                        backToBack = false;
+                    }
                 }
             }
             else
