@@ -62,10 +62,10 @@ public class Player : MonoBehaviour
         this.routePos = newPos;
     } 
 
-    public bool IsOnSpecialTile()
+    /*public bool IsOnSpecialTile()
     {
-        return (currentRoute.GetSpecialTiles()[routePos].GetTileEffect() == "effect");
-    }
+        return (this.currentRoute.GetSpecialTiles()[this.routePos].name == "Special Tile");
+    }*/
 
     public void AddExtraLife()
     {

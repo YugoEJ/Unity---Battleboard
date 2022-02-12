@@ -14,20 +14,20 @@ public class SpecialTile : MonoBehaviour
 
     public void InitializeTile(float posX, float posZ)
     {
-        specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        specialTile.name = "Special Tile";
-        //var st = specialTile.GetComponent<Renderer>();
-        //st.material.SetColor("_Color", Color.grey);
-        specialTile.transform.position = new Vector3(posX, 6.25f, posZ);
-        specialTile.transform.localScale = new Vector3(0.6466f, 0.6466f, 0.6466f);
+        this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        this.specialTile.name = "Special Tile";
+        this.specialTile.transform.position = new Vector3(posX, 6.25f, posZ);
+        this.specialTile.transform.localScale = new Vector3(0.6466f, 0.6466f, 0.6466f);
 
         RandomizeTile();
     }
 
     public void InitEmptyTile()
     {
-        specialTile = null;
-        tileEffect = "no effect";
+        this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        this.specialTile.SetActive(false);
+        this.specialTile.name = "Empty Tile";
+        this.tileEffect = "no-effect";
     }
 
     private void RandomizeTile()

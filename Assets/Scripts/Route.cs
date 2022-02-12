@@ -74,11 +74,6 @@ public class Route : MonoBehaviour
         }
     }
 
-    /*private SpecialTile GetSpecialTile(int index)
-    {
-        return specialTiles[index];
-    }*/
-
     public SpecialTile[] GetSpecialTiles()
     {
         return specialTiles;

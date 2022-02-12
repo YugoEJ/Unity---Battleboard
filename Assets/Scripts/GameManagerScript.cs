@@ -25,6 +25,7 @@ public class GameManagerScript : MonoBehaviour
     private bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
+    private bool skipTurn;
     private float speed = 40f;
     private int diceResult;
     private int totalDiceRolls;
@@ -110,7 +111,7 @@ public class GameManagerScript : MonoBehaviour
 
         // the variable stepsToTake constantly changes within the function, whereas diceResult changes frequently in order to update this.totalDiceRolls
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
-        this.diceResult = stepsToTake;
+        //this.diceResult = stepsToTake;
         this.totalDiceRolls += stepsToTake;
 
         Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
@@ -212,6 +213,7 @@ public class GameManagerScript : MonoBehaviour
 
         currentPlayer.SetMoving(false);
 
+        ApplySpecialTileEffect(currentPlayer);
 
 
         yield return new WaitForSeconds(1.5f);
@@ -241,12 +243,35 @@ public class GameManagerScript : MonoBehaviour
         currentPlayer.transform.position = Vector3.MoveTowards(currentPlayer.transform.position, goalNode, speed * Time.deltaTime);
     }
 
+    private void ApplySpecialTileEffect(Player currentPlayer)
+    {
+        string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
+        Debug.Log(specialEffect);
+
+        switch (specialEffect)
+        {
+            case "no-effect":
+                break;
+
+            case "extra-life":
+                currentPlayer.AddExtraLife();
+                break;
+
+            case "super-speed":
+                currentPlayer.GiveSuperSpeed();
+                break;
+
+            case "skip-turn":
+
+                break;
+
+        }
+    }
+
     private IEnumerator NextTurnDelay()
     {
         PauseGame();
         yield return new WaitForSeconds(3);
-
-        // CHECK IF CURRENT PLAYER LANDED ON SPECIAL TILE - IF SO, APPLY EFFECT.
 
         if (currentPlayer == player)
         {
