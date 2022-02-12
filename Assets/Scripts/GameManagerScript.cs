@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public Scene boardScene;
+
     public Camera boardCam;
     public Camera minigameCam;
 
@@ -30,9 +33,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void Start()
     {
-        duringMinigame = false;
+        boardScene = SceneManager.GetActiveScene();
         stepsForMinigame = 25;
-        gamePaused = false;
         totalDiceRolls = 0;
         currentPlayer = player;
         diceSFX.Play();
@@ -50,23 +52,32 @@ public class GameManagerScript : MonoBehaviour
             PauseGame();
         }
 
-        if (!gamePaused && !gameOver && !duringMinigame)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (currentPlayer == player)
+            SceneManager.LoadScene(boardScene.name);
+        }
+
+        if (!duringMinigame)
+        {
+            if (!gamePaused && !gameOver && !duringMinigame)
             {
-                if (Input.GetKeyDown(KeyCode.Space) && !player.IsMoving() && !computer.IsMoving())
+                if (currentPlayer == player)
                 {
-                    Move(player, computer);
+                    if (Input.GetKeyDown(KeyCode.Space) && !player.IsMoving() && !computer.IsMoving())
+                    {
+                        Move(player, computer);
+                    }
                 }
-            }
-            else if (currentPlayer == computer)
-            {
-                if (!computer.IsMoving() && !player.IsMoving())
+                else if (currentPlayer == computer)
                 {
-                    Move(computer, player);
+                    if (!computer.IsMoving() && !player.IsMoving())
+                    {
+                        Move(computer, player);
+                    }
                 }
             }
         }
+
     }
 
     private void Move(Player currentPlayer, Player nextPlayer)
@@ -208,7 +219,8 @@ public class GameManagerScript : MonoBehaviour
         {
             Debug.Log("Current total dice rolls: " + this.totalDiceRolls);
 
-            if (this.totalDiceRolls >= this.stepsForMinigame)
+            // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
+            /*if (this.totalDiceRolls >= this.stepsForMinigame)
             {
                 Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
 
@@ -219,9 +231,7 @@ public class GameManagerScript : MonoBehaviour
                 // BEGIN MINIGAME
 
                 duringMinigame = true;
-                PauseGame();
-
-            }
+            }*/
         }
     }
 

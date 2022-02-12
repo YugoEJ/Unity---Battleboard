@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     public bool CanMove(int stepsToTake)
     {
-        if ((routePos + stepsToTake) < (currentRoute.tileList.Count - 1))                // if the amount of steps to take does not overflow, move player piece
+        if ((routePos + stepsToTake) < (currentRoute.tileList.Count - 1))
         {
             return true;
         }
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // IsEdgePos() checks (for moving animation) whether to calculate for X or Z axes
+    // IsEdgePos() checks (for moving animation) whether to calculate for X or Z axies
     public bool IsEdgePos(int currNode)
     {
         bool isEdgePos = false;
