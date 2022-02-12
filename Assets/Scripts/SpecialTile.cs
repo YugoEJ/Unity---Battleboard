@@ -26,7 +26,7 @@ public class SpecialTile : MonoBehaviour
     {
         this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
         this.specialTile.SetActive(false);
-        this.specialTile.name = "Empty Tile";
+        //this.specialTile.name = "Empty Tile";
         this.tileEffect = "no-effect";
     }
 

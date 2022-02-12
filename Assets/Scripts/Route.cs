@@ -22,39 +22,41 @@ public class Route : MonoBehaviour
 
         for (int i = 0; i < 72; i++)
         {
+            if (i > tilesPerRow)
+            {
+                maxSpecialTilesPerRow = 3;
+                tilesPerRow += 12;
+            }
+
             SpecialTile st = new SpecialTile();
             
             if (Random.Range(0, 6) < 3 && i > 3 && i < 70)
             {
                 // this statement makes sure there are no back-to-back special tiles.
-                if (backToBack)
+                if (backToBack == true)
                 {
-                    backToBack = false;
                     st.InitEmptyTile();
                     specialTiles[i] = st;
-                    continue;
+                    backToBack = false;
                 }
-
-                if (maxSpecialTilesPerRow != 0)
+                else
                 {
-                    st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
-                    specialTiles[i] = st;
+                    if (maxSpecialTilesPerRow != 0)
+                    {
+                        st.InitializeTile(tileList[i].position.x, tileList[i].position.z);
+                        specialTiles[i] = st;
 
-                    maxSpecialTilesPerRow--;
-                    backToBack = true;
+                        maxSpecialTilesPerRow--;
+
+                        backToBack = true;
+                    }
                 }
-
-                if (i > tilesPerRow)
-                {
-                    maxSpecialTilesPerRow = 3;
-                    tilesPerRow += tilesPerRow;
-                }
-
             }
             else
             {
                 st.InitEmptyTile();
                 specialTiles[i] = st;
+                backToBack = false;
             }
         }
     }
