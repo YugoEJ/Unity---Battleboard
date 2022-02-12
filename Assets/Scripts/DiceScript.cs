@@ -6,7 +6,6 @@ public class DiceScript : MonoBehaviour {
 
 	Rigidbody rb;
 	public static Vector3 diceVelocity;
-	private bool diceLanded;
 
 	void Start () {
 		rb = GetComponent<Rigidbody> ();

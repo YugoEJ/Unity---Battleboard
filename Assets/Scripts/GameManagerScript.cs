@@ -212,6 +212,8 @@ public class GameManagerScript : MonoBehaviour
 
         currentPlayer.SetMoving(false);
 
+
+
         yield return new WaitForSeconds(1.5f);
 
         if (currentPlayer == computer)

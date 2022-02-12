@@ -4,9 +4,11 @@ public class Player : MonoBehaviour
 {
     public Route currentRoute;
 
-    //private int stepsToTake;
     private int routePos;
     private bool isMoving;
+
+    private int extraLife;
+    private bool superSpeed;
 
     public bool CanMove(int stepsToTake)
     {
@@ -50,11 +52,6 @@ public class Player : MonoBehaviour
         this.isMoving = moving;
     }
 
-    /*public int StepsToTake()
-    {
-        return stepsToTake;
-    }*/
-
     public int RoutePos()
     {
         return this.routePos;
@@ -68,5 +65,31 @@ public class Player : MonoBehaviour
     public bool IsOnSpecialTile()
     {
         return (currentRoute.GetSpecialTiles()[routePos].GetTileEffect() == "effect");
+    }
+
+    public void AddExtraLife()
+    {
+        if (this.extraLife < 3)
+        {
+            this.extraLife++;
+        }
+    }
+
+    public void RemoveExtraLife()
+    {
+        if (this.extraLife < 0)
+        {
+            this.extraLife--;
+        }
+    }
+
+    public void GiveSuperSpeed()
+    {
+        this.superSpeed = true;
+    }
+
+    public void RemoveSuperSpeed()
+    {
+        this.superSpeed = false;
     }
 }

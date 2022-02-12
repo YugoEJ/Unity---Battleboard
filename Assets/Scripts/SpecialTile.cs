@@ -8,7 +8,7 @@ public class SpecialTile : MonoBehaviour
     //private Sprite tileImage;
     //private AudioClip tileSound;
 
-    private string[] tileEffects = new string[] { "powerup1", "powerup2", "punishment" };
+    private string[] tileEffects = new string[] { "extra-life", "super-speed", "skip-turn" };
     //private Sprite[] tileImages;
     //private AudioClip[] tileSounds;
 
@@ -34,7 +34,7 @@ public class SpecialTile : MonoBehaviour
     {
         var tile = specialTile.GetComponent<Renderer>();
 
-        if (Random.Range(1, 11) < 8)
+        if (Random.Range(1, 5) <= 3)
         {
             this.tileEffect = this.tileEffects[Random.Range(0, 2)];
             tile.material.SetColor("_Color", Color.green);
