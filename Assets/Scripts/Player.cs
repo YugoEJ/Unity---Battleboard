@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 
     private int extraLife;
     private bool superSpeed;
+    private bool wonMinigame;
 
     public bool CanMove(int stepsToTake)
     {
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
 
     public void RemoveExtraLife()
     {
-        if (this.extraLife < 0)
+        if (this.extraLife > 0)
         {
             this.extraLife--;
         }
@@ -91,5 +92,20 @@ public class Player : MonoBehaviour
     public void RemoveSuperSpeed()
     {
         this.superSpeed = false;
+    }
+
+    public bool IsMinigameWinner()
+    {
+        return this.wonMinigame;
+    }
+
+    public void SetMinigameWinner()
+    {
+        this.wonMinigame = true;
+    }
+
+    public void RemoveMinigameWinner()
+    {
+        this.wonMinigame = false;
     }
 }
