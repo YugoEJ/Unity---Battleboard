@@ -244,7 +244,7 @@ public class GameManagerScript : MonoBehaviour
 
         Debug.Log("Current total dice rolls: " + this.totalDiceRolls);
 
-        ApplySpecialTileEffect(currentPlayer);
+        ApplySpecialTileEffect(currentPlayer, false);
 
         if (currentPlayer == this.computer)
         {
@@ -263,6 +263,8 @@ public class GameManagerScript : MonoBehaviour
                 this.duringMinigame = true;
             }
         }
+
+        Debug.Log(this.currentPlayer.name + "'s turn.");
     }
 
     private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
@@ -375,7 +377,7 @@ public class GameManagerScript : MonoBehaviour
 
         Debug.Log(winningPlayer.name + " has stopped moving after winning the Minigame.");
 
-        ApplySpecialTileEffect(this.currentPlayer);
+        ApplySpecialTileEffect(winningPlayer, true);
 
         this.currentPlayer = winningPlayer;
 
@@ -384,7 +386,7 @@ public class GameManagerScript : MonoBehaviour
         StartCoroutine(NextTurnDelay());
     }
 
-    private void ApplySpecialTileEffect(Player currentPlayer)
+    private void ApplySpecialTileEffect(Player currentPlayer, bool afterMinigame)
     {
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
         Debug.Log(specialEffect);
@@ -404,13 +406,16 @@ public class GameManagerScript : MonoBehaviour
 
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
             case "skip-turn":
-                if (this.skipTurn && this.currentPlayer == computer)
+                if (!afterMinigame)
                 {
-                    this.skipTurn = false;
-                }
-                else
-                {
-                    this.skipTurn = true;
+                    if (this.skipTurn && this.currentPlayer == computer)
+                    {
+                        this.skipTurn = false;
+                    }
+                    else
+                    {
+                        this.skipTurn = true;
+                    }
                 }
                 break;
         }
@@ -420,16 +425,6 @@ public class GameManagerScript : MonoBehaviour
     {
         PauseGame();
         yield return new WaitForSeconds(3.75f);
-
-        if (this.currentPlayer == this.player)
-        {
-            Debug.Log(this.currentPlayer.name + "'s turn.");
-        }
-        else
-        {
-            Debug.Log(this.currentPlayer.name + "'s turn.");
-            yield return new WaitForSeconds(1);
-        }
 
         PauseGame();
         yield return new WaitForSeconds(2.5f);
