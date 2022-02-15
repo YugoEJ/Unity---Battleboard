@@ -25,7 +25,6 @@ public class GameManagerScript : MonoBehaviour
     private bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
-    private bool skipTurn;
     private float speed = 40f;
     private int totalDiceRolls;
     private int stepsForMinigame;
@@ -80,6 +79,8 @@ public class GameManagerScript : MonoBehaviour
                     computer.RemoveMinigameWinner();
                     StartCoroutine(MoveWinningPlayer(computer, 6));
                 }
+
+                currentPlayer = player;
             } 
             else
             {
@@ -111,10 +112,10 @@ public class GameManagerScript : MonoBehaviour
         // if current player CAN move, this means he hasn't reached the end, and the game will continue.
         if (currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake()) && !this.duringMinigame) 
         {
-            if (this.skipTurn == true)
+            if (nextPlayer.IsSkippingTurn())
             {
                 this.currentPlayer = currentPlayer;
-                this.skipTurn = false;
+                nextPlayer.RemoveSkipTurn();
             }
             else
             {
@@ -379,7 +380,7 @@ public class GameManagerScript : MonoBehaviour
 
         ApplySpecialTileEffect(winningPlayer, true);
 
-        this.currentPlayer = winningPlayer;
+        //this.currentPlayer = this.player;
 
         //Debug.Log(nextPlayer.name + "'s turn.");
 
@@ -408,13 +409,13 @@ public class GameManagerScript : MonoBehaviour
             case "skip-turn":
                 if (!afterMinigame)
                 {
-                    if (this.skipTurn && this.currentPlayer == computer)
+                    if (this.player.IsSkippingTurn() && this.currentPlayer == this.computer)
                     {
-                        this.skipTurn = false;
+                        this.computer.RemoveSkipTurn();
                     }
                     else
                     {
-                        this.skipTurn = true;
+                        currentPlayer.SetSkipTurn();
                     }
                 }
                 break;

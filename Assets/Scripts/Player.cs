@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private int extraLife;
     private bool superSpeed;
     private bool wonMinigame;
+    private bool skipTurn;
 
     public bool CanMove(int stepsToTake)
     {
@@ -107,5 +108,20 @@ public class Player : MonoBehaviour
     public void RemoveMinigameWinner()
     {
         this.wonMinigame = false;
+    }
+
+    public bool IsSkippingTurn()
+    {
+        return this.skipTurn;
+    }
+
+    public void SetSkipTurn()
+    {
+        this.skipTurn = true;
+    }
+
+    public void RemoveSkipTurn()
+    {
+        this.skipTurn = false;
     }
 }
