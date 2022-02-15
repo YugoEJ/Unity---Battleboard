@@ -25,9 +25,10 @@ public class GameManagerScript : MonoBehaviour
     private bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
-    private float speed = 40f;
     private int totalDiceRolls;
     private int stepsForMinigame;
+    private int stepsForMinigameIncrement = 25;
+    private float speed = 40f;
 
     private void Start()
     {
@@ -45,7 +46,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game.
+        // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game for debugging.
+        if (Input.GetKeyDown(KeyCode.P)) 
         {
             PauseGame();
         }
@@ -55,10 +57,10 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(boardScene.name);
         }
 
+        // simulating a Minigame that Player won, and Computer lost.
         if (Input.GetKeyDown(KeyCode.F))
         {
             player.SetMinigameWinner();
-            computer.SetMinigameWinner();
             minigameCam.enabled = false;
             boardCam.enabled = true;
             duringMinigame = false;
@@ -121,17 +123,20 @@ public class GameManagerScript : MonoBehaviour
             {
                 this.currentPlayer = nextPlayer;
             }
-            //Debug.Log(nextPlayer.name + "'s turn.");
 
-            StartCoroutine(NextTurnDelay());
-            
+            StartCoroutine(DiceRollDelay());
+        }
+        else if (!currentPlayer.CanMove(DiceCheckZoneScript.StepsToTake()))
+        {
+            // if this statement is true, currentPlayer is the winner. this statement should be considered in other Move methods as well (MoveWinningPlayer()).
+            this.gameOver = true;
+            Debug.Log(currentPlayer.name + " wins!");
+
+            return;
         }
         else
         {
-            // if this statement is true, currentPlayer is the winner.
-            this.gameOver = true;
-            Debug.Log(currentPlayer.name + " wins!");
-            return;
+            this.currentPlayer = nextPlayer;
         }
     }
 
@@ -139,9 +144,7 @@ public class GameManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        // the variable stepsToTake constantly changes within the function, whereas diceResult changes frequently in order to update this.totalDiceRolls
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
-        //this.diceResult = stepsToTake;
         this.totalDiceRolls += stepsToTake;
 
         Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
@@ -247,22 +250,20 @@ public class GameManagerScript : MonoBehaviour
 
         ApplySpecialTileEffect(currentPlayer, false);
 
-        if (currentPlayer == this.computer)
+        // THIS IS WHERE WE MAKE A STATEMENT THAT PAUSES THE GAME ONCE THE MINIGAME SHOULD BEGIN, AS DEMONSTRATED BELOW THIS COMMENT
+
+        // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
+        if (currentPlayer == this.computer && this.totalDiceRolls >= this.stepsForMinigame)
         {
+            Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
 
-            // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
-            if (this.totalDiceRolls >= this.stepsForMinigame)
-            {
-                Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
+            this.stepsForMinigame += this.stepsForMinigameIncrement;
+            this.boardCam.enabled = false;
+            this.minigameCam.enabled = true;
 
-                this.stepsForMinigame += this.stepsForMinigame;
-                this.boardCam.enabled = false;
-                this.minigameCam.enabled = true;
+            // BEGIN MINIGAME
 
-                // BEGIN MINIGAME
-
-                this.duringMinigame = true;
-            }
+            this.duringMinigame = true;
         }
 
         Debug.Log(this.currentPlayer.name + "'s turn.");
@@ -276,7 +277,6 @@ public class GameManagerScript : MonoBehaviour
     private IEnumerator MoveWinningPlayer(Player winningPlayer, int stepsToTake)
     {
         yield return new WaitForSeconds(1f);
-
         Debug.Log(winningPlayer.name + " won the Minigame and will now move : " + stepsToTake + " steps.");
 
         if (winningPlayer.IsMoving())
@@ -368,29 +368,20 @@ public class GameManagerScript : MonoBehaviour
                 yield return null;
             }
 
-
             yield return new WaitForSeconds(0.1f);
 
             stepsToTake--;
         }
 
         winningPlayer.SetMoving(false);
-
-        Debug.Log(winningPlayer.name + " has stopped moving after winning the Minigame.");
-
         ApplySpecialTileEffect(winningPlayer, true);
-
-        //this.currentPlayer = this.player;
-
-        //Debug.Log(nextPlayer.name + "'s turn.");
-
-        StartCoroutine(NextTurnDelay());
     }
 
+    // the bool in this method checks if "skip-turn" should be applied (if the winner of the Minigame lands on a skip-turn tile, it will be nullified).
     private void ApplySpecialTileEffect(Player currentPlayer, bool afterMinigame)
     {
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
-        Debug.Log(specialEffect);
+        Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect.ToString());
 
         switch (specialEffect)
         {
@@ -422,31 +413,12 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    private IEnumerator NextTurnDelay()
+    private IEnumerator DiceRollDelay()
     {
         PauseGame();
-        yield return new WaitForSeconds(3.75f);
-
+        yield return new WaitForSeconds(4f);
         PauseGame();
-        yield return new WaitForSeconds(2.5f);
     }
-
-    /*private Player FlipCoin()
-    {
-        Player[] players = new Player[2];
-        players[0] = player;
-        players[1] = computer;
-
-        Debug.Log("Flipping coin to decide who goes first!");
-        int coin = Random.Range(0, 2);
-
-        currentPlayer = players[coin];
-        //Debug.Log(currentPlayer.name + " goes first.");
-
-        StartCoroutine(NextTurnDelay());
-
-        return currentPlayer;
-    }*/
 
     public void PauseGame()
     {
