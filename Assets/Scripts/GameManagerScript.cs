@@ -25,16 +25,16 @@ public class GameManagerScript : MonoBehaviour
     private bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
-    private int totalDiceRolls;
-    private int stepsForMinigame;
-    private int stepsForMinigameIncrement = 25;
+    private int currentTotalDiceRolls;
+    private int requiredDiceRollsForMinigame;
+    private int requiredDiceRollsIncrement = 25;
     private float speed = 40f;
 
     private void Start()
     {
         boardScene = SceneManager.GetActiveScene();
-        stepsForMinigame = 25;
-        totalDiceRolls = 0;
+        requiredDiceRollsForMinigame = 25;
+        currentTotalDiceRolls = 0;
         currentPlayer = player;
         diceSFX.Play();
         BGM.Play();
@@ -145,7 +145,7 @@ public class GameManagerScript : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
-        this.totalDiceRolls += stepsToTake;
+        this.currentTotalDiceRolls += stepsToTake;
 
         Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
 
@@ -246,18 +246,18 @@ public class GameManagerScript : MonoBehaviour
 
         currentPlayer.SetMoving(false);
 
-        Debug.Log("Current total dice rolls: " + this.totalDiceRolls);
+        Debug.Log("Current total dice rolls: " + this.currentTotalDiceRolls);
 
         ApplySpecialTileEffect(currentPlayer, false);
 
         // THIS IS WHERE WE MAKE A STATEMENT THAT PAUSES THE GAME ONCE THE MINIGAME SHOULD BEGIN, AS DEMONSTRATED BELOW THIS COMMENT
 
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
-        if (currentPlayer == this.computer && this.totalDiceRolls >= this.stepsForMinigame)
+        if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame)
         {
-            Debug.Log("Minigame should now begin because " + this.totalDiceRolls + " >= " + this.stepsForMinigame);
+            Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
-            this.stepsForMinigame += this.stepsForMinigameIncrement;
+            this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
             this.boardCam.enabled = false;
             this.minigameCam.enabled = true;
 
