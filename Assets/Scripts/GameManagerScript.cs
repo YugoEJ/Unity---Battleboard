@@ -15,6 +15,8 @@ public class GameManagerScript : MonoBehaviour
 
     public DiceScript dice;
 
+    public UIManagerScript boardUI;
+
     public AudioSource BGM;
     public AudioSource diceSFX;
     public AudioSource stepOneSFX;
@@ -33,6 +35,7 @@ public class GameManagerScript : MonoBehaviour
     private void Start()
     {
         boardScene = SceneManager.GetActiveScene();
+        boardUI.TotalDiceRollsText.text += " " + 0;
         requiredDiceRollsForMinigame = 25;
         currentTotalDiceRolls = 0;
         currentPlayer = player;
@@ -40,8 +43,6 @@ public class GameManagerScript : MonoBehaviour
         BGM.Play();
 
         minigameCam.enabled = false;
-
-        Debug.Log("Player goes first.");
     }
 
     private void Update()
@@ -63,6 +64,7 @@ public class GameManagerScript : MonoBehaviour
             player.SetMinigameWinner();
             minigameCam.enabled = false;
             boardCam.enabled = true;
+            boardUI.ShowAllTexts();
             duringMinigame = false;
         }
 
@@ -246,11 +248,15 @@ public class GameManagerScript : MonoBehaviour
 
         currentPlayer.SetMoving(false);
 
-        Debug.Log("Current total dice rolls: " + this.currentTotalDiceRolls);
+        //Debug.Log("Current total dice rolls: " + this.currentTotalDiceRolls);
 
         ApplySpecialTileEffect(currentPlayer, false);
 
         // THIS IS WHERE WE MAKE A STATEMENT THAT PAUSES THE GAME ONCE THE MINIGAME SHOULD BEGIN, AS DEMONSTRATED BELOW THIS COMMENT
+        if (currentPlayer == this.computer)
+        {
+            boardUI.TotalDiceRollsText.text = "Total Dice Rolls: " + this.currentTotalDiceRolls;
+        }
 
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
         if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame)
@@ -258,6 +264,7 @@ public class GameManagerScript : MonoBehaviour
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
+            this.boardUI.HideAllTexts();
             this.boardCam.enabled = false;
             this.minigameCam.enabled = true;
 
@@ -266,6 +273,14 @@ public class GameManagerScript : MonoBehaviour
             this.duringMinigame = true;
         }
 
+        if (this.currentPlayer == player)
+        {
+            boardUI.SetPlayerTurn();
+        }
+        else
+        {
+            boardUI.SetPCTurn();
+        }
         Debug.Log(this.currentPlayer.name + "'s turn.");
     }
 
