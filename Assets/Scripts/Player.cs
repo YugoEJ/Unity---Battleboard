@@ -64,10 +64,10 @@ public class Player : MonoBehaviour
         this.routePos = newPos;
     } 
 
-    /*public bool IsOnSpecialTile()
+    public int GetExtraLife()
     {
-        return (this.currentRoute.GetSpecialTiles()[this.routePos].name == "Special Tile");
-    }*/
+        return this.extraLife;
+    }
 
     public void AddExtraLife()
     {
@@ -82,6 +82,18 @@ public class Player : MonoBehaviour
         if (this.extraLife > 0)
         {
             this.extraLife--;
+        }
+    }
+
+    public string GetSuperSpeed()
+    {
+        if (this.superSpeed)
+        {
+            return "On";
+        }
+        else
+        {
+            return "Off";
         }
     }
 

@@ -22,7 +22,7 @@ public class SpecialTile : MonoBehaviour
         this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
         this.specialTile.SetActive(false);
         this.specialTile.name = "";
-        this.tileEffect = "";
+        this.tileEffect = "None";
     }
 
     private void RandomizeTile()

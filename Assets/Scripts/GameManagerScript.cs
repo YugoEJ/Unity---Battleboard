@@ -35,10 +35,21 @@ public class GameManagerScript : MonoBehaviour
     private void Start()
     {
         boardScene = SceneManager.GetActiveScene();
-        boardUI.TotalDiceRollsText.text += " " + 0;
+
         requiredDiceRollsForMinigame = 25;
         currentTotalDiceRolls = 0;
+
         currentPlayer = player;
+
+        boardUI.TotalDiceRollsText.text += " " + 0;
+        boardUI.DiceResultText.text = "" + 0;
+        boardUI.SpecialEffectText.text += " None";
+        boardUI.PlayerExtraLifeText.text += " 0";
+        boardUI.PlayerSuperSpeedText.text += " Off";
+        boardUI.PCExtraLifeText.text += " 0";
+        boardUI.PCSuperSpeedText.text += " Off";
+        boardUI.NextMinigameText.text += " " + requiredDiceRollsForMinigame + " Rolls";
+
         diceSFX.Play();
         BGM.Play();
 
@@ -149,7 +160,7 @@ public class GameManagerScript : MonoBehaviour
         int stepsToTake = DiceCheckZoneScript.StepsToTake();
         this.currentTotalDiceRolls += stepsToTake;
 
-        Debug.Log(currentPlayer.name + " rolled: " + stepsToTake);
+        this.boardUI.DiceResultText.text = "" + stepsToTake;
 
         if (currentPlayer.IsMoving())
         {
@@ -261,13 +272,13 @@ public class GameManagerScript : MonoBehaviour
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
         if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame)
         {
-            StartCoroutine(MinigameDelay());
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
-            this.boardUI.HideAllTexts();
-            this.boardCam.enabled = false;
-            this.minigameCam.enabled = true;
+            StartCoroutine(MinigameDelay());
+            //this.boardUI.HideAllTexts();
+            //this.boardCam.enabled = false;
+            //this.minigameCam.enabled = true;
 
             // BEGIN MINIGAME
 
@@ -398,21 +409,39 @@ public class GameManagerScript : MonoBehaviour
     {
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
         
-        boardUI.SpecialEffectText.text = "Special Effect: " + specialEffect;
+        boardUI.SpecialEffectText.text = "Effect: " + specialEffect;
 
         Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect);
 
         switch (specialEffect)
         {
-            case "":
+            case "None":
                 break;
 
             case "Extra-Life":
                 currentPlayer.AddExtraLife();
+
+                if (currentPlayer == this.player)
+                {
+                    this.boardUI.PlayerExtraLifeText.text = "Extra-Life: " + currentPlayer.GetExtraLife();
+                }
+                else
+                {
+                    this.boardUI.PCExtraLifeText.text = "Extra-Life: " + currentPlayer.GetExtraLife();
+                }
                 break;
 
             case "Super-Speed":
                 currentPlayer.GiveSuperSpeed();
+
+                if (currentPlayer == this.player)
+                {
+                    this.boardUI.PlayerSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeed();
+                }
+                else
+                {
+                    this.boardUI.PCSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeed();
+                }
                 break;
 
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
@@ -434,9 +463,11 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator MinigameDelay()
     {
-        PauseGame();
         yield return new WaitForSeconds(2f);
-        PauseGame();
+        this.boardUI.HideAllTexts();
+        this.boardCam.enabled = false;
+        this.minigameCam.enabled = true;
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator DiceRollDelay()

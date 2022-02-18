@@ -9,6 +9,7 @@ public class UIManagerScript : MonoBehaviour
     public Text TurnDividerText;
     public Text DiceResultText;
     public Text TotalDiceRollsText;
+    public Text NextMinigameText;
     public Text SpecialEffectText;
     public Text PCExtraLifeText;
     public Text PCSuperSpeedText;
@@ -20,8 +21,10 @@ public class UIManagerScript : MonoBehaviour
     public void ShowAllTexts()
     {
         this.TurnText.enabled = true;
+        this.TurnDividerText.enabled = true;
         this.DiceResultText.enabled = true;
         this.TotalDiceRollsText.enabled = true;
+        this.NextMinigameText.enabled = true;
         this.SpecialEffectText.enabled = true;
         this.PCExtraLifeText.enabled = true;
         this.PCSuperSpeedText.enabled = true;
@@ -35,6 +38,7 @@ public class UIManagerScript : MonoBehaviour
         this.TurnDividerText.enabled = false;
         this.DiceResultText.enabled = false;
         this.TotalDiceRollsText.enabled = false;
+        this.NextMinigameText.enabled = false;
         this.SpecialEffectText.enabled = false;
         this.PCExtraLifeText.enabled = false;
         this.PCSuperSpeedText.enabled = false;
