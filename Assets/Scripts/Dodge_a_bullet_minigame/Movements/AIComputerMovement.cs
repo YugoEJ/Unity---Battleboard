@@ -109,6 +109,7 @@ public class AIComputerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
+
         if (col.gameObject.tag == "rightBound")
         {
             Debug.Log("touched RIGHT!");

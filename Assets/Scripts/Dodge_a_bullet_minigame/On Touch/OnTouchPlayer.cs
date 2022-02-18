@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class OnTouchPlayer : MonoBehaviour
 {
-    public GameObject WinText;
+    /*public GameObject WinText;
     public GameObject LoseText;
     bool loseTextAppears = false;
-    bool winTextAppears = false;
+    bool winTextAppears = false;*/
+
+    public GameObject WinText;
+    public GameObject LoseText;
+    public GameObject Draw;
+
+    public static bool touchedPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        LoseText.gameObject.SetActive(false);
-        WinText.gameObject.SetActive(false);
+        /*LoseText.gameObject.SetActive(false);
+        WinText.gameObject.SetActive(false);*/
     }
 
     // Update is called once per frame
@@ -24,19 +30,43 @@ public class OnTouchPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        /*if (col.gameObject.tag == "rightBound" || col.gameObject.tag == "leftBound")
-        {
-            LoseText.gameObject.SetActive(false);
-            WinText.gameObject.SetActive(false);
-        }*/
-
-        /*if (col.gameObject.tag == "rightBound" || col.gameObject.tag == "leftBound")
-        {
-            LoseText.gameObject.SetActive(false);
-            WinText.gameObject.SetActive(false);
-        }*/
+        Debug.Log(OnTouchComputer.touchedComputer);
 
         if (col.gameObject.tag == "obstacle")
+        {
+            touchedPlayer = true;
+        }
+
+        if (touchedPlayer == false && OnTouchComputer.touchedComputer == true)
+        {
+            WinText.gameObject.SetActive(true);
+        }
+
+        if (touchedPlayer == true && OnTouchComputer.touchedComputer == false)
+        {
+            LoseText.gameObject.SetActive(true);
+        }
+
+        if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && RandomSpawner.obstacleCounter == 0)
+        {
+            Draw.gameObject.SetActive(true);
+        }
+
+        
+        ////////////
+
+        /*if (col.gameObject.tag == "obstacle" && OnTouchComputer.touchedComputer == false)
+        {
+            LoseText.gameObject.SetActive(true);
+        }*/
+
+        /*if (col.gameObject.tag == "rightBound" || col.gameObject.tag == "leftBound")
+        {
+            LoseText.gameObject.SetActive(false);
+            WinText.gameObject.SetActive(false);
+        }*/
+
+        /*if (col.gameObject.tag == "obstacle")
         {
             LoseText.gameObject.SetActive(true);
             loseTextAppears = true;
@@ -52,6 +82,9 @@ public class OnTouchPlayer : MonoBehaviour
         {
             LoseText.gameObject.SetActive(false);
             loseTextAppears = false;
-        }
+        }*/
     }
+
+
+
 }
