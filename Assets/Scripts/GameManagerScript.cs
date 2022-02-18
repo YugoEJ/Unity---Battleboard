@@ -77,6 +77,10 @@ public class GameManagerScript : MonoBehaviour
             boardSFX.minigameBGM.Stop();
             boardSFX.boardBGM.Play();
 
+            // super speed should be removed in Minigame scripts
+            player.RemoveSuperSpeed();
+            computer.RemoveSuperSpeed();
+
             boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
             boardUI.PlayerSuperSpeedText.text = "Super Speed: " + player.GetSuperSpeed();
             boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
