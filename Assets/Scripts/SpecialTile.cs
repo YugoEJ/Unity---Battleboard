@@ -5,12 +5,7 @@ public class SpecialTile : MonoBehaviour
     private GameObject specialTile;
 
     private string tileEffect;
-    //private Sprite tileImage;
-    //private AudioClip tileSound;
-
-    private string[] tileEffects = new string[] { "extra-life", "super-speed", "skip-turn" };
-    //private Sprite[] tileImages;
-    //private AudioClip[] tileSounds;
+    private string[] tileEffects = new string[] { "Extra-Life", "Super-Speed", "Skip-Turn" };
 
     public void InitializeTile(float posX, float posZ)
     {
@@ -26,8 +21,8 @@ public class SpecialTile : MonoBehaviour
     {
         this.specialTile = GameObject.CreatePrimitive(PrimitiveType.Plane);
         this.specialTile.SetActive(false);
-        this.specialTile.name = "Empty Tile";
-        this.tileEffect = "no-effect";
+        this.specialTile.name = "";
+        this.tileEffect = "";
     }
 
     private void RandomizeTile()

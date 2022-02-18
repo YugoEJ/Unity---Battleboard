@@ -261,6 +261,7 @@ public class GameManagerScript : MonoBehaviour
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
         if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame)
         {
+            StartCoroutine(MinigameDelay());
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
@@ -396,23 +397,26 @@ public class GameManagerScript : MonoBehaviour
     private void ApplySpecialTileEffect(Player currentPlayer, bool afterMinigame)
     {
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
-        Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect.ToString());
+        
+        boardUI.SpecialEffectText.text = "Special Effect: " + specialEffect;
+
+        Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect);
 
         switch (specialEffect)
         {
-            case "no-effect":
+            case "":
                 break;
 
-            case "extra-life":
+            case "Extra-Life":
                 currentPlayer.AddExtraLife();
                 break;
 
-            case "super-speed":
+            case "Super-Speed":
                 currentPlayer.GiveSuperSpeed();
                 break;
 
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
-            case "skip-turn":
+            case "Skip-Turn":
                 if (!afterMinigame)
                 {
                     if (this.player.IsSkippingTurn() && this.currentPlayer == this.computer)
@@ -426,6 +430,13 @@ public class GameManagerScript : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private IEnumerator MinigameDelay()
+    {
+        PauseGame();
+        yield return new WaitForSeconds(2f);
+        PauseGame();
     }
 
     private IEnumerator DiceRollDelay()
