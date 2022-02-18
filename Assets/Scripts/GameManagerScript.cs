@@ -16,13 +16,7 @@ public class GameManagerScript : MonoBehaviour
     public DiceScript dice;
 
     public UIManagerScript boardUI;
-
-    public AudioSource BGM;
-    public AudioSource diceSFX;
-    public AudioSource stepOneSFX;
-    public AudioSource stepTwoSFX;
-    public AudioSource stepThreeSFX;
-    public AudioSource stepFourSFX;
+    public SFXManagerScript boardSFX;
 
     private bool duringMinigame;
     private bool gamePaused;
@@ -50,8 +44,8 @@ public class GameManagerScript : MonoBehaviour
         boardUI.PCSuperSpeedText.text += " Off";
         boardUI.NextMinigameText.text += " " + requiredDiceRollsForMinigame + " Rolls";
 
-        diceSFX.Play();
-        BGM.Play();
+        boardSFX.diceSFX.Play();
+        boardSFX.boardBGM.Play();
 
         minigameCam.enabled = false;
     }
@@ -69,14 +63,24 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(boardScene.name);
         }
 
-        // simulating a Minigame that Player won, and Computer lost.
+        // simulating a Minigame that Player won, and Computer lost. these fields will be UPDATED BY THE MINIGAME SCRIPTS (e.g. Game.player.SetMinigameWinner() | Game.minigameCam.enabled = false, etc.)
         if (Input.GetKeyDown(KeyCode.F))
         {
-            player.SetMinigameWinner();
             minigameCam.enabled = false;
             boardCam.enabled = true;
+
             boardUI.ShowAllTexts();
+
+            player.SetMinigameWinner();
             duringMinigame = false;
+
+            boardSFX.minigameBGM.Stop();
+            boardSFX.boardBGM.Play();
+
+            boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
+            boardUI.PlayerSuperSpeedText.text = "Super Speed: " + player.GetSuperSpeed();
+            boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
+            boardUI.PCSuperSpeedText.text = "Super Speed: " + computer.GetSuperSpeed();
         }
 
         if (!gamePaused && !gameOver && !duringMinigame)
@@ -86,13 +90,13 @@ public class GameManagerScript : MonoBehaviour
                 if (player.IsMinigameWinner())
                 {
                     player.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(player, 6));
+                    StartCoroutine(MoveWinningPlayer(player, 3));
                 }
 
                 if (computer.IsMinigameWinner())
                 {
                     computer.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(computer, 6));
+                    StartCoroutine(MoveWinningPlayer(computer, 3));
                 }
 
                 currentPlayer = player;
@@ -119,7 +123,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void Move(Player currentPlayer, Player nextPlayer)
     {
-        diceSFX.Play();
+        boardSFX.diceSFX.Play();
         dice.Roll();
 
         StartCoroutine(MovePlayer(currentPlayer));
@@ -275,7 +279,7 @@ public class GameManagerScript : MonoBehaviour
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
-            StartCoroutine(MinigameDelay());
+            StartCoroutine(StartMinigameDelay());
             //this.boardUI.HideAllTexts();
             //this.boardCam.enabled = false;
             //this.minigameCam.enabled = true;
@@ -283,6 +287,7 @@ public class GameManagerScript : MonoBehaviour
             // BEGIN MINIGAME
 
             this.duringMinigame = true;
+
         }
 
         if (this.currentPlayer == player)
@@ -409,7 +414,7 @@ public class GameManagerScript : MonoBehaviour
     {
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
         
-        boardUI.SpecialEffectText.text = "Effect: " + specialEffect;
+        this.boardUI.SpecialEffectText.text = "Effect: " + specialEffect;
 
         Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect);
 
@@ -420,6 +425,7 @@ public class GameManagerScript : MonoBehaviour
 
             case "Extra-Life":
                 currentPlayer.AddExtraLife();
+                this.boardSFX.extraLifeSFX.Play();
 
                 if (currentPlayer == this.player)
                 {
@@ -433,6 +439,7 @@ public class GameManagerScript : MonoBehaviour
 
             case "Super-Speed":
                 currentPlayer.GiveSuperSpeed();
+                this.boardSFX.superSpeedSFX.Play();
 
                 if (currentPlayer == this.player)
                 {
@@ -454,6 +461,7 @@ public class GameManagerScript : MonoBehaviour
                     }
                     else
                     {
+                        this.boardSFX.skipTurnSFX.Play();
                         currentPlayer.SetSkipTurn();
                     }
                 }
@@ -461,12 +469,20 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    private IEnumerator MinigameDelay()
+    // most of the actions taken in this method should be COUNTERED by the MINIGAME SCRIPTS when the minigame is over (e.g. Game.boardUI.ShowAllTexts() | Game.boardCam.enabled = true).
+    private IEnumerator StartMinigameDelay()
     {
         yield return new WaitForSeconds(2f);
         this.boardUI.HideAllTexts();
+
         this.boardCam.enabled = false;
         this.minigameCam.enabled = true;
+
+        this.boardSFX.boardBGM.Stop();
+        this.boardSFX.minigameBGM.Play();
+
+        this.boardUI.NextMinigameText.text = "Next Minigame: " + requiredDiceRollsForMinigame + " Rolls";
+
         yield return new WaitForSeconds(1f);
     }
 
@@ -488,16 +504,20 @@ public class GameManagerScript : MonoBehaviour
 
         switch (sound)
         {
-            case 1: stepOneSFX.Play();
+            case 1: 
+                boardSFX.stepOneSFX.Play();
                 break;
 
-            case 2: stepTwoSFX.Play();
+            case 2:
+                boardSFX.stepTwoSFX.Play();
                 break;
 
-            case 3: stepThreeSFX.Play();
+            case 3:
+                boardSFX.stepThreeSFX.Play();
                 break;
 
-            case 4: stepFourSFX.Play();
+            case 4:
+                boardSFX.stepFourSFX.Play();
                 break;
         }
     }
