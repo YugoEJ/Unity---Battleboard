@@ -9,6 +9,8 @@ TagManager:
   - Computer
   - Landmine
   - obstacle
+  - Plane
+  - backBound
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ public class RandomSpawner : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
 
-    public static int obstacleCounter = 20;
+    public static int obstacleCounter = 1;
 
     void Start()
     {
