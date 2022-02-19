@@ -25,7 +25,12 @@ public class OnTouchPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && DeleteObstacleOnTouch.obstacleCounter == 0)
+        {
+            Draw.gameObject.SetActive(true);
+            WinText.gameObject.SetActive(false);
+            LoseText.gameObject.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision col)
@@ -47,10 +52,7 @@ public class OnTouchPlayer : MonoBehaviour
             LoseText.gameObject.SetActive(true);
         }
 
-        if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && RandomSpawner.obstacleCounter == 0)
-        {
-            Draw.gameObject.SetActive(true);
-        }
+        
 
         
         ////////////

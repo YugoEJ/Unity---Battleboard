@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DeleteObstacleOnTouch : MonoBehaviour
 {
+    public static int obstacleCounter = 15;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,8 @@ public class DeleteObstacleOnTouch : MonoBehaviour
         if (col.gameObject.tag == "obstacle")
         {
             Destroy(col.gameObject);
-            //RandomSpawner.obstacleCounter--;
+            //obstacleCounter--;
+            //Debug.Log(obstacleCounter);
         }
 
         //OnTouchPlayer.isObstacleTouchedPlayer = true;

@@ -13,6 +13,7 @@ public class OnTouchComputer : MonoBehaviour
     public GameObject Draw;
 
     public static bool touchedComputer = false;
+    //bool draw = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class OnTouchComputer : MonoBehaviour
             WinText.gameObject.SetActive(true);
         }
 
-        if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && RandomSpawner.obstacleCounter == 0)
+        if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && DeleteObstacleOnTouch.obstacleCounter == 0)
         {
             Draw.gameObject.SetActive(true);
         }

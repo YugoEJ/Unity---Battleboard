@@ -7,7 +7,7 @@ public class RandomSpawner : MonoBehaviour
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
 
-    public static int obstacleCounter = 15;
+    //public static int obstacleCounter = 15;
 
     void Start()
     {
@@ -16,10 +16,10 @@ public class RandomSpawner : MonoBehaviour
 
     IEnumerator Reset()
     {
-        while (obstacleCounter > 0)
+        while (Timer.timeValue > 0.9)
         {
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1.2f);
 
             //int randEnemy = Random.Range(0, enemyPrefabs.Length);
             int randSpawPoint1 = Random.Range(0, spawnPoints.Length);
@@ -29,7 +29,10 @@ public class RandomSpawner : MonoBehaviour
             Instantiate(enemyPrefabs[0], spawnPoints[randSpawPoint1].position, transform.rotation);
             Instantiate(enemyPrefabs[0], spawnPoints[randSpawPoint2].position, transform.rotation);
 
-            obstacleCounter--;
+            //DeleteObstacleOnTouch.obstacleCounter--;
+
+            //obstacleCounter--;
+            //Debug.Log(DeleteObstacleOnTouch.obstacleCounter);
         }
 
         //You can put more yield return new WaitForSeconds(1); in one coroutine
