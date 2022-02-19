@@ -7,8 +7,7 @@ public class Player : MonoBehaviour
     private int routePos;
     private bool isMoving;
 
-    private int extraLife = 2;
-    private bool superSpeed = false;
+    private int extraLife = 0;
     private bool wonMinigame;
     private bool skipTurn;
 
@@ -83,33 +82,6 @@ public class Player : MonoBehaviour
         {
             this.extraLife--;
         }
-    }
-
-    public bool HasSuperSpeed()
-    {
-        return this.superSpeed;
-    }
-
-    public string GetSuperSpeed()
-    {
-        if (this.superSpeed)
-        {
-            return "On";
-        }
-        else
-        {
-            return "Off";
-        }
-    }
-
-    public void GiveSuperSpeed()
-    {
-        this.superSpeed = true;
-    }
-
-    public void RemoveSuperSpeed()
-    {
-        this.superSpeed = false;
     }
 
     public bool IsMinigameWinner()

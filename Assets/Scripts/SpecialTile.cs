@@ -5,7 +5,7 @@ public class SpecialTile : MonoBehaviour
     private GameObject specialTile;
 
     private string tileEffect;
-    private string[] tileEffects = new string[] { "Extra-Life", "Super-Speed", "Skip-Turn" };
+    private string[] tileEffects = new string[] { "Extra-Life", "Skip-Turn" };
 
     public void InitializeTile(float posX, float posZ)
     {
@@ -32,13 +32,13 @@ public class SpecialTile : MonoBehaviour
         if (Random.Range(0, 7) <= 4)
         {
             Color colorGreen = new Color32(153, 226, 79, 255);
-            this.tileEffect = this.tileEffects[Random.Range(0, 2)];
+            this.tileEffect = this.tileEffects[0];
             tile.material.SetColor("_Color", colorGreen);
         }
         else
         {
             Color colorRed = new Color32(196, 41, 41, 255);
-            this.tileEffect = this.tileEffects[2];
+            this.tileEffect = this.tileEffects[1];
             tile.material.SetColor("_Color", colorRed);
         }
 

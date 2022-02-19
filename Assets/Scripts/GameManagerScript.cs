@@ -40,9 +40,9 @@ public class GameManagerScript : MonoBehaviour
         boardUI.DiceResultText.text = "" + 0;
         boardUI.SpecialEffectText.text += " None";
         boardUI.PlayerExtraLifeText.text += " 0";
-        boardUI.PlayerSuperSpeedText.text += " Off";
+        //boardUI.PlayerSuperSpeedText.text += " Off";
         boardUI.PCExtraLifeText.text += " 0";
-        boardUI.PCSuperSpeedText.text += " Off";
+        //boardUI.PCSuperSpeedText.text += " Off";
         boardUI.NextMinigameText.text += " " + requiredDiceRollsForMinigame + " Rolls";
 
         boardSFX.diceSFX.Play();
@@ -66,8 +66,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            minigameCam.enabled = true;
-            boardCam.enabled = false;
+            player.SetMinigameWinner();
         }
 
         // simulating a Minigame that Player won, and Computer lost. these fields will be UPDATED BY THE MINIGAME SCRIPTS (e.g. Game.player.SetMinigameWinner() | Game.minigameCam.enabled = false, etc.)
@@ -84,9 +83,6 @@ public class GameManagerScript : MonoBehaviour
             boardSFX.minigameBGM.Stop();
             boardSFX.boardBGM.Play();
 
-            // super speed should be removed in Minigame scripts
-            player.RemoveSuperSpeed();
-            computer.RemoveSuperSpeed();
 
             boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
             boardUI.PlayerSuperSpeedText.text = "Super Speed: " + player.GetSuperSpeed();
@@ -96,7 +92,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (!gamePaused && !gameOver && !duringMinigame)
         {
-            if (player.IsMinigameWinner() || computer.IsMinigameWinner())
+            if ((player.IsMinigameWinner() || computer.IsMinigameWinner()) && !duringMinigame)
             {
                 if (player.IsMinigameWinner())
                 {
@@ -290,6 +286,7 @@ public class GameManagerScript : MonoBehaviour
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
+            this.duringMinigame = true;
             StartCoroutine(StartMinigameDelay());
             //this.boardUI.HideAllTexts();
             //this.boardCam.enabled = false;
@@ -447,19 +444,19 @@ public class GameManagerScript : MonoBehaviour
                 }
                 break;
 
-            case "Super-Speed":
+            /*case "Super-Speed":
                 currentPlayer.GiveSuperSpeed();
                 this.boardSFX.superSpeedSFX.Play();
 
                 if (currentPlayer == this.player)
                 {
-                    this.boardUI.PlayerSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeed();
+                    this.boardUI.PlayerSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeedForText();
                 }
                 else
                 {
-                    this.boardUI.PCSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeed();
+                    this.boardUI.PCSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeedForText();
                 }
-                break;
+                break;*/
 
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
             case "Skip-Turn":
@@ -482,10 +479,8 @@ public class GameManagerScript : MonoBehaviour
     // most of the actions taken in this method should be COUNTERED by the MINIGAME SCRIPTS when the minigame is over (e.g. Game.boardUI.ShowAllTexts() | Game.boardCam.enabled = true).
     private IEnumerator StartMinigameDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         this.boardUI.HideAllTexts();
-
-        this.duringMinigame = true;
 
         this.boardCam.enabled = false;
         this.minigameCam.enabled = true;
@@ -494,8 +489,6 @@ public class GameManagerScript : MonoBehaviour
         this.boardSFX.minigameBGM.Play();
 
         this.boardUI.NextMinigameText.text = "Next Minigame: " + requiredDiceRollsForMinigame + " Rolls";
-
-        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator DiceRollDelay()
@@ -503,11 +496,6 @@ public class GameManagerScript : MonoBehaviour
         PauseGame();
         yield return new WaitForSeconds(4f);
         PauseGame();
-    }
-
-    private void UpdateTexts()
-    {
-
     }
 
     public void PauseGame()

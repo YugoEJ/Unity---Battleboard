@@ -23,22 +23,6 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        if (!appliedEffects)
-        {
-            if (player.HasSuperSpeed())
-            {
-                MovementSpeed = 135;
-                //appliedEffects = true;
-
-            }
-            else
-            {
-                MovementSpeed = 60;
-            }
-        }
-
-
-
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 

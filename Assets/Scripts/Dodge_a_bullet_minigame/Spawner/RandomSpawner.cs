@@ -48,11 +48,5 @@ public class RandomSpawner : MonoBehaviour
 
         board.duringMinigame = false;
         obstaclesSent = false;
-
-
-
-        //You can put more yield return new WaitForSeconds(1); in one coroutine
-
-        //StartCoroutine("Reset");
     }
 }

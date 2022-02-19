@@ -7,7 +7,7 @@ public class OnTouchPlayer : MonoBehaviour
     public GameManagerScript board;
     public Player player;
     public Player computer;
-    public static int healthPoints;
+    public static int playerHealthPoints;
     public bool appliedEffects;
 
     public GameObject WinText;
@@ -20,12 +20,16 @@ public class OnTouchPlayer : MonoBehaviour
     {
         if (board.duringMinigame && !appliedEffects)
         {
-            healthPoints = 1 + player.GetExtraLife();
+            Timer.timeValue = 10f;
+
+            playerHealthPoints = 1 + player.GetExtraLife();
+            OnTouchComputer.computerHealthPoints = 1 + computer.GetExtraLife();
+
             appliedEffects = true;
             isGameOver = false;
         }
 
-        if (healthPoints != 0 && OnTouchComputer.healthPoints != 0 && Timer.timeValue <= 0)
+        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints != 0 && Timer.timeValue <= 0 && isGameOver == false)
         {
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
@@ -35,57 +39,57 @@ public class OnTouchPlayer : MonoBehaviour
             computer.RemoveMinigameWinner();
             StartCoroutine(DelayGoToBoard());
         }
-        else
-        {
-            isGameOver = false;
-        }
     }
 
     private void OnCollisionEnter(Collision col)
     {
-
         if (col.gameObject.tag == "obstacle" && isGameOver == false)
         {
             Destroy(col.gameObject);
             player.RemoveExtraLife();
             board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
-            healthPoints--;
+            playerHealthPoints--;
+            //board.boardSFX.hurtMinigameSFX.Play();
         }
 
-        if (healthPoints != 0 && OnTouchComputer.healthPoints == 0 && isGameOver == false)
+        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints == 0 && isGameOver == false)
         {
-            WinText.gameObject.SetActive(true);
             isGameOver = true;
+            WinText.gameObject.SetActive(true);
             player.SetMinigameWinner();
             computer.RemoveMinigameWinner();
+            //board.boardSFX.winMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
-
         }
 
-        if (healthPoints == 0 && OnTouchComputer.healthPoints != 0 && isGameOver == false)
+        if (playerHealthPoints == 0 && OnTouchComputer.computerHealthPoints != 0 && isGameOver == false)
         {
-            LoseText.gameObject.SetActive(true);
             isGameOver = true;
+            LoseText.gameObject.SetActive(true);
             player.RemoveMinigameWinner();
             computer.SetMinigameWinner();
+            //board.boardSFX.loseMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
         }
     }
 
     public IEnumerator DelayGoToBoard()
     {
-        yield return new WaitForSeconds(3f);
+        appliedEffects = false;
+        isGameOver = true;
+        board.duringMinigame = false;
 
-        player.RemoveSuperSpeed();
-        computer.RemoveSuperSpeed();
+        Timer.timeValue = 0f;
+
+        yield return new WaitForSeconds(1f);
+
         board.minigameCam.enabled = false;
         board.boardCam.enabled = true;
         board.boardSFX.boardBGM.Play();
         board.boardSFX.minigameBGM.Stop();
         board.boardUI.ShowAllTexts();
-        appliedEffects = false;
         HideTexts();
-        board.duringMinigame = false;
+
     }
 
     public void HideTexts()

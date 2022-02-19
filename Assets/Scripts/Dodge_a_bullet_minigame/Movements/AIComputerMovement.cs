@@ -53,16 +53,7 @@ public class AIComputerMovement : MonoBehaviour
 
         if (isWalking == true)
         {
-            if (computer.HasSuperSpeed())
-            {
-                rb.AddForce(transform.forward * 40);
-                
-            }
-            else
-            {
-                rb.AddForce(transform.forward * MovementSpeed);
-            }
-
+            rb.AddForce(transform.forward * MovementSpeed);
             animator.SetBool("isRunning", true);
         }
 

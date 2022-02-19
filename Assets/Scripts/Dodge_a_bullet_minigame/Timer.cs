@@ -7,13 +7,8 @@ public class Timer : MonoBehaviour
 {
     public GameManagerScript board;
 
-    public static float timeValue;
+    public static float timeValue = 0;
     public Text timerText;
-
-    private void Start()
-    {
-        timeValue = 16f;
-    }
 
     void Update()
     {
@@ -30,11 +25,6 @@ public class Timer : MonoBehaviour
 
             DisplayTime(timeValue);
         }
-        else
-        {
-            ResetTimer();
-        }
-
     }
 
     void DisplayTime(float timeToDisplay)
@@ -48,10 +38,5 @@ public class Timer : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
-    void ResetTimer()
-    {
-        timeValue = 16f;
     }
 }

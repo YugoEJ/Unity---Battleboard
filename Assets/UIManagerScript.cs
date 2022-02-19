@@ -12,9 +12,7 @@ public class UIManagerScript : MonoBehaviour
     public Text NextMinigameText;
     public Text SpecialEffectText;
     public Text PCExtraLifeText;
-    public Text PCSuperSpeedText;
     public Text PlayerExtraLifeText;
-    public Text PlayerSuperSpeedText;
     public GameObject PCTurnIndicator;
     public GameObject PlayerTurnIndicator;
 
@@ -27,9 +25,7 @@ public class UIManagerScript : MonoBehaviour
         this.NextMinigameText.enabled = true;
         this.SpecialEffectText.enabled = true;
         this.PCExtraLifeText.enabled = true;
-        this.PCSuperSpeedText.enabled = true;
         this.PlayerExtraLifeText.enabled = true;
-        this.PlayerSuperSpeedText.enabled = true;
     }
 
     public void HideAllTexts()
@@ -41,9 +37,7 @@ public class UIManagerScript : MonoBehaviour
         this.NextMinigameText.enabled = false;
         this.SpecialEffectText.enabled = false;
         this.PCExtraLifeText.enabled = false;
-        this.PCSuperSpeedText.enabled = false;
         this.PlayerExtraLifeText.enabled = false;
-        this.PlayerSuperSpeedText.enabled = false;
     }
 
     public void SetPlayerTurn()
