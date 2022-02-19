@@ -12,8 +12,6 @@ public class OnTouchComputer : MonoBehaviour
     public GameObject WinText;
     public GameObject Draw;
 
-    public static bool touchedComputer = false;
-
     void Update()
     {
         if (board.duringMinigame && !appliedEffects)
@@ -62,7 +60,6 @@ public class OnTouchComputer : MonoBehaviour
         board.boardSFX.boardBGM.Play();
         board.boardSFX.minigameBGM.Stop();
         board.boardUI.ShowAllTexts();
-        touchedComputer = false;
         HideTexts();
         board.duringMinigame = false;
     }

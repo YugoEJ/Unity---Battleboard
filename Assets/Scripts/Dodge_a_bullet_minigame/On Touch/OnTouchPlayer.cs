@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class OnTouchPlayer : MonoBehaviour
 {
-    /*public GameObject WinText;
-    public GameObject LoseText;
-    bool loseTextAppears = false;
-    bool winTextAppears = false;*/
-
     public GameManagerScript board;
     public Player player;
     public Player computer;
@@ -21,16 +16,6 @@ public class OnTouchPlayer : MonoBehaviour
 
     public static bool isGameOver = false;
 
-    public static bool touchedPlayer;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*LoseText.gameObject.SetActive(false);
-        WinText.gameObject.SetActive(false);*/
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (board.duringMinigame && !appliedEffects)
@@ -85,40 +70,6 @@ public class OnTouchPlayer : MonoBehaviour
             computer.SetMinigameWinner();
             StartCoroutine(DelayGoToBoard());
         }
-
-        
-
-        
-        ////////////
-
-        /*if (col.gameObject.tag == "obstacle" && OnTouchComputer.touchedComputer == false)
-        {
-            LoseText.gameObject.SetActive(true);
-        }*/
-
-        /*if (col.gameObject.tag == "rightBound" || col.gameObject.tag == "leftBound")
-        {
-            LoseText.gameObject.SetActive(false);
-            WinText.gameObject.SetActive(false);
-        }*/
-
-        /*if (col.gameObject.tag == "obstacle")
-        {
-            LoseText.gameObject.SetActive(true);
-            loseTextAppears = true;
-
-        }
-        else if (loseTextAppears == false && RandomSpawner.obstacleCounter == 0)
-        {
-            WinText.gameObject.SetActive(true);
-            winTextAppears = true;
-        }
-
-        if (winTextAppears == true)
-        {
-            LoseText.gameObject.SetActive(false);
-            loseTextAppears = false;
-        }*/
     }
 
     public IEnumerator DelayGoToBoard()
@@ -126,12 +77,12 @@ public class OnTouchPlayer : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         player.RemoveSuperSpeed();
+        computer.RemoveSuperSpeed();
         board.minigameCam.enabled = false;
         board.boardCam.enabled = true;
         board.boardSFX.boardBGM.Play();
         board.boardSFX.minigameBGM.Stop();
         board.boardUI.ShowAllTexts();
-        touchedPlayer = false;
         appliedEffects = false;
         HideTexts();
         board.duringMinigame = false;

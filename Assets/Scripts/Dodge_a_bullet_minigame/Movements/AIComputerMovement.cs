@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class AIComputerMovement : MonoBehaviour
 {
-    public float MovementSpeed = 30f;
-    //public float rotationSpeed = 100f;
+    public Player computer;
+    public float MovementSpeed = 25f;
 
     private bool isWandering = false;
     private bool isRotatingLeft = false;
@@ -18,17 +18,14 @@ public class AIComputerMovement : MonoBehaviour
     Rigidbody rb;
     Animator animator;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         if (isWandering == false)
         {
             StartCoroutine(Wander());
@@ -56,7 +53,16 @@ public class AIComputerMovement : MonoBehaviour
 
         if (isWalking == true)
         {
-            rb.AddForce(transform.forward * MovementSpeed);
+            if (computer.HasSuperSpeed())
+            {
+                rb.AddForce(transform.forward * 40);
+                
+            }
+            else
+            {
+                rb.AddForce(transform.forward * MovementSpeed);
+            }
+
             animator.SetBool("isRunning", true);
         }
 
@@ -76,9 +82,6 @@ public class AIComputerMovement : MonoBehaviour
         int walkTime = Random.Range(1, 3);
 
         isWandering = true;
-
-        //yield return new WaitForSeconds(walkWait);
-
         isWalking = true;
 
         yield return new WaitForSeconds(walkTime);
@@ -105,21 +108,5 @@ public class AIComputerMovement : MonoBehaviour
         }
 
         isWandering = false;
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-
-        if (col.gameObject.tag == "rightBound")
-        {
-            Debug.Log("touched RIGHT!");
-            //isWalking = false;
-        }
-
-        if (col.gameObject.tag == "leftBound")
-        {
-            Debug.Log("touched LEFT!");
-            //isWalking = false;
-        }
     }
 }
