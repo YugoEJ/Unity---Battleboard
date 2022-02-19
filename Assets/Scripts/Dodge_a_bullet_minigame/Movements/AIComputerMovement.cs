@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AIComputerMovement : MonoBehaviour
 {
-
     public float MovementSpeed = 30f;
     //public float rotationSpeed = 100f;
 
@@ -29,38 +28,39 @@ public class AIComputerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isWandering == false)
+
+        if (isWandering == false)
         {
             StartCoroutine(Wander());
         }
 
-        if(direction == -1)
+        if (direction == -1)
         {
             if (isRotatingRight == true)
             {
                 rb.velocity = new Vector3(0, 0, 0);
                 transform.eulerAngles = new Vector2(0, -90); //flip the character on its x axis - to the right
-                //transform.position += new Vector3(-1, 0, 0) * Time.deltaTime * MovementSpeed;
+                                                                //transform.position += new Vector3(-1, 0, 0) * Time.deltaTime * MovementSpeed;
             }
         }
 
-        if(direction == 1)
+        if (direction == 1)
         {
             if (isRotatingLeft == true)
             {
                 rb.velocity = new Vector3(0, 0, 0);
                 transform.eulerAngles = new Vector2(0, 90); //flip the character on its x axis - to the left
-                //transform.position += new Vector3(1, 0, 0) * Time.deltaTime * MovementSpeed;
+                                                            //transform.position += new Vector3(1, 0, 0) * Time.deltaTime * MovementSpeed;
             }
         }
 
-        if(isWalking == true)
+        if (isWalking == true)
         {
             rb.AddForce(transform.forward * MovementSpeed);
             animator.SetBool("isRunning", true);
         }
 
-        if(isWalking == false)
+        if (isWalking == false)
         {
             animator.SetBool("isRunning", false);
             rb.velocity = new Vector3(0, 0, 0);

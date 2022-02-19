@@ -11,6 +11,8 @@ public class OnTouchPlayer : MonoBehaviour
 
     public GameManagerScript board;
     public Player player;
+    public int healthPoints = 1;
+    public bool appliedEffects;
 
     public GameObject WinText;
     public GameObject LoseText;
@@ -30,6 +32,11 @@ public class OnTouchPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (board.duringMinigame && !appliedEffects)
+        {
+            healthPoints += player.GetExtraLife();
+            appliedEffects = true;
+        }
 
         if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && Timer.timeValue <= 0)
         {
@@ -114,6 +121,7 @@ public class OnTouchPlayer : MonoBehaviour
         board.boardSFX.minigameBGM.Stop();
         board.boardUI.ShowAllTexts();
         touchedPlayer = false;
+        appliedEffects = false;
         HideTexts();
     }
 

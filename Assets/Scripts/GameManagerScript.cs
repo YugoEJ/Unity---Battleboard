@@ -22,7 +22,7 @@ public class GameManagerScript : MonoBehaviour
     private bool gamePaused;
     private bool gameOver;
     private int currentTotalDiceRolls;
-    private int requiredDiceRollsForMinigame;
+    private int requiredDiceRollsForMinigame = 10;
     private int requiredDiceRollsIncrement = 10;
     private float speed = 40f;
 
@@ -32,7 +32,6 @@ public class GameManagerScript : MonoBehaviour
 
         boardUI.ShowAllTexts();
 
-        requiredDiceRollsForMinigame = 5;
         currentTotalDiceRolls = 0;
 
         currentPlayer = player;

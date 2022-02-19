@@ -16051,6 +16051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8478d9f64561114c999b38542f7eaba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
   speed: 0
   horizontalMove: 0
   runSpeed: 1
@@ -18664,6 +18665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d33ac5730517e498d957e8b7e00500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
   MovementSpeed: 30
 --- !u!136 &1505947689
 CapsuleCollider:
@@ -20426,6 +20428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8478d9f64561114c999b38542f7eaba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 0}
   speed: 0
   horizontalMove: 0
   runSpeed: 1

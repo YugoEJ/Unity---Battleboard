@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        timeValue = 7f;
+        timeValue = 16f;
     }
 
     void Update()
@@ -52,6 +52,6 @@ public class Timer : MonoBehaviour
 
     void ResetTimer()
     {
-        timeValue = 7f;
+        timeValue = 16f;
     }
 }
