@@ -25,7 +25,7 @@ public class OnTouchPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && DeleteObstacleOnTouch.obstacleCounter == 0)
+        if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && Timer.timeValue <= 0)
         {
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
