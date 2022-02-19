@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     private int routePos;
     private bool isMoving;
 
-    private int extraLife;
+    private int extraLife = 2;
     private bool superSpeed;
     private bool wonMinigame;
     private bool skipTurn;
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     public void AddExtraLife()
     {
-        if (this.extraLife < 3)
+        if (this.extraLife < 2)
         {
             this.extraLife++;
         }

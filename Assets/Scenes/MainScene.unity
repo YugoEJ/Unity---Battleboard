@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7773,7 +7773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602942191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -444.4, y: 81, z: -266}
+  m_LocalPosition: {x: -1055.4, y: 81, z: -1732}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1505947686}
@@ -7783,6 +7783,7 @@ Transform:
   - {fileID: 1949965514}
   - {fileID: 1862084280}
   - {fileID: 1672354933}
+  - {fileID: 2047232692}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16036,6 +16037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 1138873928}
   player: {fileID: 404985681}
+  computer: {fileID: 1794623886}
+  appliedEffects: 0
   WinText: {fileID: 1767315261}
   LoseText: {fileID: 1689445966}
   Draw: {fileID: 1654241796}
@@ -16051,7 +16054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8478d9f64561114c999b38542f7eaba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 1138873928}
   speed: 0
   horizontalMove: 0
   runSpeed: 1
@@ -18279,7 +18281,6 @@ Transform:
   m_Children:
   - {fileID: 705507995}
   - {fileID: 963194228}
-  - {fileID: 2047232692}
   m_Father: {fileID: 2086116387}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18651,6 +18652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   board: {fileID: 1138873928}
   computer: {fileID: 1794623886}
+  appliedEffects: 0
   WinText: {fileID: 1767315261}
   Draw: {fileID: 1654241796}
 --- !u!114 &1505947688
@@ -18665,7 +18667,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d33ac5730517e498d957e8b7e00500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 1138873928}
   MovementSpeed: 30
 --- !u!136 &1505947689
 CapsuleCollider:
@@ -20428,7 +20429,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8478d9f64561114c999b38542f7eaba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
   speed: 0
   horizontalMove: 0
   runSpeed: 1
@@ -25217,11 +25217,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047232689}
   m_LocalRotation: {x: -0, y: -0.999647, z: -0.02657074, w: 0}
-  m_LocalPosition: {x: -445.19223, y: 43.661156, z: 90.20856}
+  m_LocalPosition: {x: 2.7999878, y: -29.499996, z: 366.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1475310230}
-  m_RootOrder: 2
+  m_Father: {fileID: 602942192}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -3.045, y: -180, z: 0}
 --- !u!1 &2057955937
 GameObject:

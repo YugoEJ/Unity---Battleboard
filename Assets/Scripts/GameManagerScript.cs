@@ -101,13 +101,13 @@ public class GameManagerScript : MonoBehaviour
                 if (player.IsMinigameWinner())
                 {
                     player.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(player, 3));
+                    StartCoroutine(MoveWinningPlayer(player, 6));
                 }
 
                 if (computer.IsMinigameWinner())
                 {
                     computer.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(computer, 3));
+                    StartCoroutine(MoveWinningPlayer(computer, 6));
                 }
 
                 currentPlayer = player;
@@ -503,6 +503,11 @@ public class GameManagerScript : MonoBehaviour
         PauseGame();
         yield return new WaitForSeconds(4f);
         PauseGame();
+    }
+
+    private void UpdateTexts()
+    {
+
     }
 
     public void PauseGame()

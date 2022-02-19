@@ -6,33 +6,27 @@ public class OnTouchComputer : MonoBehaviour
 {
     public GameManagerScript board;
     public Player computer;
-    /*public GameObject WinText;
-    public GameObject LoseText;
-    bool loseTextAppears = false;
-    bool winTextAppears = false;*/
+    public static int healthPoints;
+    public bool appliedEffects;
 
     public GameObject WinText;
     public GameObject Draw;
 
     public static bool touchedComputer = false;
-    //bool draw = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*LoseText.gameObject.SetActive(false);
-        WinText.gameObject.SetActive(false);*/
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && Timer.timeValue <= 0)
+        if (board.duringMinigame && !appliedEffects)
+        {
+            healthPoints = 1 + computer.GetExtraLife();
+            appliedEffects = true;
+        }
+
+        if (healthPoints != 0 && OnTouchPlayer.healthPoints != 0 && Timer.timeValue <= 0)
         {
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
             OnTouchPlayer.isGameOver = true;
-            //boardCam();
             computer.RemoveMinigameWinner();
             StartCoroutine(DelayGoToBoard());
         }
@@ -40,39 +34,22 @@ public class OnTouchComputer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "obstacle" && OnTouchPlayer.touchedPlayer == false && OnTouchPlayer.isGameOver == false) 
+        if (healthPoints == 0 && OnTouchPlayer.healthPoints != 0 && OnTouchPlayer.isGameOver == false) 
         {
-            touchedComputer = true;
             WinText.gameObject.SetActive(true);
-            //boardCam();
+            OnTouchPlayer.isGameOver = true;
             computer.RemoveMinigameWinner();
             StartCoroutine(DelayGoToBoard());
-
         }
 
-        /*if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && Timer.timeValue <= 0)
+        if (col.gameObject.tag == "obstacle" && OnTouchPlayer.isGameOver == false)
         {
-            Draw.gameObject.SetActive(true);
-        }*/
-
-        //////////
-
-        /*if (col.gameObject.tag == "obstacle") // Don't show win text for player even if there is a collision
-        {
-            WinText.gameObject.SetActive(true);
-            winTextAppears = true;
+            Destroy(col.gameObject);
+            OnTouchPlayer.isGameOver = true;
+            computer.RemoveExtraLife();
+            board.boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
+            healthPoints--;
         }
-        else if (winTextAppears == false && RandomSpawner.obstacleCounter == 0)
-        {
-            WinText.gameObject.SetActive(true);
-            winTextAppears = true;
-        }
-
-        if (winTextAppears == true)
-        {
-            LoseText.gameObject.SetActive(false);
-            loseTextAppears = false;
-        }*/
     }
 
     public IEnumerator DelayGoToBoard()
@@ -87,6 +64,7 @@ public class OnTouchComputer : MonoBehaviour
         board.boardUI.ShowAllTexts();
         touchedComputer = false;
         HideTexts();
+        board.duringMinigame = false;
     }
 
     public void HideTexts()
@@ -94,14 +72,4 @@ public class OnTouchComputer : MonoBehaviour
         WinText.gameObject.SetActive(false);
         Draw.gameObject.SetActive(false);
     }
-
-/*    public void boardCam()
-    {
-        computer.RemoveSuperSpeed();
-        board.minigameCam.enabled = true;
-        board.boardCam.enabled = true;
-        board.boardSFX.boardBGM.Play();
-        board.boardSFX.minigameBGM.Stop();
-        board.boardUI.ShowAllTexts();
-    }*/
 }

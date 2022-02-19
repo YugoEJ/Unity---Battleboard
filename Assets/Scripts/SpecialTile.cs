@@ -31,13 +31,15 @@ public class SpecialTile : MonoBehaviour
 
         if (Random.Range(0, 7) <= 4)
         {
+            Color colorGreen = new Color32(153, 226, 79, 255);
             this.tileEffect = this.tileEffects[Random.Range(0, 2)];
-            tile.material.SetColor("_Color", Color.green);
+            tile.material.SetColor("_Color", colorGreen);
         }
         else
         {
+            Color colorRed = new Color32(196, 41, 41, 255);
             this.tileEffect = this.tileEffects[2];
-            tile.material.SetColor("_Color", Color.red);
+            tile.material.SetColor("_Color", colorRed);
         }
 
         Debug.Log("Random tile effect: " + this.tileEffect);
