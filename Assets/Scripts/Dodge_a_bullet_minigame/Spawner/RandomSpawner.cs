@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class RandomSpawner : MonoBehaviour
 {
+    public GameManagerScript board;
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
+    public bool obstaclesSent = false;
 
     //public static int obstacleCounter = 15;
 
-    void Start()
+    void Update()
+    {
+        if (board.duringMinigame && !obstaclesSent)
+        {
+            obstaclesSent = true;
+            StartCoroutine("Reset");
+        }
+    }
+
+    /*void Start()
     {
         StartCoroutine("Reset");
-    }
+    }*/
 
     IEnumerator Reset()
     {
@@ -35,16 +46,13 @@ public class RandomSpawner : MonoBehaviour
             //Debug.Log(DeleteObstacleOnTouch.obstacleCounter);
         }
 
+        board.duringMinigame = false;
+        obstaclesSent = false;
+
+
+
         //You can put more yield return new WaitForSeconds(1); in one coroutine
 
         //StartCoroutine("Reset");
     }
-
-    void Update()
-    {
-
-    }
-
-
-
 }

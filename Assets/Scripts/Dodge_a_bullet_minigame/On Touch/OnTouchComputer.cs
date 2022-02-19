@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OnTouchComputer : MonoBehaviour
 {
+    public GameManagerScript board;
+    public Player computer;
     /*public GameObject WinText;
     public GameObject LoseText;
     bool loseTextAppears = false;
@@ -30,6 +32,9 @@ public class OnTouchComputer : MonoBehaviour
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
             OnTouchPlayer.isGameOver = true;
+            //boardCam();
+            computer.RemoveMinigameWinner();
+            StartCoroutine(DelayGoToBoard());
         }
     }
 
@@ -39,6 +44,10 @@ public class OnTouchComputer : MonoBehaviour
         {
             touchedComputer = true;
             WinText.gameObject.SetActive(true);
+            //boardCam();
+            computer.RemoveMinigameWinner();
+            StartCoroutine(DelayGoToBoard());
+
         }
 
         /*if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && Timer.timeValue <= 0)
@@ -65,4 +74,34 @@ public class OnTouchComputer : MonoBehaviour
             loseTextAppears = false;
         }*/
     }
+
+    public IEnumerator DelayGoToBoard()
+    {
+        yield return new WaitForSeconds(3f);
+
+        computer.RemoveSuperSpeed();
+        board.minigameCam.enabled = false;
+        board.boardCam.enabled = true;
+        board.boardSFX.boardBGM.Play();
+        board.boardSFX.minigameBGM.Stop();
+        board.boardUI.ShowAllTexts();
+        touchedComputer = false;
+        HideTexts();
+    }
+
+    public void HideTexts()
+    {
+        WinText.gameObject.SetActive(false);
+        Draw.gameObject.SetActive(false);
+    }
+
+/*    public void boardCam()
+    {
+        computer.RemoveSuperSpeed();
+        board.minigameCam.enabled = true;
+        board.boardCam.enabled = true;
+        board.boardSFX.boardBGM.Play();
+        board.boardSFX.minigameBGM.Stop();
+        board.boardUI.ShowAllTexts();
+    }*/
 }

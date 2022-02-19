@@ -18,19 +18,21 @@ public class GameManagerScript : MonoBehaviour
     public UIManagerScript boardUI;
     public SFXManagerScript boardSFX;
 
-    private bool duringMinigame;
+    public bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
     private int currentTotalDiceRolls;
     private int requiredDiceRollsForMinigame;
-    private int requiredDiceRollsIncrement = 25;
+    private int requiredDiceRollsIncrement = 10;
     private float speed = 40f;
 
     private void Start()
     {
         boardScene = SceneManager.GetActiveScene();
 
-        requiredDiceRollsForMinigame = 25;
+        boardUI.ShowAllTexts();
+
+        requiredDiceRollsForMinigame = 5;
         currentTotalDiceRolls = 0;
 
         currentPlayer = player;
@@ -63,8 +65,14 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(boardScene.name);
         }
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            minigameCam.enabled = true;
+            boardCam.enabled = false;
+        }
+
         // simulating a Minigame that Player won, and Computer lost. these fields will be UPDATED BY THE MINIGAME SCRIPTS (e.g. Game.player.SetMinigameWinner() | Game.minigameCam.enabled = false, etc.)
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.F))
         {
             minigameCam.enabled = false;
             boardCam.enabled = true;
@@ -85,7 +93,7 @@ public class GameManagerScript : MonoBehaviour
             boardUI.PlayerSuperSpeedText.text = "Super Speed: " + player.GetSuperSpeed();
             boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
             boardUI.PCSuperSpeedText.text = "Super Speed: " + computer.GetSuperSpeed();
-        }
+        }*/
 
         if (!gamePaused && !gameOver && !duringMinigame)
         {
@@ -278,7 +286,7 @@ public class GameManagerScript : MonoBehaviour
         }
 
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
-        if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame)
+        if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame && !this.player.IsSkippingTurn())
         {
             Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
 
@@ -290,7 +298,6 @@ public class GameManagerScript : MonoBehaviour
 
             // BEGIN MINIGAME
 
-            this.duringMinigame = true;
 
         }
 
@@ -478,6 +485,8 @@ public class GameManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         this.boardUI.HideAllTexts();
+
+        this.duringMinigame = true;
 
         this.boardCam.enabled = false;
         this.minigameCam.enabled = true;

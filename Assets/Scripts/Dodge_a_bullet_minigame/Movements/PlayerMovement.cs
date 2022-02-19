@@ -12,13 +12,13 @@ public class PlayerMovement : MonoBehaviour
     public float MovementSpeed = 60;
     public float JumpForce = 6f;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody rigidbody;
 
     public Animator animator;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody>();
     }
     
     void Update()

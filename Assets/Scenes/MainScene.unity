@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6247,6 +6247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b27d6d6df820fd4d932061b12b18c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
   timerText: {fileID: 497059675}
 --- !u!114 &497059675
 MonoBehaviour:
@@ -12077,7 +12078,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -14377,6 +14378,7 @@ MonoBehaviour:
   dice: {fileID: 358047570}
   boardUI: {fileID: 102835958}
   boardSFX: {fileID: 1981025908}
+  duringMinigame: 0
 --- !u!1 &1140683193
 GameObject:
   m_ObjectHideFlags: 0
@@ -15984,7 +15986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1260702700
 Transform:
   m_ObjectHideFlags: 0
@@ -16032,6 +16034,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a4f9d726cc596e408b447b653c94905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
+  player: {fileID: 404985681}
   WinText: {fileID: 1767315261}
   LoseText: {fileID: 1689445966}
   Draw: {fileID: 1654241796}
@@ -18644,6 +18648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf3296295fbf87d49a45835705ff7d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
+  computer: {fileID: 1794623886}
   WinText: {fileID: 1767315261}
   Draw: {fileID: 1654241796}
 --- !u!114 &1505947688
@@ -23289,6 +23295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a3d871bc8df9242bff4f10e490db66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 1138873928}
   spawnPoints:
   - {fileID: 1847016908}
   - {fileID: 117891131}
@@ -23323,6 +23330,7 @@ MonoBehaviour:
   - {fileID: 1403800057}
   enemyPrefabs:
   - {fileID: 5395698997105851518, guid: 503001f30ef3fb1469cd82b2aeacb5af, type: 3}
+  obstaclesSent: 0
 --- !u!1 &1873028587
 GameObject:
   m_ObjectHideFlags: 0

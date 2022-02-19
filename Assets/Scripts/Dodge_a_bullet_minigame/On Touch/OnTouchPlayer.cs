@@ -9,6 +9,9 @@ public class OnTouchPlayer : MonoBehaviour
     bool loseTextAppears = false;
     bool winTextAppears = false;*/
 
+    public GameManagerScript board;
+    public Player player;
+
     public GameObject WinText;
     public GameObject LoseText;
     public GameObject Draw;
@@ -34,6 +37,8 @@ public class OnTouchPlayer : MonoBehaviour
             WinText.gameObject.SetActive(false);
             LoseText.gameObject.SetActive(false);
             isGameOver = true;
+            player.RemoveMinigameWinner();
+            StartCoroutine(DelayGoToBoard());
         }
     }
 
@@ -49,11 +54,18 @@ public class OnTouchPlayer : MonoBehaviour
         if (touchedPlayer == false && OnTouchComputer.touchedComputer == true && isGameOver == false)
         {
             WinText.gameObject.SetActive(true);
+            player.SetMinigameWinner();
+            //boardCam();
+            StartCoroutine(DelayGoToBoard());
+
         }
 
         if (touchedPlayer == true && OnTouchComputer.touchedComputer == false && isGameOver == false)
         {
             LoseText.gameObject.SetActive(true);
+            player.RemoveMinigameWinner();
+            //boardCam();
+            StartCoroutine(DelayGoToBoard());
         }
 
         
@@ -91,6 +103,36 @@ public class OnTouchPlayer : MonoBehaviour
         }*/
     }
 
+    public IEnumerator DelayGoToBoard()
+    {
+        yield return new WaitForSeconds(3f);
+
+        player.RemoveSuperSpeed();
+        board.minigameCam.enabled = false;
+        board.boardCam.enabled = true;
+        board.boardSFX.boardBGM.Play();
+        board.boardSFX.minigameBGM.Stop();
+        board.boardUI.ShowAllTexts();
+        touchedPlayer = false;
+        HideTexts();
+    }
+
+    public void HideTexts()
+    {
+        WinText.gameObject.SetActive(false);
+        LoseText.gameObject.SetActive(false);
+        Draw.gameObject.SetActive(false);
+    }
+
+    /*    public void boardCam()
+        {
+            player.RemoveSuperSpeed();
+            board.minigameCam.enabled = false;
+            board.boardCam.enabled = true;
+            board.boardSFX.boardBGM.Play();
+            board.boardSFX.minigameBGM.Stop();
+            board.boardUI.ShowAllTexts();
+        }*/
 
 
 }
