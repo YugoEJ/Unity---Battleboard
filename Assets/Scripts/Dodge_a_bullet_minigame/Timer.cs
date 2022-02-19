@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public static float timeValue = 16;
+    public static float timeValue = 7;
     public Text timerText;
 
     void Update()

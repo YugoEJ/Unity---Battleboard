@@ -13,6 +13,8 @@ public class OnTouchPlayer : MonoBehaviour
     public GameObject LoseText;
     public GameObject Draw;
 
+    public static bool isGameOver = false;
+
     public static bool touchedPlayer;
 
     // Start is called before the first frame update
@@ -25,29 +27,31 @@ public class OnTouchPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (touchedPlayer == false && OnTouchComputer.touchedComputer == false && Timer.timeValue <= 0)
         {
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
             LoseText.gameObject.SetActive(false);
+            isGameOver = true;
         }
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        Debug.Log(OnTouchComputer.touchedComputer);
+        //Debug.Log(OnTouchComputer.touchedComputer);
 
         if (col.gameObject.tag == "obstacle")
         {
             touchedPlayer = true;
         }
 
-        if (touchedPlayer == false && OnTouchComputer.touchedComputer == true)
+        if (touchedPlayer == false && OnTouchComputer.touchedComputer == true && isGameOver == false)
         {
             WinText.gameObject.SetActive(true);
         }
 
-        if (touchedPlayer == true && OnTouchComputer.touchedComputer == false)
+        if (touchedPlayer == true && OnTouchComputer.touchedComputer == false && isGameOver == false)
         {
             LoseText.gameObject.SetActive(true);
         }

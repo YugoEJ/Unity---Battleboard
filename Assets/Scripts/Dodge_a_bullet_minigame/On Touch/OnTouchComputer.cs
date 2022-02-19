@@ -25,12 +25,17 @@ public class OnTouchComputer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && Timer.timeValue <= 0)
+        {
+            Draw.gameObject.SetActive(true);
+            WinText.gameObject.SetActive(false);
+            OnTouchPlayer.isGameOver = true;
+        }
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "obstacle" && OnTouchPlayer.touchedPlayer == false) 
+        if (col.gameObject.tag == "obstacle" && OnTouchPlayer.touchedPlayer == false && OnTouchPlayer.isGameOver == false) 
         {
             touchedComputer = true;
             WinText.gameObject.SetActive(true);
