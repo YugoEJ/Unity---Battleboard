@@ -19,7 +19,7 @@ public class RandomSpawner : MonoBehaviour
         while (Timer.timeValue > 0.9)
         {
 
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(1f);
 
             //int randEnemy = Random.Range(0, enemyPrefabs.Length);
             int randSpawPoint1 = Random.Range(0, spawnPoints.Length);

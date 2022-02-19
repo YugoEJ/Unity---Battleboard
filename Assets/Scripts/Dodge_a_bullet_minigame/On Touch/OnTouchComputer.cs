@@ -36,10 +36,10 @@ public class OnTouchComputer : MonoBehaviour
             WinText.gameObject.SetActive(true);
         }
 
-        if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && DeleteObstacleOnTouch.obstacleCounter == 0)
+        /*if (touchedComputer == false && OnTouchPlayer.touchedPlayer == false && Timer.timeValue <= 0)
         {
             Draw.gameObject.SetActive(true);
-        }
+        }*/
 
         //////////
 
