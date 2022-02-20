@@ -46,6 +46,7 @@ public class RandomSpawner : MonoBehaviour
             //Debug.Log(DeleteObstacleOnTouch.obstacleCounter);
         }
 
+        OnTouchPlayer.isGameOver = true;
         board.duringMinigame = false;
         obstaclesSent = false;
     }

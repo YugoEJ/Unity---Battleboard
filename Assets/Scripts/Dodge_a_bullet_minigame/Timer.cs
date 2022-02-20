@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
     public GameManagerScript board;
 
-    public static float timeValue;
+    public static float timeValue = 0.3f;
     public Text timerText;
 
     void Update()

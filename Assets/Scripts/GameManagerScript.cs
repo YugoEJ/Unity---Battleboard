@@ -65,7 +65,7 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (!gamePaused && !gameOver && !duringMinigame)
+        if (!gamePaused && !gameOver && !duringMinigame && OnTouchPlayer.isGameOver)
         {
             if ((player.IsMinigameWinner() || computer.IsMinigameWinner()) && !duringMinigame)
             {
@@ -449,7 +449,7 @@ public class GameManagerScript : MonoBehaviour
     // most of the actions taken in this method should be COUNTERED by the MINIGAME SCRIPTS when the minigame is over (e.g. Game.boardUI.ShowAllTexts() | Game.boardCam.enabled = true).
     private IEnumerator StartMinigameDelay()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0f);
         this.boardUI.HideAllTexts();
 
         this.boardCam.enabled = false;
