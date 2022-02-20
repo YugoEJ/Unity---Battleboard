@@ -20,7 +20,7 @@ public class OnTouchPlayer : MonoBehaviour
     {
         if (board.duringMinigame && !appliedEffects)
         {
-            Timer.timeValue = 17.5f;
+            Timer.timeValue = 6f;
 
             playerHealthPoints = 1 + player.GetExtraLife();
             OnTouchComputer.computerHealthPoints = 1 + computer.GetExtraLife();
@@ -29,12 +29,12 @@ public class OnTouchPlayer : MonoBehaviour
             isGameOver = false;
         }
 
-        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints != 0 && Timer.timeValue <= 0 && isGameOver == false)
+        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints != 0 && Timer.timeValue <= 0 && !isGameOver)
         {
             Draw.gameObject.SetActive(true);
             WinText.gameObject.SetActive(false);
             LoseText.gameObject.SetActive(false);
-            isGameOver = true;
+            //isGameOver = true;
             player.RemoveMinigameWinner();
             computer.RemoveMinigameWinner();
             board.boardSFX.loseMinigameSFX.Play();
@@ -44,15 +44,6 @@ public class OnTouchPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        /*if (col.gameObject.tag == "obstacle" && isGameOver == false)
-        {
-            //Destroy(col.gameObject);
-            player.RemoveExtraLife();
-            board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
-            playerHealthPoints--;
-            //board.boardSFX.hurtMinigameSFX.Play();
-        }*/
-
         if (col.gameObject.tag == "obstacle")
         {
             Destroy(col.gameObject);
@@ -63,7 +54,6 @@ public class OnTouchPlayer : MonoBehaviour
                 board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
                 playerHealthPoints--;
                 board.boardSFX.hurtMinigameSFX.Play();
-
             }
         }
 
@@ -90,10 +80,10 @@ public class OnTouchPlayer : MonoBehaviour
 
     public IEnumerator DelayGoToBoard()
     {
-        appliedEffects = false;
-        isGameOver = true;
         board.duringMinigame = false;
+        appliedEffects = false;
         Timer.timeValue = 0f;
+        isGameOver = true;
 
         yield return new WaitForSeconds(3f);
 

@@ -13,6 +13,8 @@ public class UIManagerScript : MonoBehaviour
     public Text SpecialEffectText;
     public Text PCExtraLifeText;
     public Text PlayerExtraLifeText;
+    public Text PlayerWinsText;
+    public Text ComputerWinsText;
     public GameObject PCTurnIndicator;
     public GameObject PlayerTurnIndicator;
 

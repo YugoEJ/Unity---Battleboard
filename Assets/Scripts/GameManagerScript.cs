@@ -41,10 +41,11 @@ public class GameManagerScript : MonoBehaviour
         boardUI.DiceResultText.text = "" + 0;
         boardUI.SpecialEffectText.text += " None";
         boardUI.PlayerExtraLifeText.text += " 0";
-        //boardUI.PlayerSuperSpeedText.text += " Off";
         boardUI.PCExtraLifeText.text += " 0";
-        //boardUI.PCSuperSpeedText.text += " Off";
         boardUI.NextMinigameText.text += " " + requiredDiceRollsForMinigame + " Rolls";
+        boardUI.ComputerWinsText.gameObject.SetActive(false);
+        boardUI.PlayerWinsText.gameObject.SetActive(false);
+
 
         boardSFX.diceSFX.Play();
         boardSFX.boardBGM.Play();
@@ -128,7 +129,17 @@ public class GameManagerScript : MonoBehaviour
         {
             // if this statement is true, currentPlayer is the winner. this statement should be considered in other Move methods as well (MoveWinningPlayer()).
             this.gameOver = true;
-            Debug.Log(currentPlayer.name + " wins!");
+
+            if (currentPlayer == player)
+            {
+                boardUI.PlayerWinsText.gameObject.SetActive(true);
+                boardUI.ComputerWinsText.gameObject.SetActive(false);
+            }
+            else
+            {
+                boardUI.ComputerWinsText.gameObject.SetActive(true);
+                boardUI.PlayerWinsText.gameObject.SetActive(false);
+            }
 
             return;
         }

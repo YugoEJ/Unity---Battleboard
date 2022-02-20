@@ -8,7 +8,6 @@ public class OnTouchComputer : MonoBehaviour
     public Player player;
     public Player computer;
     public static int computerHealthPoints;
-    public bool appliedEffects;
 
     public GameObject WinText;
     public GameObject Draw;
@@ -40,9 +39,8 @@ public class OnTouchComputer : MonoBehaviour
 
     public IEnumerator DelayGoToBoard()
     {
-        appliedEffects = false;
-        OnTouchPlayer.isGameOver = true;
         board.duringMinigame = false;
+        OnTouchPlayer.isGameOver = true;
         Timer.timeValue = 0f;
 
         yield return new WaitForSeconds(3f);
