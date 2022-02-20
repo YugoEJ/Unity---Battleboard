@@ -10,7 +10,6 @@ public class OnTouchComputer : MonoBehaviour
     public static int computerHealthPoints;
 
     public GameObject WinText;
-    public GameObject Draw;
 
     private void OnCollisionEnter(Collision col)
     {
@@ -23,17 +22,17 @@ public class OnTouchComputer : MonoBehaviour
                 computer.RemoveExtraLife();
                 board.boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
                 computerHealthPoints--;
-            }
-        }
 
-        if (computerHealthPoints == 0 && OnTouchPlayer.playerHealthPoints != 0 && OnTouchPlayer.isGameOver == false) 
-        {
-            OnTouchPlayer.isGameOver = true;
-            WinText.gameObject.SetActive(true);
-            player.SetMinigameWinner();
-            computer.RemoveMinigameWinner();
-            board.boardSFX.winMinigameSFX.Play();
-            StartCoroutine(DelayGoToBoard());
+                if ((computerHealthPoints > 0 && OnTouchPlayer.playerHealthPoints <= 0) || (computerHealthPoints <= 0 && OnTouchPlayer.playerHealthPoints <= 0) || (computerHealthPoints <= 0 && OnTouchPlayer.playerHealthPoints >= 0)) 
+                {
+                    OnTouchPlayer.isGameOver = true;
+                    WinText.gameObject.SetActive(true);
+                    player.SetMinigameWinner();
+                    computer.RemoveMinigameWinner();
+                    board.boardSFX.winMinigameSFX.Play();
+                    StartCoroutine(DelayGoToBoard());
+                }
+            }
         }
     }
 
@@ -41,10 +40,8 @@ public class OnTouchComputer : MonoBehaviour
     {
         board.duringMinigame = false;
         OnTouchPlayer.isGameOver = true;
-        Timer.timeValue = 0f;
 
         yield return new WaitForSeconds(3f);
-
 
         board.minigameCam.enabled = false;
         board.boardCam.enabled = true;
@@ -57,6 +54,5 @@ public class OnTouchComputer : MonoBehaviour
     public void HideTexts()
     {
         WinText.gameObject.SetActive(false);
-        Draw.gameObject.SetActive(false);
     }
 }

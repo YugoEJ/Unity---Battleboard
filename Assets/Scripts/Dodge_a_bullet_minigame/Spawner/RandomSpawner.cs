@@ -7,27 +7,15 @@ public class RandomSpawner : MonoBehaviour
     public GameManagerScript board;
     public Transform[] spawnPoints;
     public GameObject[] enemyPrefabs;
-    public bool obstaclesSent = false;
 
-    //public static int obstacleCounter = 15;
-
-    void Update()
-    {
-        if (board.duringMinigame && !obstaclesSent)
-        {
-            obstaclesSent = true;
-            StartCoroutine("Reset");
-        }
-    }
-
-    /*void Start()
+    public void Start()
     {
         StartCoroutine("Reset");
-    }*/
+    }
 
     IEnumerator Reset()
     {
-        while (Timer.timeValue > 0.9)
+        while (board.duringMinigame)
         {
 
             yield return new WaitForSeconds(1f);
@@ -39,15 +27,6 @@ public class RandomSpawner : MonoBehaviour
             //spawns 2 obstacles
             Instantiate(enemyPrefabs[0], spawnPoints[randSpawPoint1].position, transform.rotation);
             Instantiate(enemyPrefabs[0], spawnPoints[randSpawPoint2].position, transform.rotation);
-
-            //DeleteObstacleOnTouch.obstacleCounter--;
-
-            //obstacleCounter--;
-            //Debug.Log(DeleteObstacleOnTouch.obstacleCounter);
         }
-
-        OnTouchPlayer.isGameOver = true;
-        board.duringMinigame = false;
-        obstaclesSent = false;
     }
 }

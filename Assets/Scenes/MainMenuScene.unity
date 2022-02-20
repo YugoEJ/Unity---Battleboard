@@ -329,7 +329,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Game Flow:                   \n\nThe goal is to reach the final tile of
     your part of the board.\nPlayers move by rolling dice (1-6).\nA minigame is initiated
-    every 30 total dice rolls.\n\nOn the board are Special Tiles:\n\nGreen Tiles:
+    every 50 total dice rolls.\n\nOn the board are Special Tiles:\n\nGreen Tiles:
     Extra-Life.\nThese allow you to be hit up to 2 times during the Minigame.\n\nRed
     Tiles: Skip-Turn.\nThis makes the player skip a turn (opponent moves twice)."
 --- !u!222 &736241169
@@ -624,7 +624,7 @@ MonoBehaviour:
     The goal is to dodge the falling obstacles.
 
     The
-    player who survives moves 3 steps on the Board.
+    player who survives moves 6 steps on the Board.
 
     A loss or a draw results
     in staying in the same spot.

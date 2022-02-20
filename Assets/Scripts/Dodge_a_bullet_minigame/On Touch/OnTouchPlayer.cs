@@ -13,7 +13,6 @@ public class OnTouchPlayer : MonoBehaviour
 
     public GameObject WinText;
     public GameObject LoseText;
-    public GameObject Draw;
 
     public static bool isGameOver = true;
 
@@ -21,38 +20,12 @@ public class OnTouchPlayer : MonoBehaviour
     {
         if (board.duringMinigame && !appliedEffects)
         {
-            Debug.Log("ontouch player IF in UPDATE");
-            Timer.timeValue = 17.5f;
-
             playerHealthPoints = 1 + player.GetExtraLife();
             OnTouchComputer.computerHealthPoints = 1 + computer.GetExtraLife();
 
             appliedEffects = true;
-            gameDraw = true;
             isGameOver = false;
         }
-
-        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints != 0 && Timer.timeValue <= 0.2f)
-        {
-            Draw.gameObject.SetActive(true);
-            WinText.gameObject.SetActive(false);
-            LoseText.gameObject.SetActive(false);
-            player.RemoveMinigameWinner();
-            computer.RemoveMinigameWinner();
-            //board.boardSFX.loseMinigameSFX.Play();
-            StartCoroutine(DelayGoToBoard());
-        }
-
-        /*if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints != 0 && isGameOver && !gameDraw)
-        {
-            Draw.gameObject.SetActive(true);
-            WinText.gameObject.SetActive(false);
-            LoseText.gameObject.SetActive(false);
-            player.RemoveMinigameWinner();
-            computer.RemoveMinigameWinner();
-            //board.boardSFX.loseMinigameSFX.Play();
-            StartCoroutine(DelayGoToBoard());
-        }*/
     }
 
     private void OnCollisionEnter(Collision col)
@@ -67,26 +40,16 @@ public class OnTouchPlayer : MonoBehaviour
                 board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
                 playerHealthPoints--;
                 board.boardSFX.hurtMinigameSFX.Play();
+
+                if ((playerHealthPoints <= 0 && OnTouchComputer.computerHealthPoints > 0) || (playerHealthPoints <= 0 && OnTouchComputer.computerHealthPoints <= 0))
+                {
+                    LoseText.gameObject.SetActive(true);
+                    player.RemoveMinigameWinner();
+                    computer.SetMinigameWinner();
+                    board.boardSFX.loseMinigameSFX.Play();
+                    StartCoroutine(DelayGoToBoard());
+                }
             }
-        }
-
-        if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints == 0 && !isGameOver)
-        {
-            //isGameOver = true;
-            WinText.gameObject.SetActive(true);
-            player.SetMinigameWinner();
-            computer.RemoveMinigameWinner();
-            board.boardSFX.winMinigameSFX.Play();
-            StartCoroutine(DelayGoToBoard());
-        }
-
-        if (playerHealthPoints == 0 && OnTouchComputer.computerHealthPoints != 0 && !isGameOver)
-        {
-            LoseText.gameObject.SetActive(true);
-            player.RemoveMinigameWinner();
-            computer.SetMinigameWinner();
-            board.boardSFX.loseMinigameSFX.Play();
-            StartCoroutine(DelayGoToBoard());
         }
     }
 
@@ -94,8 +57,6 @@ public class OnTouchPlayer : MonoBehaviour
     {
         board.duringMinigame = false;
         appliedEffects = false;
-        gameDraw = false;
-        Timer.timeValue = 0.3f;
         isGameOver = true;
 
         yield return new WaitForSeconds(2f);
@@ -112,6 +73,5 @@ public class OnTouchPlayer : MonoBehaviour
     {
         WinText.gameObject.SetActive(false);
         LoseText.gameObject.SetActive(false);
-        Draw.gameObject.SetActive(false);
     }
 }

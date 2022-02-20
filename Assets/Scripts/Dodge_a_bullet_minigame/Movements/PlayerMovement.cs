@@ -12,15 +12,8 @@ public class PlayerMovement : MonoBehaviour
     public float JumpForce = 6f;
     public bool appliedEffects = false;
 
-    //private Rigidbody rigidbody;
-
     public Animator animator;
 
-    void Start()
-    {
-        //rigidbody = GetComponent<Rigidbody>();
-    }
-    
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;

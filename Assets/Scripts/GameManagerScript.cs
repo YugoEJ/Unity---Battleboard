@@ -19,12 +19,14 @@ public class GameManagerScript : MonoBehaviour
     public UIManagerScript boardUI;
     public SFXManagerScript boardSFX;
 
+    public RandomSpawner spawner;
+
     public bool duringMinigame;
     private bool gamePaused;
     private bool gameOver;
     private int currentTotalDiceRolls;
-    private int requiredDiceRollsForMinigame = 10;
-    private int requiredDiceRollsIncrement = 10;
+    private int requiredDiceRollsForMinigame = 50;
+    private int requiredDiceRollsIncrement = 50;
     private float speed = 40f;
 
     private void Start()
@@ -65,20 +67,20 @@ public class GameManagerScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (!gamePaused && !gameOver && !duringMinigame && OnTouchPlayer.isGameOver)
+        if (!gamePaused && !gameOver && !duringMinigame)
         {
             if ((player.IsMinigameWinner() || computer.IsMinigameWinner()) && !duringMinigame)
             {
                 if (player.IsMinigameWinner())
                 {
                     player.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(player, 3));
+                    StartCoroutine(MoveWinningPlayer(player, 6));
                 }
 
                 if (computer.IsMinigameWinner())
                 {
                     computer.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(computer, 3));
+                    StartCoroutine(MoveWinningPlayer(computer, 6));
                 }
 
                 currentPlayer = player;
@@ -257,7 +259,6 @@ public class GameManagerScript : MonoBehaviour
 
         ApplySpecialTileEffect(currentPlayer, false);
 
-        // THIS IS WHERE WE MAKE A STATEMENT THAT PAUSES THE GAME ONCE THE MINIGAME SHOULD BEGIN, AS DEMONSTRATED BELOW THIS COMMENT
         if (currentPlayer == this.computer)
         {
             boardUI.TotalDiceRollsText.text = "Total Dice Rolls: " + this.currentTotalDiceRolls;
@@ -414,20 +415,6 @@ public class GameManagerScript : MonoBehaviour
                 }
                 break;
 
-            /*case "Super-Speed":
-                currentPlayer.GiveSuperSpeed();
-                this.boardSFX.superSpeedSFX.Play();
-
-                if (currentPlayer == this.player)
-                {
-                    this.boardUI.PlayerSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeedForText();
-                }
-                else
-                {
-                    this.boardUI.PCSuperSpeedText.text = "Super-Speed: " + currentPlayer.GetSuperSpeedForText();
-                }
-                break;*/
-
             // if landed on skip-turn tile, the opponent may roll the dice twice. if skip-turn was already true, the opponent's skip-turn gets nullified.
             case "Skip-Turn":
                 if (!afterMinigame)
@@ -459,6 +446,8 @@ public class GameManagerScript : MonoBehaviour
         this.boardSFX.minigameBGM.Play();
 
         this.boardUI.NextMinigameText.text = "Next Minigame: " + requiredDiceRollsForMinigame + " Rolls";
+
+        spawner.Start();
     }
 
     private IEnumerator DiceRollDelay()
