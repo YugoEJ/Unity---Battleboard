@@ -13,32 +13,18 @@ public class OnTouchComputer : MonoBehaviour
     public GameObject WinText;
     public GameObject Draw;
 
-    void Update()
-    {
-        /*if (board.duringMinigame && !appliedEffects)
-        {
-            healthPoints = 1 + computer.GetExtraLife();
-            appliedEffects = true;
-        }*/
-
-        /*if (computerHealthPoints != 0 && OnTouchPlayer.playerHealthPoints != 0 && Timer.timeValue <= 0)
-        {
-            Draw.gameObject.SetActive(true);
-            WinText.gameObject.SetActive(false);
-            OnTouchPlayer.isGameOver = true;
-            computer.RemoveMinigameWinner();
-            StartCoroutine(DelayGoToBoard());
-        }*/
-    }
-
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "obstacle" && OnTouchPlayer.isGameOver == false)
+        if (col.gameObject.tag == "obstacle")
         {
             Destroy(col.gameObject);
-            computer.RemoveExtraLife();
-            board.boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
-            computerHealthPoints--;
+
+            if (OnTouchPlayer.isGameOver == false)
+            {
+                computer.RemoveExtraLife();
+                board.boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
+                computerHealthPoints--;
+            }
         }
 
         if (computerHealthPoints == 0 && OnTouchPlayer.playerHealthPoints != 0 && OnTouchPlayer.isGameOver == false) 

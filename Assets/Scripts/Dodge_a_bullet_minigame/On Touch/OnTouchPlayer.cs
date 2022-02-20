@@ -43,12 +43,25 @@ public class OnTouchPlayer : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.tag == "obstacle" && isGameOver == false)
+        /*if (col.gameObject.tag == "obstacle" && isGameOver == false)
         {
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
             player.RemoveExtraLife();
             board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
             playerHealthPoints--;
+            //board.boardSFX.hurtMinigameSFX.Play();
+        }*/
+
+        if (col.gameObject.tag == "obstacle")
+        {
+            Destroy(col.gameObject);
+
+            if (isGameOver == false)
+            {
+                player.RemoveExtraLife();
+                board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
+                playerHealthPoints--;
+            }
             //board.boardSFX.hurtMinigameSFX.Play();
         }
 
