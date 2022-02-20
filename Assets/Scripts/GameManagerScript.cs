@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public Scene boardScene;
+    public Scene mainMenuScene;
 
     public Camera boardCam;
     public Camera minigameCam;
@@ -53,42 +54,15 @@ public class GameManagerScript : MonoBehaviour
 
     private void Update()
     {
-        // game should be paused when a special effect is applied (item equipped, game initiated, etc.), for now, P will pause the game for debugging.
-        if (Input.GetKeyDown(KeyCode.P)) 
-        {
-            PauseGame();
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(boardScene.name);
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            player.SetMinigameWinner();
+            SceneManager.LoadScene(0);
         }
-
-        // simulating a Minigame that Player won, and Computer lost. these fields will be UPDATED BY THE MINIGAME SCRIPTS (e.g. Game.player.SetMinigameWinner() | Game.minigameCam.enabled = false, etc.)
-        /*if (Input.GetKeyDown(KeyCode.F))
-        {
-            minigameCam.enabled = false;
-            boardCam.enabled = true;
-
-            boardUI.ShowAllTexts();
-
-            player.SetMinigameWinner();
-            duringMinigame = false;
-
-            boardSFX.minigameBGM.Stop();
-            boardSFX.boardBGM.Play();
-
-
-            boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
-            boardUI.PlayerSuperSpeedText.text = "Super Speed: " + player.GetSuperSpeed();
-            boardUI.PCExtraLifeText.text = "Extra Life: " + computer.GetExtraLife();
-            boardUI.PCSuperSpeedText.text = "Super Speed: " + computer.GetSuperSpeed();
-        }*/
 
         if (!gamePaused && !gameOver && !duringMinigame)
         {
@@ -270,8 +244,6 @@ public class GameManagerScript : MonoBehaviour
 
         currentPlayer.SetMoving(false);
 
-        //Debug.Log("Current total dice rolls: " + this.currentTotalDiceRolls);
-
         ApplySpecialTileEffect(currentPlayer, false);
 
         // THIS IS WHERE WE MAKE A STATEMENT THAT PAUSES THE GAME ONCE THE MINIGAME SHOULD BEGIN, AS DEMONSTRATED BELOW THIS COMMENT
@@ -283,18 +255,9 @@ public class GameManagerScript : MonoBehaviour
         // if the minigame threshold (this.stepsForMinigame) is met, pause the game and switch to the minigame
         if (currentPlayer == this.computer && this.currentTotalDiceRolls >= this.requiredDiceRollsForMinigame && !this.player.IsSkippingTurn())
         {
-            Debug.Log("Minigame should now begin because " + this.currentTotalDiceRolls + " >= " + this.requiredDiceRollsForMinigame);
-
             this.requiredDiceRollsForMinigame += this.requiredDiceRollsIncrement;
             this.duringMinigame = true;
             StartCoroutine(StartMinigameDelay());
-            //this.boardUI.HideAllTexts();
-            //this.boardCam.enabled = false;
-            //this.minigameCam.enabled = true;
-
-            // BEGIN MINIGAME
-
-
         }
 
         if (this.currentPlayer == player)
@@ -305,7 +268,6 @@ public class GameManagerScript : MonoBehaviour
         {
             boardUI.SetPCTurn();
         }
-        Debug.Log(this.currentPlayer.name + "'s turn.");
     }
 
     private void MoveToNextNode(Vector3 goalNode, Player currentPlayer)
@@ -315,8 +277,7 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator MoveWinningPlayer(Player winningPlayer, int stepsToTake)
     {
-        yield return new WaitForSeconds(1f);
-        Debug.Log(winningPlayer.name + " won the Minigame and will now move : " + stepsToTake + " steps.");
+        yield return new WaitForSeconds(4f);
 
         if (winningPlayer.IsMoving())
         {
@@ -422,8 +383,6 @@ public class GameManagerScript : MonoBehaviour
         string specialEffect = currentPlayer.currentRoute.GetSpecialTiles()[currentPlayer.RoutePos()].GetTileEffect();
         
         this.boardUI.SpecialEffectText.text = "Effect: " + specialEffect;
-
-        Debug.Log(currentPlayer.name + " has landed on special tile: " + specialEffect);
 
         switch (specialEffect)
         {

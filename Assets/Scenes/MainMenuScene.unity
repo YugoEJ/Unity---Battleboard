@@ -327,32 +327,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Flow:                    Controls: SPACEBAR (roll dice)
-
-
-    The
-    goal is to reach the final tile of your part of the board.
-
-    Players move
-    by rolling dice (1-6).
-
-    A minigame is initiated every 30 total dice rolls.
-
-
-    On
-    the board are Special Tiles:
-
-
-    Green Tiles: Extra-Life or Super-Speed.
-
-    These
-    may assist you in the Minigame battle.
-
-
-    Red Tiles: Skip-Turn.
-
-    This
-    makes the player skip a turn (opponent moves twice).'
+  m_Text: "Game Flow:                   \n\nThe goal is to reach the final tile of
+    your part of the board.\nPlayers move by rolling dice (1-6).\nA minigame is initiated
+    every 30 total dice rolls.\n\nOn the board are Special Tiles:\n\nGreen Tiles:
+    Extra-Life.\nThese allow you to be hit up to 2 times during the Minigame.\n\nRed
+    Tiles: Skip-Turn.\nThis makes the player skip a turn (opponent moves twice)."
 --- !u!222 &736241169
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -639,25 +618,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Minigame Flow:                  Controls: ARROWS (left/right)
+  m_Text: 'Minigame Flow:
 
+
+    The goal is to dodge the falling obstacles.
 
     The
-    goal is to dodge the falling obstacles.
+    player who survives moves 3 steps on the Board.
 
-    The player who survives moves a
-    random amount of steps on the Board.
-
-
-    The Super-Speed Powerup allows the
-    player to move at a faster pace during the Minigame.
-
-    The Extra-Life Powerup
-    allows the player to be hit (up to 3 times, depending on the amount of Extra-Life
-    tiles the player landed on).
+    A loss or a draw results
+    in staying in the same spot.
 
 
-    The losing player stays in the same spot.'
+    The Extra-Life Powerup allows the player to
+    be hit (up to 2 times, depending on the amount of Extra-Life tiles the player
+    landed on).'
 --- !u!222 &924383886
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -836,7 +811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 486, y: 82.203186}
+  m_AnchoredPosition: {x: -89, y: 80}
   m_SizeDelta: {x: 534.4622, y: 68.4064}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &984457468
@@ -981,7 +956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 486, y: -17.796814}
+  m_AnchoredPosition: {x: -89, y: -20}
   m_SizeDelta: {x: 534.4622, y: 68.4064}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003925978
@@ -1248,7 +1223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 486, y: 177}
+  m_AnchoredPosition: {x: -89, y: 174.79681}
   m_SizeDelta: {x: 534.4622, y: 68.4064}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1159294102
@@ -2420,6 +2395,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055848240}
   m_CullTransparentMesh: 1
+--- !u!1 &2068307320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2068307321}
+  - component: {fileID: 2068307323}
+  - component: {fileID: 2068307322}
+  m_Layer: 5
+  m_Name: ControlsText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2068307321
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068307320}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2128117098}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 745, y: 8}
+  m_SizeDelta: {x: 890, y: 540}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2068307322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068307320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 35
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 119
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "Controls: \n\nRoll Dice:            SPACEBAR\nMove Left/Right:  KEYBOARD
+    ARROWS\nRestart Game:     R\nMain Menu:          ESCAPE"
+--- !u!222 &2068307323
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068307320}
+  m_CullTransparentMesh: 1
 --- !u!1 &2128117097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,6 +2508,7 @@ RectTransform:
   - {fileID: 1003925977}
   - {fileID: 736241167}
   - {fileID: 924383884}
+  - {fileID: 2068307321}
   m_Father: {fileID: 1560322503}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
