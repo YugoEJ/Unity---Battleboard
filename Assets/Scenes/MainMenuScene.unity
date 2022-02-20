@@ -626,13 +626,12 @@ MonoBehaviour:
     The
     player who survives moves 6 steps on the Board.
 
-    A loss or a draw results
-    in staying in the same spot.
+    A loss results in staying
+    in the same spot.
 
 
-    The Extra-Life Powerup allows the player to
-    be hit (up to 2 times, depending on the amount of Extra-Life tiles the player
-    landed on).'
+    The Extra-Life Powerup allows the player to be hit (up
+    to 2 times, depending on the amount of Extra-Life tiles the player landed on).'
 --- !u!222 &924383886
 CanvasRenderer:
   m_ObjectHideFlags: 0
