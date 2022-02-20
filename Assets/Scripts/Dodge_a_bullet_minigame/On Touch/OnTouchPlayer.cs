@@ -20,7 +20,7 @@ public class OnTouchPlayer : MonoBehaviour
     {
         if (board.duringMinigame && !appliedEffects)
         {
-            Timer.timeValue = 10f;
+            Timer.timeValue = 17.5f;
 
             playerHealthPoints = 1 + player.GetExtraLife();
             OnTouchComputer.computerHealthPoints = 1 + computer.GetExtraLife();
@@ -37,6 +37,7 @@ public class OnTouchPlayer : MonoBehaviour
             isGameOver = true;
             player.RemoveMinigameWinner();
             computer.RemoveMinigameWinner();
+            board.boardSFX.loseMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
         }
     }
@@ -61,8 +62,9 @@ public class OnTouchPlayer : MonoBehaviour
                 player.RemoveExtraLife();
                 board.boardUI.PlayerExtraLifeText.text = "Extra Life: " + player.GetExtraLife();
                 playerHealthPoints--;
+                board.boardSFX.hurtMinigameSFX.Play();
+
             }
-            //board.boardSFX.hurtMinigameSFX.Play();
         }
 
         if (playerHealthPoints != 0 && OnTouchComputer.computerHealthPoints == 0 && isGameOver == false)
@@ -71,7 +73,7 @@ public class OnTouchPlayer : MonoBehaviour
             WinText.gameObject.SetActive(true);
             player.SetMinigameWinner();
             computer.RemoveMinigameWinner();
-            //board.boardSFX.winMinigameSFX.Play();
+            board.boardSFX.winMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
         }
 
@@ -81,7 +83,7 @@ public class OnTouchPlayer : MonoBehaviour
             LoseText.gameObject.SetActive(true);
             player.RemoveMinigameWinner();
             computer.SetMinigameWinner();
-            //board.boardSFX.loseMinigameSFX.Play();
+            board.boardSFX.loseMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
         }
     }
@@ -91,10 +93,9 @@ public class OnTouchPlayer : MonoBehaviour
         appliedEffects = false;
         isGameOver = true;
         board.duringMinigame = false;
-
         Timer.timeValue = 0f;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         board.minigameCam.enabled = false;
         board.boardCam.enabled = true;

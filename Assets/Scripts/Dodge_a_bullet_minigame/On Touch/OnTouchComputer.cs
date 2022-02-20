@@ -33,20 +33,20 @@ public class OnTouchComputer : MonoBehaviour
             WinText.gameObject.SetActive(true);
             player.SetMinigameWinner();
             computer.RemoveMinigameWinner();
-            //board.boardSFX.winMinigameSFX.Play();
+            board.boardSFX.winMinigameSFX.Play();
             StartCoroutine(DelayGoToBoard());
         }
     }
 
     public IEnumerator DelayGoToBoard()
     {
-        //board.duringMinigame = false;
         appliedEffects = false;
+        OnTouchPlayer.isGameOver = true;
+        board.duringMinigame = false;
         Timer.timeValue = 0f;
 
         yield return new WaitForSeconds(3f);
 
-        board.duringMinigame = false;
 
         board.minigameCam.enabled = false;
         board.boardCam.enabled = true;

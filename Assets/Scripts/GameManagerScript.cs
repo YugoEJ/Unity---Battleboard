@@ -97,13 +97,13 @@ public class GameManagerScript : MonoBehaviour
                 if (player.IsMinigameWinner())
                 {
                     player.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(player, 6));
+                    StartCoroutine(MoveWinningPlayer(player, 3));
                 }
 
                 if (computer.IsMinigameWinner())
                 {
                     computer.RemoveMinigameWinner();
-                    StartCoroutine(MoveWinningPlayer(computer, 6));
+                    StartCoroutine(MoveWinningPlayer(computer, 3));
                 }
 
                 currentPlayer = player;
