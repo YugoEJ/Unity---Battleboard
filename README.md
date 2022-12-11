@@ -1,2 +1,2 @@
 # Battle-Board
-Video Game Development Course - Final Project - Sapir College 2021/2022
+Video Game Development Course Project - Sapir College 2021/2022
