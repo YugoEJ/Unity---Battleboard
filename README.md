@@ -17,4 +17,4 @@ In the Special Minigame, both the Player and the Computer will have to avoid fal
 If a player is hit, they lose 1 Health Point - first to lose all of their Health Points loses the Minigame. 
 
 The winner of the Special Minigame will advance 6 steps on the board.
-The first player to reach the end of their half of the board – wins.
+The first player to reach the final tile of their half of the board – wins.
